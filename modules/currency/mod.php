@@ -2,7 +2,7 @@
 /**
  * WBW Currency Switcher for WooCommerce - currencyWcu Class
  *
- * @version 2.3.1
+ * @version 2.3.2
  *
  * @author woobewoo
  */
@@ -312,23 +312,109 @@ class currencyWcu extends moduleWcu {
 	}
 
 	/**
+	 * Convert a possibly locale-formatted price to a float.
+	 *
+	 * getCurrencyPrice() may return a locale-formatted string (e.g. "8,70")
+	 * instead of a pure float. This helper normalises the value.
+	 *
+	 * @version 2.3.2
+	 * @since   2.3.1
+	 *
+	 * @param mixed $value
+	 * @return float
+	 */
+	public function toFloatPrice($value) {
+		if (is_float($value) || is_int($value)) {
+			return (float) $value;
+		}
+
+		$str = trim((string) $value);
+
+		if ('' === $str) {
+			return 0.0;
+		}
+
+		if ('' !== $this->decimalSep && '.' !== $this->decimalSep) {
+			$str = str_replace($this->decimalSep, '.', $str);
+		}
+
+		$str = preg_replace('/[^0-9.\-]/', '', $str);
+
+		return (float) $str;
+	}
+
+	/**
 	 * updatePackageRates.
 	 *
-	 * @version 2.2.8
+	 * Convert shipping package rates to the current currency, including
+	 * proportional conversion of taxes so that inclusive-VAT shipping
+	 * (e.g. Flat Rate) reflects the correct tax after switching.
+	 *
+	 * @version 2.3.2
 	 * @since   2.2.8
 	 *
-	 * @param $rates Rates.
+	 * @param array $rates Rates.
 	 *
 	 * @return array
 	 */
 	public function updatePackageRates($rates) {
-		foreach ($rates as $rate_obj) {
-			$rate_obj->cost = $this->getModel()->getCurrencyPrice($rate_obj->cost);
+		if ($this->currentCurrency === $this->defaultCurrency) {
+			return $rates;
+		}
 
-			if (!empty($rate_obj->taxes)) {
-				foreach ($rate_obj->taxes as &$tax) {
-					$tax = $this->getModel()->getCurrencyPrice($tax);
+		if (!is_array($rates) || empty($rates)) {
+			return $rates;
+		}
+
+		foreach ($rates as $rate_obj) {
+			if (!is_object($rate_obj)) {
+				continue;
+			}
+
+			$has_setters = method_exists($rate_obj, 'get_cost') && method_exists($rate_obj, 'set_taxes');
+
+			$old_cost = $has_setters
+				? $this->toFloatPrice($rate_obj->get_cost())
+				: $this->toFloatPrice($rate_obj->cost);
+
+			$new_cost = $this->toFloatPrice($this->getModel()->getCurrencyPrice($old_cost));
+
+			if ($has_setters) {
+				$rate_obj->set_cost($new_cost);
+			} else {
+				$rate_obj->cost = $new_cost;
+			}
+
+			$taxes = $has_setters ? $rate_obj->get_taxes() : $rate_obj->taxes;
+
+			if (empty($taxes) || !is_array($taxes)) {
+				continue;
+			}
+
+			if ($old_cost > 0) {
+				// Scale taxes by the same ratio as the cost to preserve
+				// per-rate breakdown for compound / multi-tax setups.
+				$ratio = $new_cost / $old_cost;
+
+				foreach ($taxes as $tax_rate_id => $tax_amount) {
+					$taxes[$tax_rate_id] = (float) $tax_amount * $ratio;
 				}
+			} else {
+				// Zero-cost rate carrying tax (rare edge case) — convert
+				// each tax line directly.
+				foreach ($taxes as $tax_rate_id => $tax_amount) {
+					$taxes[$tax_rate_id] = $this->toFloatPrice(
+						$this->getModel()->getCurrencyPrice((float) $tax_amount)
+					);
+				}
+			}
+
+			// Write the converted taxes back — this is the write the
+			// original plugin was missing.
+			if ($has_setters) {
+				$rate_obj->set_taxes($taxes);
+			} else {
+				$rate_obj->taxes = $taxes;
 			}
 		}
 

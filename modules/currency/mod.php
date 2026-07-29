@@ -318,7 +318,7 @@ class currencyWcu extends moduleWcu {
 	 * instead of a pure float. This helper normalises the value.
 	 *
 	 * @version 2.3.2
-	 * @since   2.3.1
+	 * @since   2.3.2
 	 *
 	 * @param mixed $value
 	 * @return float

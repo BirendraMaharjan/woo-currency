@@ -2,7 +2,7 @@
 /**
  * WBW Currency Switcher for WooCommerce - Currency Tab Content
  *
- * @version 2.2.6
+ * @version 2.4.0
  *
  * @author  woobewoo
  */
@@ -12,40 +12,40 @@ defined( 'ABSPATH' ) || exit;
 
 <?php $wcuShowPro = !empty($this->optionsProModule) ? '' : 'wcuShowPro'; ?>
 <div class="wcuCurrenciesShell">
-	<h3 style="margin-bottom: 1px;"><?php printf(__('WooCurrency %s', WCU_LANG_CODE), WCU_VERSION) ?></h3>
+	<h3 style="margin-bottom: 1px;"><?php printf(__('WooCurrency %s', 'woo-currency'), WCU_VERSION) ?></h3>
 	<div class="nav-tab-wrapper">
-		<a href="#" data-target="wcuCurrenciesTab" class="nav-tab nav-tab-active" ><?php _e('Currencies', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuOptionsTab" class="nav-tab"><?php _e('Options', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuSwitcherTab" class="nav-tab"><?php _e('Frontend switcher', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuTooltipTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Tooltip', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuConverterTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Currency converter', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuRatesTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Currency rates', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuCustomCssTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Custom CSS', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuGeoIpRulesTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Geo IP Rules', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuFlagsTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Custom Flags', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuCustomCurrencyTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Custom Currencies', WCU_LANG_CODE)?></a>
-		<a href="#" data-target="wcuManualPricesTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Manual Prices', WCU_LANG_CODE)?></a>
+		<a href="#" data-target="wcuCurrenciesTab" class="nav-tab nav-tab-active" ><?php _e('Currencies', 'woo-currency')?></a>
+		<a href="#" data-target="wcuOptionsTab" class="nav-tab"><?php _e('Options', 'woo-currency')?></a>
+		<a href="#" data-target="wcuSwitcherTab" class="nav-tab"><?php _e('Frontend switcher', 'woo-currency')?></a>
+		<a href="#" data-target="wcuTooltipTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Tooltip', 'woo-currency')?></a>
+		<a href="#" data-target="wcuConverterTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Currency converter', 'woo-currency')?></a>
+		<a href="#" data-target="wcuRatesTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Currency rates', 'woo-currency')?></a>
+		<a href="#" data-target="wcuCustomCssTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Custom CSS', 'woo-currency')?></a>
+		<a href="#" data-target="wcuGeoIpRulesTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Geo IP Rules', 'woo-currency')?></a>
+		<a href="#" data-target="wcuFlagsTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Custom Flags', 'woo-currency')?></a>
+		<a href="#" data-target="wcuCustomCurrencyTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Custom Currencies', 'woo-currency')?></a>
+		<a href="#" data-target="wcuManualPricesTab" class="nav-tab <?php echo $wcuShowPro ?>"><?php _e('Manual Prices', 'woo-currency')?></a>
 	</div>
 	<div class="wcuTabContent" data-tab="wcuCurrenciesTab" >
-		<?php echo htmlWcu::button(array('attrs' => 'class="button wcuAddCurrency page-title-action"', 'value' => __('Add currency', WCU_LANG_CODE)))?>
+		<?php echo htmlWcu::button(array('attrs' => 'class="button wcuAddCurrency page-title-action"', 'value' => __('Add currency', 'woo-currency')))?>
 
 		<?php dispatcherWcu::doAction('getChildrenOneTab', array('currencies')) ?>
 
 		<div class="wcuCurrenciesList">
 			<div class="wcuCurrencyHeader row">
 				<div class="col-md-1" align="center"></div>
-				<div class="col-md-1"><?php _e('Currency code', WCU_LANG_CODE) ?></div>
+				<div class="col-md-1"><?php _e('Currency code', 'woo-currency') ?></div>
 				<?php if (!empty($this->flagsModule)) {?>
-				<div class="col-md-1" style="width:60px;"><?php _e('Flag', WCU_LANG_CODE) ?></div>
+				<div class="col-md-1" style="width:60px;"><?php _e('Flag', 'woo-currency') ?></div>
 				<?php }?>
-				<div class="col-md-1"><?php _e('Title', WCU_LANG_CODE) ?></div>
-				<div class="col-md-1"><?php echo __('Symbol', WCU_LANG_CODE) . ' / ' . __('Position', WCU_LANG_CODE); ?></div>
-				<div class="col-md-1"><?php _e('Separators', WCU_LANG_CODE) ?> <i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php _e('You can set thousand and/or decimal separators for each currency separately. Leave the fields blank if you want the wooCommerce settings to be used.', WCU_LANG_CODE) ?>"></i></div>
-				<div class="col-md-1"><?php _e('Cents', WCU_LANG_CODE) ?></div>
-				<div class="col-md-1" style="min-width:140px;"><?php _e('Converter Rates ', WCU_LANG_CODE) ?><i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php _e('This rates is updated automatically with a selected Currency Aggregator.', WCU_LANG_CODE) ?>"></i></div>
-				<div class="col-md-1" style="min-width:130px;"><?php _e('Manual Rates ', WCU_LANG_CODE) ?><i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php _e('This value overwrites the automatic rate from field Converter Rates. Input value in follow format example: 12.5035', WCU_LANG_CODE) ?>"></i></div>
+				<div class="col-md-1"><?php _e('Title', 'woo-currency') ?></div>
+				<div class="col-md-1"><?php echo __('Symbol', 'woo-currency') . ' / ' . __('Position', 'woo-currency'); ?></div>
+				<div class="col-md-1"><?php _e('Separators', 'woo-currency') ?> <i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php _e('You can set thousand and/or decimal separators for each currency separately. Leave the fields blank if you want the wooCommerce settings to be used.', 'woo-currency') ?>"></i></div>
+				<div class="col-md-1"><?php _e('Cents', 'woo-currency') ?></div>
+				<div class="col-md-1" style="min-width:140px;"><?php _e('Converter Rates ', 'woo-currency') ?><i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php _e('This rates is updated automatically with a selected Currency Aggregator.', 'woo-currency') ?>"></i></div>
+				<div class="col-md-1" style="min-width:130px;"><?php _e('Manual Rates ', 'woo-currency') ?><i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php _e('This value overwrites the automatic rate from field Converter Rates. Input value in follow format example: 12.5035', 'woo-currency') ?>"></i></div>
 				<?php if ( !empty($this->optionsProModule) ) {?>
-					<div class="col-md-1"><?php _e('Exchange Fee', WCU_LANG_CODE) ?><i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php _e('The exchange fee only works with the automatic rate.', WCU_LANG_CODE) ?>"></i></div>
+					<div class="col-md-1"><?php _e('Exchange Fee', 'woo-currency') ?><i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php _e('The exchange fee only works with the automatic rate.', 'woo-currency') ?>"></i></div>
 				<?php }?>
 				<div style="clear: both;"></div>
 			</div>
@@ -60,12 +60,12 @@ defined( 'ABSPATH' ) || exit;
 			<div class="<?php echo $example ?> wcuCurrencyItem row" <?php echo $example ? 'style="display: none;"' : '' ?>>
 				<div class="col-md-1">
 					<div class="col-xs-1" style="padding:0px;">
-						<i class="fa fa-arrows-v woobewoo-tooltip tooltipstered" title="<?php echo sprintf(__('Hold the cursor on the row to change the position of the currency.', WCU_LANG_CODE))?>" style="font-size: 20px; margin-top:5px;"></i>
+						<i class="fa fa-arrows-v woobewoo-tooltip tooltipstered" title="<?php echo sprintf(__('Hold the cursor on the row to change the position of the currency.', 'woo-currency'))?>" style="font-size: 20px; margin-top:5px;"></i>
 					</div>
 					<div class="col-xs-10" style="padding:0px;">
 						<?php echo htmlWcu::button(array(
-							'value' => !empty($params['etalon']) ? __('Main Currency', WCU_LANG_CODE) : __('Set as Main', WCU_LANG_CODE),
-							'attrs' => $disabled.' class="button wcuCurrencyEtalon '.$etalon.'" data-main="'.__('Main Currency', WCU_LANG_CODE).'" data-def="'.__('Set as Main', WCU_LANG_CODE).'"',
+							'value' => !empty($params['etalon']) ? __('Main Currency', 'woo-currency') : __('Set as Main', 'woo-currency'),
+							'attrs' => $disabled.' class="button wcuCurrencyEtalon '.$etalon.'" data-main="'.__('Main Currency', 'woo-currency').'" data-def="'.__('Set as Main', 'woo-currency').'"',
 							))?>
 						<?php echo htmlWcu::hidden("{$this->dbPrefix}[etalon][]", array(
 							'value' => !empty($params['etalon']) ? $params['etalon'] : 0,
@@ -102,7 +102,7 @@ defined( 'ABSPATH' ) || exit;
 					<?php if (!$example) {?>
 						<?php dispatcherWcu::doAction('customSymbols', $currName) ?>
 						<i class="wcuCurrencySymbolEdit dashicons dashicons-edit woobewoo-tooltip tooltipstered"
-							<?php if ( !$this->customSymbolsModule ) { ?> title="<?php echo esc_html(sprintf(__('Type your symbol for this currency. Only in PRO version.', WCU_LANG_CODE), $this->pluginLink, $this->pluginLink))?>"<?php } ?>>
+							<?php if ( !$this->customSymbolsModule ) { ?> title="<?php echo esc_html(sprintf(__('Type your symbol for this currency. Only in PRO version.', 'woo-currency'), $this->pluginLink, $this->pluginLink))?>"<?php } ?>>
 						</i>
 					<?php }?>
 					<?php echo htmlWcu::selectbox("{$this->dbPrefix}[position][]", array(
@@ -156,11 +156,11 @@ defined( 'ABSPATH' ) || exit;
 				<?php }?>
 				<div class="col-md-2">
 					<?php echo htmlWcu::button(array(
-						'value' => __('Get rate', WCU_LANG_CODE),
+						'value' => __('Get rate', 'woo-currency'),
 						'attrs' => $disabled . 'class="button wcuCurrencyConvert"',
 						))?>
 					<?php echo htmlWcu::button(array(
-						'value' => __('Remove', WCU_LANG_CODE),
+						'value' => __('Remove', 'woo-currency'),
 						'attrs' => $disabled . 'class="button wcuCurrencyRemove"',
 						))?>
 				</div>
@@ -174,8 +174,8 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<div class="wcuTabContent" data-tab="wcuSwitcherTab">
 		<div class="nav-tab-wrapper-child">
-			<a href="#" data-target-child="wcuSwitcherDesignTab" class="nav-tab-child" ><?php _e('Design', WCU_LANG_CODE)?></a>
-			<a href="#" data-target-child="wcuSwitcherDisplayRulesTab" class="nav-tab-child"><?php _e('Display rules', WCU_LANG_CODE)?></a>
+			<a href="#" data-target-child="wcuSwitcherDesignTab" class="nav-tab-child" ><?php _e('Design', 'woo-currency')?></a>
+			<a href="#" data-target-child="wcuSwitcherDisplayRulesTab" class="nav-tab-child"><?php _e('Display rules', 'woo-currency')?></a>
 		</div>
 		<div class="wcuTabContentChild"  data-tab-child="wcuSwitcherDesignTab">
 			<div class="wcuTabContentInner">
@@ -190,8 +190,8 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<div class="wcuTabContent" data-tab="wcuTooltipTab" >
 		<div class="nav-tab-wrapper-child">
-			<a href="#" data-target-child="wcuTooltipDesignTab" class="nav-tab-child" ><?php _e('Design', WCU_LANG_CODE)?></a>
-			<a href="#" data-target-child="wcuTooltipDisplayRulesTab" class="nav-tab-child"><?php _e('Display rules', WCU_LANG_CODE)?></a>
+			<a href="#" data-target-child="wcuTooltipDesignTab" class="nav-tab-child" ><?php _e('Design', 'woo-currency')?></a>
+			<a href="#" data-target-child="wcuTooltipDisplayRulesTab" class="nav-tab-child"><?php _e('Display rules', 'woo-currency')?></a>
 		</div>
 		<div class="wcuTabContentChild"  data-tab-child="wcuTooltipDesignTab">
 			<div class="wcuTabContentInner">
@@ -214,8 +214,8 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<div class="wcuTabContent" data-tab="wcuConverterTab" >
 		<div class="nav-tab-wrapper-child">
-			<a href="#" data-target-child="wcuConverterDesignTab" class="nav-tab-child" ><?php _e('Design', WCU_LANG_CODE)?></a>
-			<a href="#" data-target-child="wcuConverterDisplayRulesTab" class="nav-tab-child"><?php _e('Display rules', WCU_LANG_CODE)?></a>
+			<a href="#" data-target-child="wcuConverterDesignTab" class="nav-tab-child" ><?php _e('Design', 'woo-currency')?></a>
+			<a href="#" data-target-child="wcuConverterDisplayRulesTab" class="nav-tab-child"><?php _e('Display rules', 'woo-currency')?></a>
 		</div>
 		<div class="wcuTabContentChild"  data-tab-child="wcuConverterDesignTab">
 			<div class="wcuTabContentInner">
@@ -238,8 +238,8 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<div class="wcuTabContent" data-tab="wcuRatesTab" >
 		<div class="nav-tab-wrapper-child">
-			<a href="#" data-target-child="wcuRatesDesignTab" class="nav-tab-child" ><?php _e('Design', WCU_LANG_CODE)?></a>
-			<a href="#" data-target-child="wcuRatesDisplayRulesTab" class="nav-tab-child"><?php _e('Display rules', WCU_LANG_CODE)?></a>
+			<a href="#" data-target-child="wcuRatesDesignTab" class="nav-tab-child" ><?php _e('Design', 'woo-currency')?></a>
+			<a href="#" data-target-child="wcuRatesDisplayRulesTab" class="nav-tab-child"><?php _e('Display rules', 'woo-currency')?></a>
 		</div>
 		<div class="wcuTabContentChild"  data-tab-child="wcuRatesDesignTab">
 			<div class="wcuTabContentInner">
@@ -310,22 +310,22 @@ defined( 'ABSPATH' ) || exit;
 	</div>
 	<div class="wcuTabContentCurrencyError">
 		<div class="wcuTabContentCurrencyErrorItem wcuTabContentCurrencyErrorSetMain alert alert-danger-background" style="display:none">
-			<?php echo __('Please set a main currency before getting the exchange rate.', WCU_LANG_CODE);?>
+			<?php echo __('Please set a main currency before getting the exchange rate.', 'woo-currency');?>
 		</div>
 		<div class="wcuTabContentCurrencyErrorItem wcuTabContentCurrencyErrorSetMainSave alert alert-danger-background" style="display:none">
-			<?php echo __('Please set a main currency before saving.', WCU_LANG_CODE);?>
+			<?php echo __('Please set a main currency before saving.', 'woo-currency');?>
 		</div>
 		<div class="wcuTabContentCurrencyErrorItem wcuTabContentCurrencyErrorRemoveDuplicate alert alert-danger-background" style="display:none">
-			<?php echo __('Please remove duplicate currencies before saving.', WCU_LANG_CODE);?>
+			<?php echo __('Please remove duplicate currencies before saving.', 'woo-currency');?>
 		</div>
 		<div class="wcuTabContentCurrencyErrorItem wcuTabContentCurrencyErrorSetRateFormat alert alert-danger-background" style="display:none">
-			<?php echo __('Please set current rate format before saving. Example: 1.584', WCU_LANG_CODE);?>
+			<?php echo __('Please set current rate format before saving. Example: 1.584', 'woo-currency');?>
 		</div>
 		<div class="wcuTabContentCurrencyErrorItem wcuTabContentCurrencyErrorSetCustomFormat alert alert-danger-background" style="display:none">
-			<?php echo __('Please input value in string format. Example: ASD', WCU_LANG_CODE);?>
+			<?php echo __('Please input value in string format. Example: ASD', 'woo-currency');?>
 		</div>
 		<div class="wcuTabContentCurrencyEtalonNotice" style="display:none">
-			<?php echo __('Prices in this currency are shown on frontend when user first time visits store.', WCU_LANG_CODE);?>
+			<?php echo __('Prices in this currency are shown on frontend when user first time visits store.', 'woo-currency');?>
 		</div>
 	</div>
 

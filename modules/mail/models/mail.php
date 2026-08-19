@@ -9,19 +9,25 @@
 
 defined( 'ABSPATH' ) || exit;
 class mailModelWcu extends modelWcu {
+
+	/**
+	 * testEmail.
+	 *
+	 * @version 2.4.0
+	 */
 	public function testEmail($email) {
 		$email = trim($email);
 		if(!empty($email)) {
 			if($this->getModule()->send($email, 
-				__('Test email functionality', WCU_LANG_CODE),
-				sprintf(__('This is a test email for testing email functionality on your site, %s.', WCU_LANG_CODE), WCU_SITE_URL))
+				__('Test email functionality', 'woo-currency'),
+				sprintf(__('This is a test email for testing email functionality on your site, %s.', 'woo-currency'), WCU_SITE_URL))
 			) {
 				return true;
 			} else {
 				$this->pushError( $this->getModule()->getMailErrors() );
 			}
 		} else
-			$this->pushError (__('Empty email address', WCU_LANG_CODE), 'test_email');
+			$this->pushError (__('Empty email address', 'woo-currency'), 'test_email');
 		return false;
 	}
 }

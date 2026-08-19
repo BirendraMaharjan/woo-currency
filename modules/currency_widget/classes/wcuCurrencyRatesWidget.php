@@ -13,12 +13,17 @@ class wcuCurrencyRatesWidget extends WP_Widget {
 	public $widgetTemplate = 'currencyRates';
 	public $widgetOps = array();
 
+	/**
+	 * __construct.
+	 *
+	 * @version 2.4.0
+	 */
 	public function __construct() {
 		$this->widgetOps = array(
 			'classname' => $this->widgetName,
-			'description' => __('Displays Currency Rates Switcher for Woocommerce products', WCU_LANG_CODE)
+			'description' => __('Displays Currency Rates Switcher for Woocommerce products', 'woo-currency')
 		);
-		parent::__construct( $this->widgetName, WCU_WP_PLUGIN_NAME . ' ' . __('Rates', WCU_LANG_CODE), $this->widgetOps );
+		parent::__construct( $this->widgetName, WCU_WP_PLUGIN_NAME . ' ' . __('Rates', 'woo-currency'), $this->widgetOps );
 	}
 	public function widget($args, $instance) {
 		echo frameWcu::_()->getModule('currency_widget')->getView()->displayWidget($instance, $this->widgetTemplate);

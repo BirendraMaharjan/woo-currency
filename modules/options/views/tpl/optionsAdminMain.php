@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 <section>
 	<div class="woobewoo-item woobewoo-panel">
 		<div id="containerWrapper">
-			<?php _e('Main page Go here!!!!', WCU_LANG_CODE)?>
+			<?php _e('Main page Go here!!!!', 'woo-currency')?>
 		</div>
 		<div style="clear: both;"></div>
 	</div>

@@ -63,6 +63,12 @@ class fieldAdapterWcu {
     static public function userFieldDestFromDB($value) {
         return utilsWcu::jsonDecode($value);
     }
+
+	/**
+	 * taxDataHtml.
+	 *
+	 * @version 2.4.0
+	 */
     static public function taxDataHtml($field) {
         $listOfDest = array();
         if(!is_array($field->value)) {
@@ -100,20 +106,20 @@ class fieldAdapterWcu {
                     'checked' => in_array($b->term_taxonomy_id, $field->value['brands']));
             }
         }
-        return '<div>'. __('Apply To', WCU_LANG_CODE). '
+        return '<div>'. __('Apply To', 'woo-currency'). '
             <div id="tax_address">
-                <b>'. __('Address', WCU_LANG_CODE). '</b><br />
-                '. __('Destination', WCU_LANG_CODE). ':'. htmlWcu::checkboxlist('params[dest]', array('optionsWcu' => $listOfDest)). '<br />
-                '. __('Country', WCU_LANG_CODE). ':'. htmlWcu::countryList('params[country]', array('notSelected' => true, 'value' => $field->value['country'])). '<br />
+                <b>'. __('Address', 'woo-currency'). '</b><br />
+                '. __('Destination', 'woo-currency'). ':'. htmlWcu::checkboxlist('params[dest]', array('optionsWcu' => $listOfDest)). '<br />
+                '. __('Country', 'woo-currency'). ':'. htmlWcu::countryList('params[country]', array('notSelected' => true, 'value' => $field->value['country'])). '<br />
             </div>
             <div id="tax_category">
-                <b>'. __('Categories', WCU_LANG_CODE). '</b><br />
-                '. (empty($cOptions) ? __('You have no categories', WCU_LANG_CODE) : htmlWcu::checkboxlist('params[categories][]', array('optionsWcu' => $cOptions))). '<br />
-                    <b>'. __('Brands', WCU_LANG_CODE). '</b><br />
-                '. (empty($bOptions) ? __('You have no brands', WCU_LANG_CODE) : htmlWcu::checkboxlist('params[brands][]', array('optionsWcu' => $bOptions))). '<br />
+                <b>'. __('Categories', 'woo-currency'). '</b><br />
+                '. (empty($cOptions) ? __('You have no categories', 'woo-currency') : htmlWcu::checkboxlist('params[categories][]', array('optionsWcu' => $cOptions))). '<br />
+                    <b>'. __('Brands', 'woo-currency'). '</b><br />
+                '. (empty($bOptions) ? __('You have no brands', 'woo-currency') : htmlWcu::checkboxlist('params[brands][]', array('optionsWcu' => $bOptions))). '<br />
             </div>
-            <div>'. __('Tax Rate', WCU_LANG_CODE).': '. htmlWcu::text('params[rate]', array('value' => $field->value['rate'])).'</div>
-            <div>'. __('Absolute', WCU_LANG_CODE).': '. htmlWcu::checkbox('params[absolute]', array('checked' => $field->value['absolute'])).'</div>
+            <div>'. __('Tax Rate', 'woo-currency').': '. htmlWcu::text('params[rate]', array('value' => $field->value['rate'])).'</div>
+            <div>'. __('Absolute', 'woo-currency').': '. htmlWcu::checkbox('params[absolute]', array('checked' => $field->value['absolute'])).'</div>
         </div>';
     }
     static public function displayCountry($cid, $key = 'name') {
@@ -134,6 +140,11 @@ class fieldAdapterWcu {
         $states = self::getStates();
         return empty($states[$sid]) ? $sid : $states[$sid][$key];
     }
+	/**
+	 * getCountries.
+	 *
+	 * @version 2.4.0
+	 */
     static public function getCountries($notSelected = false) {
         static $options = array();
         if(empty($options[ $notSelected ])) {
@@ -141,7 +152,7 @@ class fieldAdapterWcu {
             if(empty(self::$countries))
                 self::$countries = self::getCachedCountries();
             if($notSelected) {
-				$options[ $notSelected ][0] = is_bool($notSelected) ? __('Not selected', WCU_LANG_CODE) : __($notSelected);
+				$options[ $notSelected ][0] = is_bool($notSelected) ? __('Not selected', 'woo-currency') : __($notSelected);
 			}
             foreach(self::$countries as $c) $options[ $notSelected ][$c['id']] = $c['name'];
         }
@@ -179,7 +190,9 @@ class fieldAdapterWcu {
         return $output;
     }
     /**
-     * Function to get field params
+     * Function to get field params.
+     *
+     * @version 2.4.0
      * 
      * @param object $params 
      */
@@ -191,33 +204,25 @@ class fieldAdapterWcu {
                 $output .= htmlWcu::text('params[attr]['.$key.']',array('value'=>$value)).'<br />';
             }
         } else {
-                $output .= __('class', WCU_LANG_CODE).':<br />';
+                $output .= __('class', 'woo-currency').':<br />';
                 $output .= htmlWcu::text('params[attr][class]',array('value'=>'')).'<br />';
-                $output .= __('id', WCU_LANG_CODE).':<br />';
+                $output .= __('id', 'woo-currency').':<br />';
                 $output .= htmlWcu::text('params[attr][id]',array('value'=>'')).'<br />';
         }
         return $output;
     }
     /**
      * Generating the list of categories for product extra fields
+     *
+     * @version 2.4.0
      * 
      * @param object $field 
      */
-    static function productFieldCategories($field){
-        if(!empty($field->htmlParams['optionsWcu']))
-            return;
-        /*$field->htmlParams['attrs'] = 'id="select_product_field_cat" rel="0"';
-        $field->htmlParams['optionsWcu'] = array();
-        $categories = frameWcu::_()->getModule('products')->getCategories();
-        if(!empty($categories)) {
-            if(!is_array($field->value['categories']))
-                    $field->value['categories'] = array();
-            $field->htmlParams['optionsWcu'][0] = in_array(0,$field->value['categories'])?__('Deselect All'):__('Select All', WCU_LANG_CODE);
-            foreach($categories as $c) {
-                $field->htmlParams['optionsWcu'][$c->term_taxonomy_id] = $c->cat_name;
-            }
-        }*/
-    }
+	static function productFieldCategories( $field ) {
+		if ( ! empty( $field->htmlParams['optionsWcu'] ) ) {
+			return;
+		}
+	}
     static public function intToDB($val) {
         return intval($val);
     }

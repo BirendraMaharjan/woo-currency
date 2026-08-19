@@ -40,11 +40,11 @@ defined( 'ABSPATH' ) || exit;
     ?>
         <table width="100%">
             <tr>
-                <td><?php _e('Delete Plugin Data (options, setup data, database tables, etc.)', WCU_LANG_CODE)?>:</td>
+                <td><?php _e('Delete Plugin Data (options, setup data, database tables, etc.)', 'woo-currency')?>:</td>
                 <td><?php echo htmlWcu::radiobuttons('deleteOptions', array('options' => array('No', 'Yes')))?></td>
             </tr>
         </table>
-    <?php echo htmlWcu::submit('toeGo', array('value' => __('Done', WCU_LANG_CODE)))?>
+    <?php echo htmlWcu::submit('toeGo', array('value' => __('Done', 'woo-currency')))?>
     <?php echo htmlWcu::formEnd()?>
     </div>
 </body>

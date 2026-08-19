@@ -72,7 +72,10 @@ class modInstallerWcu {
         return true;
     }
     /**
-     * Move files to plugin modules directory
+     * Move files to plugin modules directory.
+     *
+     * @version 2.4.0
+     *
      * @param string $code code for module
      * @param string $path path from what module will be moved
      * @return bool is success - true, else - false
@@ -83,7 +86,7 @@ class modInstallerWcu {
                 utilsWcu::copyDirectories($path, WCU_MODULES_DIR. $code);
                 return true;
             } else 
-                errorsWcu::push(__('Cannot create module directory. Try to set permission to '. WCU_MODULES_DIR. ' directory 755 or 777', WCU_LANG_CODE), errorsWcu::MOD_INSTALL);
+                errorsWcu::push(__('Cannot create module directory. Try to set permission to '. WCU_MODULES_DIR. ' directory 755 or 777', 'woo-currency'), errorsWcu::MOD_INSTALL);
         } else
             return true;
         return false;
@@ -101,6 +104,12 @@ class modInstallerWcu {
         $locations['xmlPath'] = $locations['plugDir']. DS. 'install.xml';
         return $locations;
     }
+
+	/**
+	 * _getModulesFromXml.
+	 *
+	 * @version 2.4.0
+	 */
     static private function _getModulesFromXml($xmlPath) {
         if($xml = utilsWcu::getXml($xmlPath)) {
             if(isset($xml->modules) && isset($xml->modules->mod)) {
@@ -110,17 +119,20 @@ class modInstallerWcu {
                     $modules[] = $mod;
                 }
                 if(empty($modules))
-                    errorsWcu::push(__('No modules were found in XML file', WCU_LANG_CODE), errorsWcu::MOD_INSTALL);
+                    errorsWcu::push(__('No modules were found in XML file', 'woo-currency'), errorsWcu::MOD_INSTALL);
                 else
                     return $modules;
             } else
-                errorsWcu::push(__('Invalid XML file', WCU_LANG_CODE), errorsWcu::MOD_INSTALL);
+                errorsWcu::push(__('Invalid XML file', 'woo-currency'), errorsWcu::MOD_INSTALL);
         } else
-            errorsWcu::push(__('No XML file were found', WCU_LANG_CODE), errorsWcu::MOD_INSTALL);
+            errorsWcu::push(__('No XML file were found', 'woo-currency'), errorsWcu::MOD_INSTALL);
         return false;
     }
     /**
-     * Check whether modules is installed or not, if not and must be activated - install it
+     * Check whether modules is installed or not, if not and must be activated - install it.
+     *
+     * @version 2.4.0
+     *
      * @param array $codes array with modules data to store in database
      * @param string $path path to plugin file where modules is stored (__FILE__ for example)
      * @return bool true if check ok, else - false
@@ -145,7 +157,7 @@ class modInstallerWcu {
                 }
             }
         } else
-            errorsWcu::push(__('Error Activate module', WCU_LANG_CODE), errorsWcu::MOD_INSTALL);
+            errorsWcu::push(__('Error Activate module', 'woo-currency'), errorsWcu::MOD_INSTALL);
         if(errorsWcu::haveErrors(errorsWcu::MOD_INSTALL)) {
             self::displayErrors();
             return false;
@@ -163,7 +175,9 @@ class modInstallerWcu {
 
 	}
     /**
-     * Deactivate module after deactivating external plugin
+     * Deactivate module after deactivating external plugin.
+     *
+     * @version 2.4.0
      */
     static public function deactivate() {
         $locations = self::_getPluginLocations();
@@ -175,7 +189,7 @@ class modInstallerWcu {
                         'id' => frameWcu::_()->getModule($modDataArr['code'])->getID(),
                         'active' => 0,
                     ))->error) {
-                        errorsWcu::push(__('Error Deactivation module', WCU_LANG_CODE), errorsWcu::MOD_INSTALL);
+                        errorsWcu::push(__('Error Deactivation module', 'woo-currency'), errorsWcu::MOD_INSTALL);
                     }
                 }
             }
@@ -186,6 +200,11 @@ class modInstallerWcu {
         }
         return true;
     }
+	/**
+	 * activate.
+	 *
+	 * @version 2.4.0
+	 */
     static public function activate($modDataArr) {
         $locations = self::_getPluginLocations();
         if($modules = self::_getModulesFromXml($locations['xmlPath'])) {
@@ -196,7 +215,7 @@ class modInstallerWcu {
                         'code' => $modDataArr['code'],
                         'active' => 1,
                     ))->error) {
-                        errorsWcu::push(__('Error Activating module', WCU_LANG_CODE), errorsWcu::MOD_INSTALL);
+                        errorsWcu::push(__('Error Activating module', 'woo-currency'), errorsWcu::MOD_INSTALL);
                     } else {
 						$dbModData = frameWcu::_()->getModule('options')->getModel('modules')->get(array('code' => $modDataArr['code']));
 						if(!empty($dbModData) && !empty($dbModData[0])) {

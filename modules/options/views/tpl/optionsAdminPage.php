@@ -44,11 +44,11 @@ defined( 'ABSPATH' ) || exit;
     </div>
 </div>
 <!--Option available in PRO version Wnd-->
-<div id="wcuOptInProWnd" style="display: none;" title="<?php _e('Improve Free version', WCU_LANG_CODE)?>">
+<div id="wcuOptInProWnd" style="display: none;" title="<?php _e('Improve Free version', 'woo-currency')?>">
 	<p id="wcuOptWndTemplateTxt" style="display: none;">
-		<?php printf(__('Please be advised that this template with all other options and PRO templates is available only in <a target="_blank" href="%s">PRO version</a>. You can <a target="_blank" href="%s" class="button">Get PRO</a> today and get this and other PRO features!', WCU_LANG_CODE), $this->mainLink, $this->mainLink)?>
+		<?php printf(__('Please be advised that this template with all other options and PRO templates is available only in <a target="_blank" href="%s">PRO version</a>. You can <a target="_blank" href="%s" class="button">Get PRO</a> today and get this and other PRO features!', 'woo-currency'), $this->mainLink, $this->mainLink)?>
 	</p>
 	<p id="wcuOptWndOptionTxt">
-		<?php printf(__('Please be advised that this option is available only in <a target="_blank" href="%s">PRO version</a>. You can <a target="_blank" href="%s" class="button">Get PRO</a> today and get this and other PRO option!', WCU_LANG_CODE), $this->mainLink, $this->mainLink)?>
+		<?php printf(__('Please be advised that this option is available only in <a target="_blank" href="%s">PRO version</a>. You can <a target="_blank" href="%s" class="button">Get PRO</a> today and get this and other PRO option!', 'woo-currency'), $this->mainLink, $this->mainLink)?>
 	</p>
 </div>

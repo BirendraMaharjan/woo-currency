@@ -2,7 +2,7 @@
 /**
  * WBW Currency Switcher for WooCommerce - currencyWcu Class
  *
- * @version 2.3.2
+ * @version 2.4.0
  *
  * @author woobewoo
  */
@@ -1074,8 +1074,13 @@ class currencyWcu extends moduleWcu {
 		return $settings;
 	}
 
+	/**
+	 * updateSettingsTabs.
+	 *
+	 * @version 2.4.0
+	 */
 	public function updateSettingsTabs($tabs) {
-		$tabs[$this->getCurrencyTabSlug()] = __('Currency', WCU_LANG_CODE);
+		$tabs[$this->getCurrencyTabSlug()] = __('Currency', 'woo-currency');
 		return $tabs;
 	}
 
@@ -1109,13 +1114,18 @@ class currencyWcu extends moduleWcu {
 		return $this->currencyNames;
 	}
 
+	/**
+	 * getCurrencyPositions.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getCurrencyPositions() {
 		if(empty($this->currencyPositions)) {
 			$this->currencyPositions = array(
-				'left' => __('left', WCU_LANG_CODE),
-				'right' => __('right', WCU_LANG_CODE),
-				'left_space' => __('left space', WCU_LANG_CODE),
-				'right_space' => __('right space', WCU_LANG_CODE),
+				'left' => __('left', 'woo-currency'),
+				'right' => __('right', 'woo-currency'),
+				'left_space' => __('left space', 'woo-currency'),
+				'right_space' => __('right space', 'woo-currency'),
 			);
 		}
 		return $this->currencyPositions;
@@ -1128,12 +1138,17 @@ class currencyWcu extends moduleWcu {
 		return $this->currencySymbols;
 	}
 
+	/**
+	 * getAllPagesListForSelect.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getAllPagesListForSelect() {
 		global $wpdb;
 		// We are not using wp methods here - as list can be very large - and it can take too much memory
 		$postTypesForPostsList = array('page', 'post', 'product', 'blog', 'grp_pages', 'documentation');
 		$allPages = dbWcu::get("SELECT ID, post_title FROM $wpdb->posts WHERE post_type IN ('". implode("','", $postTypesForPostsList). "') AND post_status IN ('publish','draft') ORDER BY post_title");
-		$array = array( WCU_HOME_PAGE_ID => __('Main Home page', WCU_LANG_CODE) );
+		$array = array( WCU_HOME_PAGE_ID => __('Main Home page', 'woo-currency') );
 		if (!empty($allPages)) {
 			foreach ($allPages as $p) {
 				$array[ $p['ID'] ] = $p['post_title'];
@@ -1350,6 +1365,11 @@ class currencyWcu extends moduleWcu {
 		return $options;
 	}
 
+	/**
+	 * getOptionsParams.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getOptionsParams() {
 		// row_classes - specific classes for option row.
 		// 1 - set row_parent param for child option
@@ -1385,8 +1405,8 @@ class currencyWcu extends moduleWcu {
 					'html' => 'selectbox',
 					'row_classes' => '',
 					'row_show' => 'all',
-					'tooltip' => __('Select your preferred currency aggregator to get the exchange rate. If you use cryptocurrency for trading, it is recommended to use the "Cryptocompare" aggregator.', WCU_LANG_CODE),
-					'label' => __('Currency Aggregator', WCU_LANG_CODE),
+					'tooltip' => __('Select your preferred currency aggregator to get the exchange rate. If you use cryptocurrency for trading, it is recommended to use the "Cryptocompare" aggregator.', 'woo-currency'),
+					'label' => __('Currency Aggregator', 'woo-currency'),
 					'params' => array(
 						'options' => !empty($currencyAgregator) ? $currencyAgregator : array(
 							'free_converter' => 'Free Converter',
@@ -1405,8 +1425,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'free_converter',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the free API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a free API key for the converter. If the field is empty, Free Converter will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://free.currencyconverterapi.com/free-api-key'),
-					'label' => __('Free Converter API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(__('Insert the free API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a free API key for the converter. If the field is empty, Free Converter will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://free.currencyconverterapi.com/free-api-key'),
+					'label' => __('Free Converter API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1418,8 +1438,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'currencyapi',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the Currency Conversion API key in this field. Get <a target="blank" href="%s"> API key </a> for the Currency Conversion API. If the field is empty, Currency Conversion API will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://currencyapi.com/'),
-					'label' => __('Currency Conversion API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(__('Insert the Currency Conversion API key in this field. Get <a target="blank" href="%s"> API key </a> for the Currency Conversion API. If the field is empty, Currency Conversion API will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://currencyapi.com/'),
+					'label' => __('Currency Conversion API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'style="margin:0px; width:400px;"',
@@ -1431,8 +1451,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'ecb',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the European Central Bank API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a European Central Bank API key for the converter. If the field is empty, European Central Bank will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://exchangeratesapi.io/faq/'),
-					'label' => __('European Central Bank API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(__('Insert the European Central Bank API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a European Central Bank API key for the converter. If the field is empty, European Central Bank will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://exchangeratesapi.io/faq/'),
+					'label' => __('European Central Bank API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1444,8 +1464,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'fixer',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the Fixer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Fixer converter. If the field is empty, Fixer will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://fixer.io/product'),
-					'label' => __('Fixer API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(__('Insert the Fixer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Fixer converter. If the field is empty, Fixer will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://fixer.io/product'),
+					'label' => __('Fixer API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1457,8 +1477,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'currencylayer',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the currencylayer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the currencylayer converter. If the field is empty, currencylayer will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://currencylayer.com/product'),
-					'label' => __('Currencylayer API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(__('Insert the currencylayer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the currencylayer converter. If the field is empty, currencylayer will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://currencylayer.com/product'),
+					'label' => __('Currencylayer API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1470,8 +1490,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'oer',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the Open Exchange Rates API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Open Exchange Rates converter. If the field is empty, Open Exchange Rates will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://openexchangerates.org/signup'),
-					'label' => __('Open Exchange Rates API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(__('Insert the Open Exchange Rates API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Open Exchange Rates converter. If the field is empty, Open Exchange Rates will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://openexchangerates.org/signup'),
+					'label' => __('Open Exchange Rates API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1482,8 +1502,8 @@ class currencyWcu extends moduleWcu {
 					'row_classes' => '',
 					'row_show' => 'all',
 					'row_hide' => '',
-					'tooltip' => __('You can allow change currency at checkout. Please note, that some payment systems (like PayPal) could use only fixed currencies.', WCU_LANG_CODE),
-					'label' => __('Change currency at checkout', WCU_LANG_CODE),
+					'tooltip' => __('You can allow change currency at checkout. Please note, that some payment systems (like PayPal) could use only fixed currencies.', 'woo-currency'),
+					'label' => __('Change currency at checkout', 'woo-currency'),
 					'params' => array(
 						'value'=>'1',
 						'data-target-toggle' => '.wcuSwEnableCheckbox',
@@ -1495,8 +1515,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'convert_checkout',
 					'row_show' => '1',
 					'row_hide' => '',
-					'tooltip' => __('The order will always display the price that was calculated at the exchange rate at the time of purchase', WCU_LANG_CODE),
-					'label' => __('Save the current rate in the order', WCU_LANG_CODE),
+					'tooltip' => __('The order will always display the price that was calculated at the exchange rate at the time of purchase', 'woo-currency'),
+					'label' => __('Save the current rate in the order', 'woo-currency'),
 					'params' => array(
 						'value'=>'1',
 					),
@@ -1505,16 +1525,16 @@ class currencyWcu extends moduleWcu {
 					'html' => 'selectbox',
 					'row_classes' => '',
 					'row_show' => 'all',
-					'tooltip' => __('Automatic update of exchange rates for the selected schedule.', WCU_LANG_CODE),
-					'label' => ($updateRates) ? __('Automatic exchange rates updates', WCU_LANG_CODE) : __('Automatic exchange rates updates <sup class="pro-label">PRO</sup>', WCU_LANG_CODE),
+					'tooltip' => __('Automatic update of exchange rates for the selected schedule.', 'woo-currency'),
+					'label' => ($updateRates) ? __('Automatic exchange rates updates', 'woo-currency') : __('Automatic exchange rates updates <sup class="pro-label">PRO</sup>', 'woo-currency'),
 					'params' => array(
 						'options' => array(
-							'disabled' => __('Enter Rates Manually', WCU_LANG_CODE),
-							'one_min' => __('Update Every Minute', WCU_LANG_CODE),
-							'one_hour' => __('Update Hourly', WCU_LANG_CODE),
-							'half_day' => __('Update Twice Daily', WCU_LANG_CODE),
-							'daily' => __('Update Daily', WCU_LANG_CODE),
-							'weekly' => __('Update Weekly', WCU_LANG_CODE),
+							'disabled' => __('Enter Rates Manually', 'woo-currency'),
+							'one_min' => __('Update Every Minute', 'woo-currency'),
+							'one_hour' => __('Update Hourly', 'woo-currency'),
+							'half_day' => __('Update Twice Daily', 'woo-currency'),
+							'daily' => __('Update Daily', 'woo-currency'),
+							'weekly' => __('Update Weekly', 'woo-currency'),
 						),
 						'attrs' => ($updateRates) ? '' : 'disabled',
 					),
@@ -1523,12 +1543,12 @@ class currencyWcu extends moduleWcu {
 					'html' => 'selectbox',
 					'row_classes' => '',
 					'row_show' => 'all',
-					'tooltip' => __('Sends to admin email notice with result values of automatic exchange rates update.', WCU_LANG_CODE),
-					'label' => ($updateRates) ? __('Automatic exchange rates updates (notice admin by email)', WCU_LANG_CODE) : __('Automatic exchange rates updates (notice admin by email) <sup class="pro-label">PRO</sup>', WCU_LANG_CODE),
+					'tooltip' => __('Sends to admin email notice with result values of automatic exchange rates update.', 'woo-currency'),
+					'label' => ($updateRates) ? __('Automatic exchange rates updates (notice admin by email)', 'woo-currency') : __('Automatic exchange rates updates (notice admin by email) <sup class="pro-label">PRO</sup>', 'woo-currency'),
 					'params' => array(
 						'options' => array(
-							'disabled' => __('Disabled', WCU_LANG_CODE),
-							'enabled' => __('Enabled', WCU_LANG_CODE),
+							'disabled' => __('Disabled', 'woo-currency'),
+							'enabled' => __('Enabled', 'woo-currency'),
 						),
 						'attrs' => ($updateRates) ? '' : 'disabled',
 					),
@@ -1539,8 +1559,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => '',
 					'row_show' => '',
 					'row_hide' => '',
-					'tooltip' => __('Type relative links, each from a new line, to disable the display of the currency converter on these pages.', WCU_LANG_CODE),
-					'label' => __('Disable URIs', WCU_LANG_CODE),
+					'tooltip' => __('Type relative links, each from a new line, to disable the display of the currency converter on these pages.', 'woo-currency'),
+					'label' => __('Disable URIs', 'woo-currency'),
 				),
 			),
 			'currency_switcher' => frameWcu::_()->getModule('currency_switcher')->getOptionsParams(),

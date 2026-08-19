@@ -232,7 +232,7 @@ if (!$this->moduleFlags) {
 
 		<div class="wcuCol-md-12 wcuCol-xs-12 wcuMargin">
 			<?php echo htmlWcu::button(array(
-				'value' => __('Convert', WCU_LANG_CODE),
+				'value' => __('Convert', 'woo-currency'),
 				'attrs' => 'class="wcuCurrencyConvertBtn wcuCol-md-12 wcuCol-xs-12 wcuMargin" onclick="getCurrencyRate(this); return false;"',
 			))?>
 		</div>

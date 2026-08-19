@@ -19,26 +19,26 @@ defined( 'ABSPATH' ) || exit;
 	<?php echo htmlWcu::hidden('action', array('value' => 'testEmail'))?>
 	<button class="button button-primary">
 		<i class="fa fa-paper-plane"></i>
-		<?php _e('Send test', WCU_LANG_CODE)?>
+		<?php _e('Send test', 'woo-currency')?>
 	</button><br />
-	<i><?php _e('This option allows you to check your server mail functionality', WCU_LANG_CODE)?></i>
+	<i><?php _e('This option allows you to check your server mail functionality', 'woo-currency')?></i>
 </form>
 <div id="wcuMailTestResShell" style="display: none;">
-	<?php _e('Did you receive test email?', WCU_LANG_CODE)?><br />
+	<?php _e('Did you receive test email?', 'woo-currency')?><br />
 	<button class="wcuMailTestResBtn button button-primary" data-res="1">
 		<i class="fa fa-check-square-o"></i>
-		<?php _e('Yes! It works!', WCU_LANG_CODE)?>
+		<?php _e('Yes! It works!', 'woo-currency')?>
 	</button>
 	<button class="wcuMailTestResBtn button button-primary" data-res="0">
 		<i class="fa fa-exclamation-triangle"></i>
-		<?php _e('No, I need to contact my hosting provider with mail function issue.', WCU_LANG_CODE)?>
+		<?php _e('No, I need to contact my hosting provider with mail function issue.', 'woo-currency')?>
 	</button>
 </div>
 <div id="wcuMailTestResSuccess" style="display: none;">
-	<?php _e('Great! Mail function was tested and is working fine.', WCU_LANG_CODE)?>
+	<?php _e('Great! Mail function was tested and is working fine.', 'woo-currency')?>
 </div>
 <div id="wcuMailTestResFail" style="display: none;">
-	<?php _e('Bad, please contact your hosting provider and ask them to setup mail functionality on your server.', WCU_LANG_CODE)?>
+	<?php _e('Bad, please contact your hosting provider and ask them to setup mail functionality on your server.', 'woo-currency')?>
 </div>
 <div style="clear: both;"></div>
 <form id="wcuMailSettingsForm">
@@ -56,8 +56,8 @@ defined( 'ABSPATH' ) || exit;
 						<span class="description">
 							<?php 
 							$opt['value'] 
-								? printf(__('Turned On %s', WCU_LANG_CODE), dateWcu::_($opt['changed_on']))
-								: printf(__('Turned Off %s', WCU_LANG_CODE), dateWcu::_($opt['changed_on']))
+								? printf(__('Turned On %s', 'woo-currency'), dateWcu::_($opt['changed_on']))
+								: printf(__('Turned Off %s', 'woo-currency'), dateWcu::_($opt['changed_on']))
 							?>
 						</span>
 					<?php }?>
@@ -78,7 +78,7 @@ defined( 'ABSPATH' ) || exit;
 	<?php echo htmlWcu::hidden('action', array('value' => 'saveOptions'))?>
 	<button class="button button-primary">
 		<i class="fa fa-fw fa-save"></i>
-		<?php _e('Save', WCU_LANG_CODE)?>
+		<?php _e('Save', 'woo-currency')?>
 	</button>
 </form>
 

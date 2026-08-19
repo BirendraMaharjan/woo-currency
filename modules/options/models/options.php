@@ -62,6 +62,11 @@ class optionsModelWcu extends modelWcu {
 			}
 		}
 	}
+	/**
+	 * saveGroup.
+	 *
+	 * @version 2.4.0
+	 */
     public function saveGroup($d = array()) {
 		if(isset($d['opt_values']) && is_array($d['opt_values']) && !empty($d['opt_values'])) {
 			dispatcherWcu::doAction('beforeSaveOpts', $d);
@@ -71,7 +76,7 @@ class optionsModelWcu extends modelWcu {
 			$this->_updateOptsInDb();
 			return true;
 		} else
-			$this->pushError(__('Empty data to save option', WCU_LANG_CODE));
+			$this->pushError(__('Empty data to save option', 'woo-currency'));
         return false;
     }
 	private function _updateOptsInDb() {

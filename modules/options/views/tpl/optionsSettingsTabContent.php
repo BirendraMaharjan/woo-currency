@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 		<li title="<?php _e('Save all options')?>">
 			<button class="button button-primary" id="wcuSettingsSaveBtn" data-toolbar-button>
 				<i class="fa fa-fw fa-save"></i>
-				<?php _e('Save', WCU_LANG_CODE)?>
+				<?php _e('Save', 'woo-currency')?>
 			</button>
 		</li>
 	</ul>
@@ -60,15 +60,15 @@ defined( 'ABSPATH' ) || exit;
 											<span class="description">
 												<?php
 												$opt['value']
-													? printf(__('Turned On %s', WCU_LANG_CODE), dateWcu::_($opt['changed_on']))
-													: printf(__('Turned Off %s', WCU_LANG_CODE), dateWcu::_($opt['changed_on']))
+													? printf(__('Turned On %s', 'woo-currency'), dateWcu::_($opt['changed_on']))
+													: printf(__('Turned Off %s', 'woo-currency'), dateWcu::_($opt['changed_on']))
 												?>
 											</span>
 										<?php }?>
 										<?php if(isset($opt['pro']) && !empty($opt['pro'])) { ?>
 											<span class="wcuProOptMiniLabel">
 												<a href="<?php echo $opt['pro']?>" target="_blank">
-													<?php _e('PRO option', WCU_LANG_CODE)?>
+													<?php _e('PRO option', 'woo-currency')?>
 												</a>
 											</span>
 										<?php }?>

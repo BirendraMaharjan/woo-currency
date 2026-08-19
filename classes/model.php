@@ -174,6 +174,12 @@ abstract class modelWcu extends baseObjectWcu {
 			$table->setLimit( $this->_limit );
 		}
 	}
+
+	/**
+	 * removeGroup.
+	 *
+	 * @version 2.4.0
+	 */
 	public function removeGroup($ids) {
 		if(!is_array($ids))
 			$ids = array($ids);
@@ -183,19 +189,24 @@ abstract class modelWcu extends baseObjectWcu {
 			if(frameWcu::_()->getTable( $this->_tbl )->delete(array('additionalCondition' => 'id IN ('. implode(',', $ids). ')'))) {
 				return true;
 			} else 
-				$this->pushError (__('Database error detected', WCU_LANG_CODE));
+				$this->pushError (__('Database error detected', 'woo-currency'));
 		} else
-			$this->pushError(__('Invalid ID', WCU_LANG_CODE));
+			$this->pushError(__('Invalid ID', 'woo-currency'));
 		return false;
 	}
 	public function clear() {
 		return $this->delete();	// Just delete all
 	}
+	/**
+	 * delete.
+	 *
+	 * @version 2.4.0
+	 */
 	public function delete($params = array()) {
 		if(frameWcu::_()->getTable( $this->_tbl )->delete( $params )) {
 			return true;
 		} else 
-			$this->pushError (__('Database error detected', WCU_LANG_CODE));
+			$this->pushError (__('Database error detected', 'woo-currency'));
 		return false;
 	}
 	public function getById($id) {
@@ -211,6 +222,11 @@ abstract class modelWcu extends baseObjectWcu {
 		$this->pushError(frameWcu::_()->getTable( $this->_tbl )->getErrors());
 		return false;
 	}
+	/**
+	 * updateById.
+	 *
+	 * @version 2.4.0
+	 */
 	public function updateById($data, $id = 0) {
 		if(!$id) {
 			$id = isset($data[ $this->_idField ]) ? (int) $data[ $this->_idField ] : 0;
@@ -218,7 +234,7 @@ abstract class modelWcu extends baseObjectWcu {
 		if($id) {
 			return $this->update($data, array($this->_idField => $id));
 		} else
-			$this->pushError(__('Empty or invalid ID', WCU_LANG_CODE));
+			$this->pushError(__('Empty or invalid ID', 'woo-currency'));
 		return false;
 	}
 	public function update($data, $where) {

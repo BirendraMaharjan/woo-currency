@@ -4,7 +4,7 @@
  *
  * @author  woobewoo
  *
- * @version 2.2.9
+ * @version 2.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -138,6 +138,11 @@ class fieldWcu {
 		$this->adapt = $adapt;
 	}
 
+	/**
+	 * drawHtml.
+	 *
+	 * @version 2.4.0
+	 */
 	public function drawHtml($tag, $id) {
 		if(method_exists('htmlWcu', $this->html)) {
 			$method = $this->html;
@@ -157,7 +162,7 @@ class fieldWcu {
 			if ($this->name == 'default_value') {
 				$optionsFromDb = frameWcu::_()->getModule('optionsWcu')->getHelper()->getOptions($id);
 				if (!empty($optionsFromDb)) {
-					$options = array(0 => __('Select', WCU_LANG_CODE));
+					$options = array(0 => __('Select', 'woo-currency'));
 					foreach($optionsFromDb as $k => $v)
 						$options[$k] = $v;
 					$method = 'selectbox';
@@ -177,6 +182,11 @@ class fieldWcu {
 		return false;
 	}
 
+	/**
+	 * displayValue.
+	 *
+	 * @version 2.4.0
+	 */
 	public function displayValue() {
 		$value = '';
 		switch($this->html) {
@@ -197,7 +207,7 @@ class fieldWcu {
 					}
 				}
 				if(empty($value))
-					$value = __('N/A', WCU_LANG_CODE);
+					$value = __('N/A', 'woo-currency');
 				else
 					$value = implode('<br />', $value);
 				break;
@@ -206,12 +216,12 @@ class fieldWcu {
 				if(!empty($options) && !empty($options[ $this->value ])) {
 					$value = $options[ $this->value ];
 				} else {
-					$value = __('N/A', WCU_LANG_CODE);
+					$value = __('N/A', 'woo-currency');
 				}
 				break;
 			default:
 				if ($this->value == '') {
-					$value = __('N/A', WCU_LANG_CODE);
+					$value = __('N/A', 'woo-currency');
 				} else {
 					if(is_array($this->value)) {
 						$options = $this->getHtmlParam('optionsWcu');
@@ -298,72 +308,12 @@ class fieldWcu {
 	}
 
 	/**
-	 * Function to process field params
+	 * processParams.
+	 *
+	 * @version 2.4.0
 	 */
-	public function processParams($tag, $id){
+	public function processParams( $tag, $id ) {
 		return '';
-		if ($this->name == "params") {
-			if(is_array($this->value) || is_object($this->value)) {
-				$params = $this->value;
-			} else {
-				$params = json_decode($this->value);
-			}
-			$add_option = '';
-			switch ($tag) {
-				case 5:
-					$add_option = __('Add Checkbox', WCU_LANG_CODE);
-					$options_tag = '';
-					$image_tag = ' style="display:none"';
-				break;
-				case 9:
-					$add_option = __('Add Item', WCU_LANG_CODE);
-					$options_tag = '';
-					$image_tag = ' style="display:none"';
-				break;
-				case 12:
-					$add_option = __('Add Item', WCU_LANG_CODE);
-					$options_tag = '';
-					$image_tag = ' style="display:none"';
-				break;
-				case 10:
-					$options_tag = '';
-					$add_option = __('Add Radio Button', WCU_LANG_CODE);
-					$image_tag = ' style="display:none"';
-				break;
-				case 8:
-					$image_tag = '';
-					$options_tag = ' style="display:none"';
-				break;
-				default:
-					$options_tag = ' style="display:none"';
-					$image_tag = ' style="display:none"';
-					break;
-			}
-			if ($tag > 0 || $id == 0) {
-				$output .= '<div class="options options_tag"'.$options_tag.'>';
-					$output .= '<span class="add_option">'.$add_option.'</span>';
-					$output .= fieldAdapterWcu::_($id,'getExtraFieldOptions',fieldAdapterWcu::STR);
-				$output .= '</div>';
-
-				$output .= '<div class="options image_tag"'.$image_tag.'>'.__('Dimensions', WCU_LANG_CODE).':<br />';
-					$params->width?$width = $params->width:'';
-					$params->height?$height = $params->height:'';
-					$output .= __('width', WCU_LANG_CODE).':<br />';
-					$output .= htmlWcu::text('params[width]',array('value'=>$width)).'<br />';
-					$output .= __('height', WCU_LANG_CODE).':<br />';
-					$output .= htmlWcu::text('params[height]',array('value'=>$height)).'<br />';
-				$output .= '</div>';
-			}
-			if($this->adapt['htmlParams']) {
-				$output .= fieldAdapterWcu::_($this, $this->adapt['htmlParams'], fieldAdapterWcu::STR);
-			} else {
-				$output .= '<a href="javascript:void(0);" class="set_properties">'.__('Click to set field "id" and "class"', WCU_LANG_CODE).'</a>';
-				$output .= '<div class="attributes" style="display:none;">'.__('Attributes', WCU_LANG_CODE).':<br />';
-				$output .= fieldAdapterWcu::_($params,'getFieldAttributes',  fieldAdapterWcu::STR);
-				$output .= '</div>';
-			}
-			return $output;
-		}
 	}
 
 	/**
@@ -418,7 +368,9 @@ class fieldWcu {
 	}
 
 	/**
-	 * Displays the config options for given module
+	 * Displays the config options for given module.
+	 *
+	 * @version 2.4.0
 	 *
 	 * @param string $module
 	 * @param array $addDefaultOptions - if you want to add some additionsl options - specify it here
@@ -434,7 +386,7 @@ class fieldWcu {
 
 		if (!file_exists($config_xml)) {
 			// if there is no configuration file for this $module
-			return __('There are no configuration options for this module', WCU_LANG_CODE);
+			return __('There are no configuration options for this module', 'woo-currency');
 		}
 		$output = '';
 		// reading params structure

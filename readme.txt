@@ -152,6 +152,7 @@ Please report security bugs found in the source code of the plugin through the [
 == Changelog ==
 
 = 2.3.2 - 28/07/2026 =
+* Dev - Code cleaned up.
 * WC tested up to: 11.0.
 
 = 2.3.2 - 28/07/2026 =

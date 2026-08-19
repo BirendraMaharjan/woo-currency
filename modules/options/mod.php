@@ -56,20 +56,28 @@ class optionsWcu extends moduleWcu {
 		}*/
 		return $this->getView()->getAdminPage();
 	}
+	/**
+	 * addAdminTab.
+	 *
+	 * @version 2.4.0
+	 */
 	public function addAdminTab($tabs) {
 		$tabs['settings'] = array(
-			'label' => __('Settings', WCU_LANG_CODE), 'callback' => array($this, 'getSettingsTabContent'), 'fa_icon' => 'fa-gear', 'sort_order' => 30,
+			'label' => __('Settings', 'woo-currency'), 'callback' => array($this, 'getSettingsTabContent'), 'fa_icon' => 'fa-gear', 'sort_order' => 30,
 		);
 		return $tabs;
 	}
 	public function getSettingsTabContent() {
 		return $this->getView()->getSettingsTabContent();
 	}
+	/**
+	 * getTabs.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getTabs() {
 		if(empty($this->_tabs)) {
-			$this->_tabs = dispatcherWcu::applyFilters('mainAdminTabs', array(
-				//'main_page' => array('label' => __('Main Page', WCU_LANG_CODE), 'callback' => array($this, 'getTabContent'), 'wp_icon' => 'dashicons-admin-home', 'sort_order' => 0),
-			));
+			$this->_tabs = dispatcherWcu::applyFilters('mainAdminTabs', array());
 			foreach($this->_tabs as $tabKey => $tab) {
 				if(!isset($this->_tabs[ $tabKey ]['url'])) {
 					$this->_tabs[ $tabKey ]['url'] = $this->getTabUrl( $tabKey );
@@ -120,6 +128,11 @@ class optionsWcu extends moduleWcu {
 		}
 		return $rolesListForSelect;
 	}
+	/**
+	 * getAll.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getAll() {
 		if(empty($this->_options)) {
 			$defSendmailPath = @ini_get('sendmail_path');
@@ -128,11 +141,9 @@ class optionsWcu extends moduleWcu {
 			}
 			$this->_options = dispatcherWcu::applyFilters('optionsDefine', array(
 				'general' => array(
-					'label' => __('General', WCU_LANG_CODE),
+					'label' => __('General', 'woo-currency'),
 					'opts' => array(
-						//'send_stats' => array('label' => __('Send usage statistics', WCU_LANG_CODE), 'desc' => __('Send information about what plugin options you prefer to use, this will help us make our solution better for You.', WCU_LANG_CODE), 'def' => '0', 'html' => 'checkboxHiddenVal'),
-						//'use_local_cdn' => array('label' => __('Disable CDN usage', PPS_LANG_CODE), 'desc' => esc_html(sprintf(__('By default our plugin is using CDN server to store there part of it\'s files - images, javascript and CSS libraries. This was designed in that way to reduce plugin size, make it lighter and easier for usage. But if you need to store all files - on your server - you can disable this option here, then upload plugin CDN files to your own site. To make it work correctly - check our article that describe how you need to do this <a href="%s" target="_blank">here</a>.', PPS_LANG_CODE), 'https://woobewoo.com/disable-cdn-usage/')), 'def' => '0', 'html' => 'checkboxHiddenVal'),
-						'access_roles' => array('label' => __('User role can use plugin', WCU_LANG_CODE), 'desc' => __('User with next roles will have access to whole plugin from admin area.', WCU_LANG_CODE), 'def' => 'administrator', 'html' => 'selectlist', 'options' => array($this, 'getAvailableUserRolesSelect'), 'pro' => '', 'attrs' => 'style="display: none;"'),
+						'access_roles' => array('label' => __('User role can use plugin', 'woo-currency'), 'desc' => __('User with next roles will have access to whole plugin from admin area.', 'woo-currency'), 'def' => 'administrator', 'html' => 'selectlist', 'options' => array($this, 'getAvailableUserRolesSelect'), 'pro' => '', 'attrs' => 'style="display: none;"'),
 					),
 				),
 			));

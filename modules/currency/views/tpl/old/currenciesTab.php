@@ -9,16 +9,16 @@
 
 defined( 'ABSPATH' ) || exit;
 
-echo htmlWcu::button(array('attrs' => 'class="wcuAddCurrency"', 'value' => __('Add currency', WCU_LANG_CODE)))?>
+echo htmlWcu::button(array('attrs' => 'class="wcuAddCurrency"', 'value' => __('Add currency', 'woo-currency')))?>
 <div class="wcuCurrenciesList">
 	<div class="wcuCurrencyHeader row">
 		<div class="col-md-1"></div>
-		<div class="col-md-1"><?php _e('Name', WCU_LANG_CODE) ?></div>
-		<div class="col-md-1"><?php _e('Title', WCU_LANG_CODE) ?></div>
-		<div class="col-md-1"><?php _e('Symbol', WCU_LANG_CODE) ?></div>
-		<div class="col-md-1"><?php _e('Symbol', WCU_LANG_CODE) ?></div>
-		<div class="col-md-1"><?php _e('Position', WCU_LANG_CODE) ?></div>
-		<div class="col-md-2"><?php _e('Actions', WCU_LANG_CODE) ?></div>
+		<div class="col-md-1"><?php _e('Name', 'woo-currency') ?></div>
+		<div class="col-md-1"><?php _e('Title', 'woo-currency') ?></div>
+		<div class="col-md-1"><?php _e('Symbol', 'woo-currency') ?></div>
+		<div class="col-md-1"><?php _e('Symbol', 'woo-currency') ?></div>
+		<div class="col-md-1"><?php _e('Position', 'woo-currency') ?></div>
+		<div class="col-md-2"><?php _e('Actions', 'woo-currency') ?></div>
 		<div style="clear: both;"></div>
 	</div>
 
@@ -31,8 +31,8 @@ echo htmlWcu::button(array('attrs' => 'class="wcuAddCurrency"', 'value' => __('A
 		<div class="<?php echo $example ?> wcuCurrencyItem row" <?php echo $example ? 'style="display: none;"' : '' ?>>
 			<div class="col-md-1">
 				<?php echo htmlWcu::button(array(
-					'value' => !empty($params['etalon']) ? __('Main Currency', WCU_LANG_CODE) : __('Set as Main', WCU_LANG_CODE),
-					'attrs' => $disabled.' class="wcuCurrencyEtalon" data-main="'.__('Main Currency', WCU_LANG_CODE).'" data-def="'.__('Set as Main', WCU_LANG_CODE).'"',
+					'value' => !empty($params['etalon']) ? __('Main Currency', 'woo-currency') : __('Set as Main', 'woo-currency'),
+					'attrs' => $disabled.' class="wcuCurrencyEtalon" data-main="'.__('Main Currency', 'woo-currency').'" data-def="'.__('Set as Main', 'woo-currency').'"',
 				))?>
 				<?php echo htmlWcu::hidden("{$this->dbPrefix}[etalon][]", array(
 					'value' => !empty($params['etalon']) ? $params['etalon'] : 0,
@@ -78,11 +78,11 @@ echo htmlWcu::button(array('attrs' => 'class="wcuAddCurrency"', 'value' => __('A
 			</div>
 			<div class="col-md-2">
 				<?php echo htmlWcu::button(array(
-					'value' => __('Get rate', WCU_LANG_CODE),
+					'value' => __('Get rate', 'woo-currency'),
 					'attrs' => $disabled . 'class="wcuCurrencyConvert"',
 				))?>
 				<?php echo htmlWcu::button(array(
-					'value' => __('Remove', WCU_LANG_CODE),
+					'value' => __('Remove', 'woo-currency'),
 					'attrs' => $disabled . 'class="wcuCurrencyRemove"',
 				))?>
 			</div>

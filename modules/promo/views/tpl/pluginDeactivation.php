@@ -49,14 +49,14 @@ defined( 'ABSPATH' ) || exit;
 		color: #777 !important;
 	}
 </style>
-<div id="wcuDeactivateWnd" style="display: none;" title="<?php _e('Your Feedback', WCU_LANG_CODE)?>">
-	<h4><?php printf(__('If you have a moment, please share why you are deactivating %s', WCU_LANG_CODE), WCU_WP_PLUGIN_NAME)?></h4>
+<div id="wcuDeactivateWnd" style="display: none;" title="<?php _e('Your Feedback', 'woo-currency')?>">
+	<h4><?php printf(__('If you have a moment, please share why you are deactivating %s', 'woo-currency'), WCU_WP_PLUGIN_NAME)?></h4>
 	<form id="wcuDeactivateForm">
 		<label class="wcuDeactivateReasonShell">
 			<?php echo htmlWcu::radiobutton('deactivate_reason', array(
 				'value' => 'not_working',
 			))?>
-			<?php _e('Couldn\'t get the plugin to work', WCU_LANG_CODE)?>
+			<?php _e('Couldn\'t get the plugin to work', 'woo-currency')?>
 			<div class="wcuDeactivateDescShell">
 				<?php printf(__('If you have a question, <a href="%s" target="_blank">contact us</a> and will do our best to help you'), 'https://woobewoo.com/contact-us/?utm_source=plugin&utm_medium=deactivated_contact&utm_campaign=woocurrency')?>
 			</div>
@@ -65,10 +65,10 @@ defined( 'ABSPATH' ) || exit;
 			<?php echo htmlWcu::radiobutton('deactivate_reason', array(
 				'value' => 'found_better',
 			))?>
-			<?php _e('I found a better plugin', WCU_LANG_CODE)?>
+			<?php _e('I found a better plugin', 'woo-currency')?>
 			<div class="wcuDeactivateDescShell">
 				<?php echo htmlWcu::text('better_plugin', array(
-					'placeholder' => __('If it\'s possible, specify plugin name', WCU_LANG_CODE),
+					'placeholder' => __('If it\'s possible, specify plugin name', 'woo-currency'),
 				))?>
 			</div>
 		</label>
@@ -76,27 +76,27 @@ defined( 'ABSPATH' ) || exit;
 			<?php echo htmlWcu::radiobutton('deactivate_reason', array(
 				'value' => 'not_need',
 			))?>
-			<?php _e('I no longer need the plugin', WCU_LANG_CODE)?>
+			<?php _e('I no longer need the plugin', 'woo-currency')?>
 		</label>
 		<label class="wcuDeactivateReasonShell">
 			<?php echo htmlWcu::radiobutton('deactivate_reason', array(
 				'value' => 'temporary',
 			))?>
-			<?php _e('It\'s a temporary deactivation', WCU_LANG_CODE)?>
+			<?php _e('It\'s a temporary deactivation', 'woo-currency')?>
 		</label>
 		<label class="wcuDeactivateReasonShell">
 			<?php echo htmlWcu::radiobutton('deactivate_reason', array(
 				'value' => 'other',
 			))?>
-			<?php _e('Other', WCU_LANG_CODE)?>
+			<?php _e('Other', 'woo-currency')?>
 			<div class="wcuDeactivateDescShell">
 				<?php echo htmlWcu::text('other', array(
-					'placeholder' => __('What is the reason?', WCU_LANG_CODE),
+					'placeholder' => __('What is the reason?', 'woo-currency'),
 				))?>
 			</div>
 		</label>
 		<?php echo htmlWcu::hidden('mod', array('value' => 'promo'))?>
 		<?php echo htmlWcu::hidden('action', array('value' => 'saveDeactivateData'))?>
 	</form>
-	<a href="" class="wcuDeactivateSkipDataBtn"><?php _e('Skip & Deactivate', WCU_LANG_CODE)?></a>
+	<a href="" class="wcuDeactivateSkipDataBtn"><?php _e('Skip & Deactivate', 'woo-currency')?></a>
 </div>

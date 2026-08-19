@@ -35,6 +35,12 @@ class promoWcu extends moduleWcu {
 		// Admin tutorial
 		//add_action('admin_enqueue_scripts', array( $this, 'loadTutorial'));
 	}
+
+	/**
+	 * checkAdminPromoNotices.
+	 *
+	 * @version 2.4.0
+	 */
 	public function checkAdminPromoNotices() {
 		if(!frameWcu::_()->isAdminPlugOptsPage())	// Our notices - only for our plugin pages for now
 			return;
@@ -44,17 +50,17 @@ class promoWcu extends moduleWcu {
 		$currTime = time();
 		$day = 24 * 3600;
 		if($startUsage) {	// Already saved
-			$rateMsg = sprintf(__("<h3>Hey, I noticed you just use %s over a week – that’s awesome!</h3><p>Could you please do me a BIG favor and give it a 5-star rating on WordPress? Just to help us spread the word and boost our motivation.</p>", WCU_LANG_CODE), WCU_WP_PLUGIN_NAME);
-			$rateMsg .= '<p><a href="#" target="_blank" class="button button-primary" data-statistic-code="done">'. __('Ok, you deserve it', WCU_LANG_CODE). '</a>
-			<a href="#" class="button" data-statistic-code="later">'. __('Nope, maybe later', WCU_LANG_CODE). '</a>
-			<a href="#" class="button" data-statistic-code="hide">'. __('I already did', WCU_LANG_CODE). '</a></p>';
-			$enbPromoLinkMsg = sprintf(__("<h3>More then eleven days with our %s plugin - Congratulations!</h3>", WCU_LANG_CODE), WCU_WP_PLUGIN_NAME);
-			$enbPromoLinkMsg .= __('<p>On behalf of the entire <a href="https://woobewoo.com/" target="_blank">woobewoo.com</a> company I would like to thank you for been with us, and I really hope that our software helped you. If you found it useful - please, share your opinion leaving a review.</p>', WCU_LANG_CODE);
-			$enbPromoLinkMsg .= '<p><a href="https://wordpress.org/plugins/woo-currency/#reviews" class="button button-primary" data-statistic-code="done">'. __('Ok, you deserve it', WCU_LANG_CODE). '</a>
-			<a href="#" class="button" data-statistic-code="later">'. __('Nope, maybe later', WCU_LANG_CODE). '</a>
-			<a href="#" class="button" data-statistic-code="hide">'. __('Skip', WCU_LANG_CODE). '</a></p>';
+			$rateMsg = sprintf(__("<h3>Hey, I noticed you just use %s over a week – that’s awesome!</h3><p>Could you please do me a BIG favor and give it a 5-star rating on WordPress? Just to help us spread the word and boost our motivation.</p>", 'woo-currency'), WCU_WP_PLUGIN_NAME);
+			$rateMsg .= '<p><a href="#" target="_blank" class="button button-primary" data-statistic-code="done">'. __('Ok, you deserve it', 'woo-currency'). '</a>
+			<a href="#" class="button" data-statistic-code="later">'. __('Nope, maybe later', 'woo-currency'). '</a>
+			<a href="#" class="button" data-statistic-code="hide">'. __('I already did', 'woo-currency'). '</a></p>';
+			$enbPromoLinkMsg = sprintf(__("<h3>More then eleven days with our %s plugin - Congratulations!</h3>", 'woo-currency'), WCU_WP_PLUGIN_NAME);
+			$enbPromoLinkMsg .= __('<p>On behalf of the entire <a href="https://woobewoo.com/" target="_blank">woobewoo.com</a> company I would like to thank you for been with us, and I really hope that our software helped you. If you found it useful - please, share your opinion leaving a review.</p>', 'woo-currency');
+			$enbPromoLinkMsg .= '<p><a href="https://wordpress.org/plugins/woo-currency/#reviews" class="button button-primary" data-statistic-code="done">'. __('Ok, you deserve it', 'woo-currency'). '</a>
+			<a href="#" class="button" data-statistic-code="later">'. __('Nope, maybe later', 'woo-currency'). '</a>
+			<a href="#" class="button" data-statistic-code="hide">'. __('Skip', 'woo-currency'). '</a></p>';
 			$enbStatsMsg = '<p>'
-				. sprintf(__('You can help us improve our plugin - by <a href="%s" data-statistic-code="hide" class="button button-primary wcuEnbStatsAdBtn">enabling Usage Statistics</a>. We will collect only our plugin usage statistics data - to understand Your needs and make our solution better for You.', WCU_LANG_CODE), frameWcu::_()->getModule('options')->getTabUrl('settings'))
+				. sprintf(__('You can help us improve our plugin - by <a href="%s" data-statistic-code="hide" class="button button-primary wcuEnbStatsAdBtn">enabling Usage Statistics</a>. We will collect only our plugin usage statistics data - to understand Your needs and make our solution better for You.', 'woo-currency'), frameWcu::_()->getModule('options')->getTabUrl('settings'))
 			. '</p>';
 			$notices = array(
 				'rate_msg' => array('html' => $rateMsg, 'show_after' => 7 * $day),
@@ -101,36 +107,47 @@ class promoWcu extends moduleWcu {
 			echo $html;
 		}
 	}
+	/**
+	 * addAdminTab.
+	 *
+	 * @version 2.4.0
+	 */
 	public function addAdminTab($tabs) {
 		$tabs['overview'] = array(
-			'label' => __('Overview', WCU_LANG_CODE), 'callback' => array($this, 'getOverviewTabContent'), 'fa_icon' => 'fa-info', 'sort_order' => 5,
+			'label' => __('Overview', 'woo-currency'), 'callback' => array($this, 'getOverviewTabContent'), 'fa_icon' => 'fa-info', 'sort_order' => 5,
 		);
 		return $tabs;
 	}
+
+	/**
+	 * addSubDestList.
+	 *
+	 * @version 2.4.0
+	 */
 	public function addSubDestList($subDestList) {
 		if(!$this->isPro()) {
 			$subDestList = array_merge($subDestList, array(
-				'constantcontact' => array('label' => __('Constant Contact - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'campaignmonitor' => array('label' => __('Campaign Monitor - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'verticalresponse' => array('label' => __('Vertical Response - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'sendgrid' => array('label' => __('SendGrid - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'get_response' => array('label' => __('GetResponse - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'icontact' => array('label' => __('iContact - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'activecampaign' => array('label' => __('Active Campaign - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'mailrelay' => array('label' => __('Mailrelay - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'arpreach' => array('label' => __('arpReach - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'sgautorepondeur' => array('label' => __('SG Autorepondeur - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'benchmarkemail' => array('label' => __('Benchmark - PRO', WCU_LANG_CODE), 'require_confirm' => true),
-				'infusionsoft' => array('label' => __('InfusionSoft - PRO', WCU_LANG_CODE), 'require_confirm' => false),
-				'salesforce' => array('label' => __('SalesForce - Web-to-Lead - PRO', WCU_LANG_CODE), 'require_confirm' => false),
-				'convertkit' => array('label' => __('ConvertKit - PRO', WCU_LANG_CODE), 'require_confirm' => false),
-				'myemma' => array('label' => __('Emma - PRO', WCU_LANG_CODE), 'require_confirm' => false),
-				'sendinblue' => array('label' => __('SendinBlue - PRO', WCU_LANG_CODE), 'require_confirm' => false),
-				'vision6' => array('label' => __('Vision6 - PRO', WCU_LANG_CODE), 'require_confirm' => false),
-				'vtiger' => array('label' => __('Vtiger - PRO', WCU_LANG_CODE), 'require_confirm' => false),
-				'ymlp' => array('label' => __('Your Mailing List Provider (Ymlp) - PRO', WCU_LANG_CODE), 'require_confirm' => false),
-				'fourdem' => array('label' => __('4Dem.it - PRO', WCU_LANG_CODE), 'require_confirm' => false),
-				'dotmailer' => array('label' => __('Dotmailer - PRO', WCU_LANG_CODE), 'require_confirm' => false),
+				'constantcontact' => array('label' => __('Constant Contact - PRO', 'woo-currency'), 'require_confirm' => true),
+				'campaignmonitor' => array('label' => __('Campaign Monitor - PRO', 'woo-currency'), 'require_confirm' => true),
+				'verticalresponse' => array('label' => __('Vertical Response - PRO', 'woo-currency'), 'require_confirm' => true),
+				'sendgrid' => array('label' => __('SendGrid - PRO', 'woo-currency'), 'require_confirm' => true),
+				'get_response' => array('label' => __('GetResponse - PRO', 'woo-currency'), 'require_confirm' => true),
+				'icontact' => array('label' => __('iContact - PRO', 'woo-currency'), 'require_confirm' => true),
+				'activecampaign' => array('label' => __('Active Campaign - PRO', 'woo-currency'), 'require_confirm' => true),
+				'mailrelay' => array('label' => __('Mailrelay - PRO', 'woo-currency'), 'require_confirm' => true),
+				'arpreach' => array('label' => __('arpReach - PRO', 'woo-currency'), 'require_confirm' => true),
+				'sgautorepondeur' => array('label' => __('SG Autorepondeur - PRO', 'woo-currency'), 'require_confirm' => true),
+				'benchmarkemail' => array('label' => __('Benchmark - PRO', 'woo-currency'), 'require_confirm' => true),
+				'infusionsoft' => array('label' => __('InfusionSoft - PRO', 'woo-currency'), 'require_confirm' => false),
+				'salesforce' => array('label' => __('SalesForce - Web-to-Lead - PRO', 'woo-currency'), 'require_confirm' => false),
+				'convertkit' => array('label' => __('ConvertKit - PRO', 'woo-currency'), 'require_confirm' => false),
+				'myemma' => array('label' => __('Emma - PRO', 'woo-currency'), 'require_confirm' => false),
+				'sendinblue' => array('label' => __('SendinBlue - PRO', 'woo-currency'), 'require_confirm' => false),
+				'vision6' => array('label' => __('Vision6 - PRO', 'woo-currency'), 'require_confirm' => false),
+				'vtiger' => array('label' => __('Vtiger - PRO', 'woo-currency'), 'require_confirm' => false),
+				'ymlp' => array('label' => __('Your Mailing List Provider (Ymlp) - PRO', 'woo-currency'), 'require_confirm' => false),
+				'fourdem' => array('label' => __('4Dem.it - PRO', 'woo-currency'), 'require_confirm' => false),
+				'dotmailer' => array('label' => __('Dotmailer - PRO', 'woo-currency'), 'require_confirm' => false),
 			));
 		}
 		return $subDestList;
@@ -193,19 +210,25 @@ class promoWcu extends moduleWcu {
 		}
 		return $mainLink;
 	}
+
+	/**
+	 * getContactFormFields.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getContactFormFields() {
 		$fields = array(
-            'name' => array('label' => __('Name', WCU_LANG_CODE), 'valid' => 'notEmpty', 'html' => 'text'),
-			'email' => array('label' => __('Email', WCU_LANG_CODE), 'html' => 'email', 'valid' => array('notEmpty', 'email'), 'placeholder' => 'example@mail.com', 'def' => get_bloginfo('admin_email')),
-			'website' => array('label' => __('Website', WCU_LANG_CODE), 'html' => 'text', 'placeholder' => 'http://example.com', 'def' => get_bloginfo('url')),
-			'subject' => array('label' => __('Subject', WCU_LANG_CODE), 'valid' => 'notEmpty', 'html' => 'text'),
-            'category' => array('label' => __('Topic', WCU_LANG_CODE), 'valid' => 'notEmpty', 'html' => 'selectbox', 'options' => array(
-				'plugins_options' => __('Plugin options', WCU_LANG_CODE),
-				'bug' => __('Report a bug', WCU_LANG_CODE),
-				'functionality_request' => __('Require a new functionality', WCU_LANG_CODE),
-				'other' => __('Other', WCU_LANG_CODE),
+            'name' => array('label' => __('Name', 'woo-currency'), 'valid' => 'notEmpty', 'html' => 'text'),
+			'email' => array('label' => __('Email', 'woo-currency'), 'html' => 'email', 'valid' => array('notEmpty', 'email'), 'placeholder' => 'example@mail.com', 'def' => get_bloginfo('admin_email')),
+			'website' => array('label' => __('Website', 'woo-currency'), 'html' => 'text', 'placeholder' => 'http://example.com', 'def' => get_bloginfo('url')),
+			'subject' => array('label' => __('Subject', 'woo-currency'), 'valid' => 'notEmpty', 'html' => 'text'),
+            'category' => array('label' => __('Topic', 'woo-currency'), 'valid' => 'notEmpty', 'html' => 'selectbox', 'options' => array(
+				'plugins_options' => __('Plugin options', 'woo-currency'),
+				'bug' => __('Report a bug', 'woo-currency'),
+				'functionality_request' => __('Require a new functionality', 'woo-currency'),
+				'other' => __('Other', 'woo-currency'),
 			)),
-			'message' => array('label' => __('Message', WCU_LANG_CODE), 'valid' => 'notEmpty', 'html' => 'textarea', 'placeholder' => __('Hello!', WCU_LANG_CODE)),
+			'message' => array('label' => __('Message', 'woo-currency'), 'valid' => 'notEmpty', 'html' => 'textarea', 'placeholder' => __('Hello!', 'woo-currency')),
         );
 		foreach($fields as $k => $v) {
 			if(isset($fields[ $k ]['valid']) && !is_array($fields[ $k ]['valid']))

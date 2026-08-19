@@ -739,6 +739,12 @@ class htmlWcu {
 		// -->
 		</script>';
 	}
+
+	/**
+	 * galleryBtn.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function galleryBtn($name, $params = array()) {
 		$galleryType = isset($params['galleryType']) ? $params['galleryType'] : 'all';
 		$buttonId = self::nameToClassId($name, $params);
@@ -752,7 +758,7 @@ class htmlWcu {
 		$out = self::hidden($name, array('value' => $params['value'], 'attrs' => 'id="'. $inputId. '"'));
 		$onChange = isset($params['onChange']) ? $params['onChange'] : '';
 		$buttonParams = $params;
-		$buttonParams['value'] = isset($params['btnVal']) ? $params['btnVal'] : sprintf(__('Select %s', WCU_LANG_CODE), strFirstUp($galleryType));
+		$buttonParams['value'] = isset($params['btnVal']) ? $params['btnVal'] : sprintf(__('Select %s', 'woo-currency'), strFirstUp($galleryType));
 		$out .= self::button($buttonParams);
 		$out .= '<script type="text/javascript">
 		// <!--

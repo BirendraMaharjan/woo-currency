@@ -89,9 +89,14 @@ class currency_widgetViewWcu extends viewWcu {
 	public function addCommonAdminAssets() {
 		frameWcu::_()->addStyle('wcu.widgets', $this->getModule()->getModPath(). 'css/wcu.widgets.css');
 	}
+	/**
+	 * addCommonValidation.
+	 *
+	 * @version 2.4.0
+	 */
 	public function addCommonValidation() {
 		if(!class_exists('WooCommerce')) {
-			echo "<div class='notice'>" . __('Warning: Woocommerce is not activated!', WCU_LANG_CODE) . "</div>";
+			echo "<div class='notice'>" . __('Warning: Woocommerce is not activated!', 'woo-currency') . "</div>";
 		}
 		return false;
 	}

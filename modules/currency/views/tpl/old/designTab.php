@@ -10,7 +10,7 @@
 defined( 'ABSPATH' ) || exit;
 
 ?>
-<p><?php _e('Settings for Currency Switcher for change currency on frontend.', WCU_LANG_CODE)?></p>
+<p><?php _e('Settings for Currency Switcher for change currency on frontend.', 'woo-currency')?></p>
 <table class="form-table">
 	<tbody>
 	<?php foreach($this->optionsParams as $index => $optBlock) {?>

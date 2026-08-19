@@ -2,7 +2,7 @@
 /**
  * WBW Currency Switcher for WooCommerce - frameWcu Class
  *
- * @version 2.3.1
+ * @version 2.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -144,12 +144,20 @@ class frameWcu {
 		add_action('init', array($this, 'connectLang'));
 	}
 
+	/**
+	 * connectLang.
+	 *
+	 * @version 2.4.0
+	 */
 	public function connectLang() {
-		load_plugin_textdomain(WCU_LANG_CODE, false, WCU_PLUG_NAME. '/languages/');
+		load_plugin_textdomain('woo-currency', false, WCU_PLUG_NAME. '/languages/');
 	}
 
 	/**
-	 * Check permissions for action in controller by $code and made corresponding action
+	 * Check permissions for action in controller by $code and made corresponding action.
+	 *
+	 * @version 2.4.0
+	 *
 	 * @param string $code Code of controller that need to be checked
 	 * @param string $action Action that need to be checked
 	 * @return bool true if ok, else - should exit from application
@@ -158,7 +166,7 @@ class frameWcu {
 		if($this->havePermissions($code, $action))
 			return true;
 		else {
-			exit(_e('You have no permissions to view this page', WCU_LANG_CODE));
+			exit(_e('You have no permissions to view this page', 'woo-currency'));
 		}
 	}
 

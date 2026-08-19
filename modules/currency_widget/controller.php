@@ -10,6 +10,11 @@
 defined( 'ABSPATH' ) || exit;
 
 class currency_widgetControllerWcu extends controllerWcu {
+	/**
+	 * getCurrencyRate.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getCurrencyRate() {
 		$res = new responseWcu();
 		$amount = reqWcu::getVar('amount');
@@ -27,15 +32,20 @@ class currency_widgetControllerWcu extends controllerWcu {
 				? $currencies[$toCurrency]['rate']
 				: $currencyModel->getCurrencyRate($defaultCurrency, $toCurrency);
 
-			$res->addMessage(__('Done', WCU_LANG_CODE));
+			$res->addMessage(__('Done', 'woo-currency'));
 			$res->addData('result', round($amount * $rateTo / $rateFrom, 7));
 		} else {
-			$res->pushError(sprintf(__('no data for %s', WCU_LANG_CODE), $toCurrency));
+			$res->pushError(sprintf(__('no data for %s', 'woo-currency'), $toCurrency));
 		}
 
 
 		return $res->ajaxExec();
 	}
+	/**
+	 * getCurrencyRatesList.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getCurrencyRatesList() {
 		$res = new responseWcu();
 		$exclude = reqWcu::getVar('exclude');
@@ -77,7 +87,7 @@ class currency_widgetControllerWcu extends controllerWcu {
 				$rates[ $c['name'] ] = $rounding ? round( $rate, $decimal ) : ( ctype_digit( (string) $rate ) ? number_format( $rate, 2 ) : $rate );
 			}
 		}
-		$res->addMessage(__('Done', WCU_LANG_CODE));
+		$res->addMessage(__('Done', 'woo-currency'));
 		$res->addData('rates', $rates);
 
 		return $res->ajaxExec();

@@ -2,7 +2,7 @@
 /**
  * WBW Currency Switcher for WooCommerce - promoViewWcu Class
  *
- * @version 2.2.0
+ * @version 2.4.0
  *
  * @author  woobewoo
  */
@@ -106,6 +106,8 @@ class promoViewWcu extends viewWcu {
 
 	/**
 	 * getServerSettings.
+	 *
+	 * @verson 2.4.0
 	 */
 	public function getServerSettings() {
 		global $wpdb;
@@ -114,15 +116,15 @@ class promoViewWcu extends viewWcu {
 			'PHP Version' => array('value' => PHP_VERSION),
 			'Server Software' => array('value' => $_SERVER['SERVER_SOFTWARE']),
 			'MySQL' => array('value' =>  $wpdb->db_version()),
-			'PHP Allow URL Fopen' => array('value' => ini_get('allow_url_fopen') ? __('Yes', WCU_LANG_CODE) : __('No', WCU_LANG_CODE)),
+			'PHP Allow URL Fopen' => array('value' => ini_get('allow_url_fopen') ? __('Yes', 'woo-currency') : __('No', 'woo-currency')),
 			'PHP Memory Limit' => array('value' => ini_get('memory_limit')),
 			'PHP Max Post Size' => array('value' => ini_get('post_max_size')),
 			'PHP Max Upload Filesize' => array('value' => ini_get('upload_max_filesize')),
 			'PHP Max Script Execute Time' => array('value' => ini_get('max_execution_time')),
-			'PHP EXIF Support' => array('value' => extension_loaded('exif') ? __('Yes', WCU_LANG_CODE) : __('No', WCU_LANG_CODE)),
+			'PHP EXIF Support' => array('value' => extension_loaded('exif') ? __('Yes', 'woo-currency') : __('No', 'woo-currency')),
 			'PHP EXIF Version' => array('value' => phpversion('exif')),
-			'PHP XML Support' => array('value' => extension_loaded('libxml') ? __('Yes', WCU_LANG_CODE) : __('No', WCU_LANG_CODE), 'error' => !extension_loaded('libxml')),
-			'PHP CURL Support' => array('value' => extension_loaded('curl') ? __('Yes', WCU_LANG_CODE) : __('No', WCU_LANG_CODE), 'error' => !extension_loaded('curl')),
+			'PHP XML Support' => array('value' => extension_loaded('libxml') ? __('Yes', 'woo-currency') : __('No', 'woo-currency'), 'error' => !extension_loaded('libxml')),
+			'PHP CURL Support' => array('value' => extension_loaded('curl') ? __('Yes', 'woo-currency') : __('No', 'woo-currency'), 'error' => !extension_loaded('curl')),
 		);
 	}
 

@@ -298,6 +298,11 @@ abstract class tableWcu {
 		return dbWcu::get($query, $return);
 	}
 
+	/**
+	 * store.
+	 *
+	 * @version 2.4.0
+	 */
 	public function store($data, $method = 'INSERT', $where = '') {
 		$this->_clearErrors();
 		$method = strtoupper($method);
@@ -319,7 +324,7 @@ abstract class tableWcu {
 		$fields = $this->_getQueryString($data, ',', true);
 
 		if(empty($fields)) {
-			$this->_addError(__('Nothing to update', WCU_LANG_CODE));
+			$this->_addError(__('Nothing to update', 'woo-currency'));
 			return false;
 		}
 
@@ -335,7 +340,7 @@ abstract class tableWcu {
 			else
 				return true;
 		} else
-			$this->_addError(WCU_TEST_MODE ? dbWcu::getError() : __('Database error. Please contact your developer.', WCU_LANG_CODE));
+			$this->_addError(WCU_TEST_MODE ? dbWcu::getError() : __('Database error. Please contact your developer.', 'woo-currency'));
 		return false;
 	}
 

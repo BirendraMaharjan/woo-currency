@@ -31,6 +31,12 @@ class modulesModelWcu extends modelWcu {
                 ->getAll(frameWcu::_()->getTable('modules')->alias().'.*, '. frameWcu::_()->getTable('modules_type')->alias(). '.label as type');
         }
     }
+
+	/**
+	 * put.
+	 *
+	 * @version 2.4.0
+	 */
     public function put($d = array()) {
         $res = new responseWcu();
         $id = $this->_getIDFromReq($d);
@@ -42,7 +48,7 @@ class modulesModelWcu extends modelWcu {
                  $d['active'] = 0;*/
             
             if(frameWcu::_()->getTable('modules')->update($d, array('id' => $id))) {
-                $res->messages[] = __('Module Updated', WCU_LANG_CODE);
+                $res->messages[] = __('Module Updated', 'woo-currency');
                 $mod = frameWcu::_()->getTable('modules')->getById($id);
                 $newType = frameWcu::_()->getTable('modules_type')->getById($mod['type_id'], 'label');
                 $newType = $newType['label'];
@@ -57,10 +63,10 @@ class modulesModelWcu extends modelWcu {
                 if($tableErrors = frameWcu::_()->getTable('modules')->getErrors()) {
                     $res->errors = array_merge($res->errors, $tableErrors);
                 } else
-                    $res->errors[] = __('Module Update Failed', WCU_LANG_CODE);
+                    $res->errors[] = __('Module Update Failed', 'woo-currency');
             }
         } else {
-            $res->errors[] = __('Error module ID', WCU_LANG_CODE);
+            $res->errors[] = __('Error module ID', 'woo-currency');
         }
         return $res;
     }

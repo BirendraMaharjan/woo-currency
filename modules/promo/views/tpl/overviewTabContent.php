@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
 	<div class="woobewoo-item woobewoo-panel">
 		<div id="containerWrapper">
 			<div class="supsistic-half-side-box woobewoo-border-right">
-				<h3><?php _e('FAQ and Documentation', WCU_LANG_CODE)?></h3>
+				<h3><?php _e('FAQ and Documentation', 'woo-currency')?></h3>
 				<div class="faq-list">
 					<?php if(!empty($this->faqList)) { ?>
 						<?php foreach($this->faqList as $title => $desc) { ?>
@@ -25,26 +25,17 @@ defined( 'ABSPATH' ) || exit;
 							</div>
 						<?php }?>
 					<?php } else {?>
-						<?php _e('There is no main FAQs for now', WCU_LANG_CODE)?>
+						<?php _e('There is no main FAQs for now', 'woo-currency')?>
 					<?php }?>
 					<div style="clear: both;"></div>
 					<a target="_blank" class="button button-primary button-hero" href="<?php echo $this->mainLink?>#faq" style="float:right;height:35px;min-height:auto;">
 						<i class="fa fa-info-circle"></i>
-						<?php _e('Check all FAQs', WCU_LANG_CODE)?>
+						<?php _e('Check all FAQs', 'woo-currency')?>
 					</a>
 					<div style="clear: both;"></div>
 				</div>
-				<?php /*<div class="video">
-					<h3><?php _e('Video Tutorial', WCU_LANG_CODE)?></h3>
-					<iframe type="text/html"
-							width="80%"
-							height="240px"
-							src="https://www.youtube.com/embed/v8h2k3vvpdM"
-							frameborder="0">
-					</iframe>
-				</div>*/?>
 				<div class="server-settings">
-					<h3><?php _e('Server Settings', WCU_LANG_CODE)?></h3>
+					<h3><?php _e('Server Settings', 'woo-currency')?></h3>
 					<ul class="settings-list">
 						<?php foreach($this->serverSettings as $title => $element) {?>
 							<li class="settings-line">
@@ -58,19 +49,19 @@ defined( 'ABSPATH' ) || exit;
 			<div class="supsistic-half-side-box" style="padding-left: 20px;">
 				<?php if($this->news) {?>
 					<div class="woobewoo-overview-news">
-						<h3><?php _e('News', WCU_LANG_CODE)?></h3>
+						<h3><?php _e('News', 'woo-currency')?></h3>
 						<div class="woobewoo-overview-news-content">
 							<?php echo $this->news?>
 						</div>
 						<a href="<?php echo $this->mainLink?>" class="button button-primary button-hero" style="float: right; margin-top: 10px;height:35px;">
 							<i class="fa fa-info-circle"></i>
-							<?php _e('All news and info', WCU_LANG_CODE)?>
+							<?php _e('All news and info', 'woo-currency')?>
 						</a>
 						<div style="clear: both;"></div>
 					</div>
 				<?php }?>
 				<div class="overview-contact-form">
-					<h3><?php _e('Contact form', WCU_LANG_CODE)?></h3>
+					<h3><?php _e('Contact form', 'woo-currency')?></h3>
 					<form id="form-settings">
 						<table class="contact-form-table">
 							<?php foreach($this->contactFields as $fName => $fData) { ?>
@@ -102,7 +93,7 @@ defined( 'ABSPATH' ) || exit;
 									<?php echo htmlWcu::hidden('action', array('value' => 'sendContact'))?>
 									<button class="button button-primary button-hero" style="float: right; margin: 10px 0;height:35px;">
 										<i class="fa fa-upload"></i>
-										<?php _e('Send email', WCU_LANG_CODE)?>
+										<?php _e('Send email', 'woo-currency')?>
 									</button>
 									<div style="clear: both;"></div>
 								</th>
@@ -111,7 +102,7 @@ defined( 'ABSPATH' ) || exit;
 					</form>
 					<div id="form-settings-send-msg" style="display: none;">
 						<i class="fa fa-envelope-o"></i>
-						<?php _e('Your email was sent, we will try to respond to your as soon as possible. Thank you for support!', WCU_LANG_CODE)?>
+						<?php _e('Your email was sent, we will try to respond to your as soon as possible. Thank you for support!', 'woo-currency')?>
 					</div>
 				</div>
 			</div>

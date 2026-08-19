@@ -197,6 +197,8 @@ class currencyModelWcu extends modelWcu {
 	/**
 	 * getCurrencyRate.
 	 *
+	 * @version 2.4.0
+	 *
 	 * @todo Is `ratesapi` the same as `ecb`?
 	 */
 	public function getCurrencyRate($fromCurrency, $toCurrency) {
@@ -210,9 +212,9 @@ class currencyModelWcu extends modelWcu {
 		$fromCurrency                 = urlencode($fromCurrency);
 		$toCurrency                   = urlencode($toCurrency);
 		if (!$fromCurrency) {
-			$errorMsg = sprintf(__("set main currency", WCU_LANG_CODE), $fromCurrency);
+			$errorMsg = sprintf(__("set main currency", 'woo-currency'), $fromCurrency);
 		} else {
-			$errorMsg = sprintf(__("no data for %s", WCU_LANG_CODE), $toCurrency);
+			$errorMsg = sprintf(__("no data for %s", 'woo-currency'), $toCurrency);
 		}
 		$rate = '';
 
@@ -306,7 +308,7 @@ class currencyModelWcu extends modelWcu {
 				break;
 			case 'cbr':
 				if ($fromCurrency != 'RUB') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'RUB');
+					$rate = sprintf(__("set %s as main", 'woo-currency'), 'RUB');
 				} elseif ($fromCurrency == $toCurrency) {
 					$rate = 1;
 				} else {
@@ -321,7 +323,7 @@ class currencyModelWcu extends modelWcu {
 				break;
 			case 'nbp':
 				if ($fromCurrency != 'PLN') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'PLN');
+					$rate = sprintf(__("set %s as main", 'woo-currency'), 'PLN');
 				} elseif ($fromCurrency == $toCurrency) {
 					$rate = 1;
 				} else {
@@ -353,7 +355,7 @@ class currencyModelWcu extends modelWcu {
 				break;
 			case 'pb':
 				if ($fromCurrency != 'UAH') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'UAH');
+					$rate = sprintf(__("set %s as main", 'woo-currency'), 'UAH');
 				} elseif ($fromCurrency == $toCurrency) {
 					$rate = 1;
 				} else {
@@ -374,7 +376,7 @@ class currencyModelWcu extends modelWcu {
 				break;
 			case 'bnr':
 				if ($fromCurrency != 'RON') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'RON');
+					$rate = sprintf(__("set %s as main", 'woo-currency'), 'RON');
 				} elseif ($fromCurrency == $toCurrency) {
 					$rate = 1;
 				} else {
@@ -402,7 +404,7 @@ class currencyModelWcu extends modelWcu {
 				if ($currencyData['success']) {
 					$rate = !empty($currencyData['result']) ? $currencyData['result'] : $errorMsg;
 				} elseif ($currencyData['error']['code'] == 105 && $fromCurrency != 'EUR') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'EUR');
+					$rate = sprintf(__("set %s as main", 'woo-currency'), 'EUR');
 				} elseif ($currencyData['error']['code'] == 105) {
 					$queryStr = sprintf("?access_key=%s", $fixerConverterApiKey);
 					$url = "http://data.fixer.io/api/latest" . $queryStr;
@@ -421,7 +423,7 @@ class currencyModelWcu extends modelWcu {
 				if ($currencyData['success']) {
 					$rate = !empty($currencyData['result']) ? $currencyData['result'] : $errorMsg;
 				} elseif ($currencyData['error']['code'] == 105 && $fromCurrency != 'USD') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'USD');
+					$rate = sprintf(__("set %s as main", 'woo-currency'), 'USD');
 				} elseif ($currencyData['error']['code'] == 105) {
 					$queryStr = sprintf("?access_key=%s&amp;currencies=%s,%s&amp;date=%s", $currencylayerConverterApiKey, $fromCurrency, $toCurrency, date('Y-m-d'));
 					$url = "http://api.currencylayer.com/live" . $queryStr;
@@ -440,7 +442,7 @@ class currencyModelWcu extends modelWcu {
 				if (!empty($currencyData) && isset($currencyData['rates'])) {
 					$rate = !empty($currencyData['rates'][$toCurrency]) ? $currencyData['rates'][$toCurrency] : $errorMsg;
 				} elseif ((empty($currencyData) || in_array($currencyData['status'], [403, 429])) && $fromCurrency != 'USD') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'USD');
+					$rate = sprintf(__("set %s as main", 'woo-currency'), 'USD');
 				} elseif (empty($currencyData) || in_array($currencyData['status'], [403, 429])) {
 					$queryStr = sprintf("?app_id=%s&symbols=%s,%s", $oerConverterApiKey, $fromCurrency, $toCurrency);
 					$url = "https://openexchangerates.org/api/latest.json" . $queryStr;

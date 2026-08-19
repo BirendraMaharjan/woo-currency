@@ -30,7 +30,7 @@ class mailControllerWcu extends controllerWcu {
 		$optsModel = frameWcu::_()->getModule('options')->getModel();
 		$submitData = reqWcu::get('post');
 		if($optsModel->saveGroup($submitData)) {
-			$res->addMessage(__('Done', WCU_LANG_CODE));
+			$res->addMessage(__('Done', 'woo-currency'));
 		} else
 			$res->pushError ($optsModel->getErrors());
 		$res->ajaxExec();

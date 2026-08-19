@@ -18,14 +18,19 @@ class adminmenuWcu extends moduleWcu {
 		$plugName = plugin_basename(WCU_DIR. WCU_MAIN_FILE);
 		add_filter('plugin_action_links_'. $plugName, array($this, 'addSettingsLinkForPlug') );
     }
+	/**
+	 * addSettingsLinkForPlug.
+	 *
+	 * @version 2.4.0
+	 */
 	public function addSettingsLinkForPlug($links) {
 		$mainLink = 'http://woobewoo.com/';
-		$twitterStatus = sprintf(__('Cool WordPress plugins from woobewoo.com developers. I tried %s - and this was what I need! #woobewoo.com', WCU_LANG_CODE), WCU_WP_PLUGIN_NAME);
-		array_unshift($links, '<a href="'. $this->getMainLink(). '">'. __('Settings', WCU_LANG_CODE). '</a>');
-		array_push($links, '<a title="'. __('More plugins for your WordPress site here!', WCU_LANG_CODE). '" href="'. $mainLink. '" target="_blank">woobewoo.com</a>');
-		array_push($links, '<a title="'. __('Spread the word!', WCU_LANG_CODE). '" href="https://www.facebook.com/sharer/sharer.php?u='. urlencode($mainLink). '" target="_blank" class="dashicons-before dashicons-facebook-alt"></a>');
-		array_push($links, '<a title="'. __('Spread the word!', WCU_LANG_CODE). '" href="https://twitter.com/home?status='. urlencode($twitterStatus). '" target="_blank" class="dashicons-before dashicons-twitter"></a>');
-		array_push($links, '<a title="'. __('Spread the word!', WCU_LANG_CODE). '" href="https://plus.google.com/share?url='. urlencode($mainLink). '" target="_blank" class="dashicons-before dashicons-googleplus"></a>');
+		$twitterStatus = sprintf(__('Cool WordPress plugins from woobewoo.com developers. I tried %s - and this was what I need! #woobewoo.com', 'woo-currency'), WCU_WP_PLUGIN_NAME);
+		array_unshift($links, '<a href="'. $this->getMainLink(). '">'. __('Settings', 'woo-currency'). '</a>');
+		array_push($links, '<a title="'. __('More plugins for your WordPress site here!', 'woo-currency'). '" href="'. $mainLink. '" target="_blank">woobewoo.com</a>');
+		array_push($links, '<a title="'. __('Spread the word!', 'woo-currency'). '" href="https://www.facebook.com/sharer/sharer.php?u='. urlencode($mainLink). '" target="_blank" class="dashicons-before dashicons-facebook-alt"></a>');
+		array_push($links, '<a title="'. __('Spread the word!', 'woo-currency'). '" href="https://twitter.com/home?status='. urlencode($twitterStatus). '" target="_blank" class="dashicons-before dashicons-twitter"></a>');
+		array_push($links, '<a title="'. __('Spread the word!', 'woo-currency'). '" href="https://plus.google.com/share?url='. urlencode($mainLink). '" target="_blank" class="dashicons-before dashicons-googleplus"></a>');
 		return $links;
 	}
 	public function initMenu() {

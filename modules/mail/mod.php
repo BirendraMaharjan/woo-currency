@@ -164,6 +164,12 @@ class mailWcu extends moduleWcu {
 
 		return $result;
 	}
+
+	/**
+	 * getMailErrors.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getMailErrors() {
 		global $ts_mail_errors;
 		global $phpmailer;
@@ -182,7 +188,7 @@ class mailWcu extends moduleWcu {
 					$ts_mail_errors[] = $phpmailer->ErrorInfo;
 				}
 				if(empty($ts_mail_errors)) {
-					$ts_mail_errors[] = __('Cannot send email - problem with send server', WCU_LANG_CODE);
+					$ts_mail_errors[] = __('Cannot send email - problem with send server', 'woo-currency');
 				}
 				return $ts_mail_errors;
 				break;
@@ -195,12 +201,17 @@ class mailWcu extends moduleWcu {
 	public function getTabContent() {
 		return $this->getView()->getTabContent();
 	}
+	/**
+	 * addOptions.
+	 *
+	 * @version 2.4.0
+	 */
 	public function addOptions($opts) {
 		$opts[ $this->getCode() ] = array(
-			'label' => __('Mail', WCU_LANG_CODE),
+			'label' => __('Mail', 'woo-currency'),
 			'opts' => array(
-				'mail_function_work' => array('label' => __('Mail function tested and work', WCU_LANG_CODE), 'desc' => ''),
-				'notify_email' => array('label' => __('Notify Email', WCU_LANG_CODE), 'desc' => __('Email address used for all email notifications from plugin', WCU_LANG_CODE), 'html' => 'text', 'def' => get_option('admin_email')),
+				'mail_function_work' => array('label' => __('Mail function tested and work', 'woo-currency'), 'desc' => ''),
+				'notify_email' => array('label' => __('Notify Email', 'woo-currency'), 'desc' => __('Email address used for all email notifications from plugin', 'woo-currency'), 'html' => 'text', 'def' => get_option('admin_email')),
 			),
 		);
 		return $opts;

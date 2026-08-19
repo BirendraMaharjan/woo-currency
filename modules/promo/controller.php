@@ -10,11 +10,17 @@
 defined( 'ABSPATH' ) || exit;
 
 class promoControllerWcu extends controllerWcu {
+
+	/**
+	 * welcomePageSaveInfo.
+	 *
+	 * @version 2.4.0
+	 */
     public function welcomePageSaveInfo() {
 		$res = new responseWcu();
 		installerWcu::setUsed();
 		if($this->getModel()->welcomePageSaveInfo(reqWcu::get('get'))) {
-			$res->addMessage(__('Information was saved. Thank you!', WCU_LANG_CODE));
+			$res->addMessage(__('Information was saved. Thank you!', 'woo-currency'));
 		} else {
 			$res->pushError($this->getModel()->getErrors());
 		}
@@ -25,6 +31,11 @@ class promoControllerWcu extends controllerWcu {
 		}
 		redirectWcu($originalPage);
 	}
+	/**
+	 * sendContact.
+	 *
+	 * @version 2.4.0
+	 */
 	public function sendContact() {
 		$res = new responseWcu();
 		$time = time();
@@ -46,13 +57,13 @@ class promoControllerWcu extends controllerWcu {
 					switch($v) {
 						case 'notEmpty':
 							if(empty($data[ $fName ])) {
-								$error = $fData['html'] == 'selectbox' ? __('Please select %s', WCU_LANG_CODE) : __('Please enter %s', WCU_LANG_CODE);
+								$error = $fData['html'] == 'selectbox' ? __('Please select %s', 'woo-currency') : __('Please enter %s', 'woo-currency');
 								$error = sprintf($error, $fData['label']);
 							}
 							break;
 						case 'email':
 							if(!is_email($data[ $fName ])) 
-								$error = __('Please enter valid email address', WCU_LANG_CODE);
+								$error = __('Please enter valid email address', 'woo-currency');
 							break;
 					}
 					if(!empty($error)) {
@@ -104,34 +115,54 @@ class promoControllerWcu extends controllerWcu {
 		}
 		$res->ajaxExec();
 	}
+	/**
+	 * addTourStep.
+	 *
+	 * @version 2.4.0
+	 */
 	public function addTourStep() {
 		$res = new responseWcu();
 		if($this->getModel()->addTourStep(reqWcu::get('post'))) {
-			$res->addMessage(__('Information was saved. Thank you!', WCU_LANG_CODE));
+			$res->addMessage(__('Information was saved. Thank you!', 'woo-currency'));
 		} else
 			$res->pushError($this->getModel()->getErrors());
 		$res->ajaxExec();
 	}
+	/**
+	 * closeTour.
+	 *
+	 * @version 2.4.0
+	 */
 	public function closeTour() {
 		$res = new responseWcu();
 		if($this->getModel()->closeTour(reqWcu::get('post'))) {
-			$res->addMessage(__('Information was saved. Thank you!', WCU_LANG_CODE));
+			$res->addMessage(__('Information was saved. Thank you!', 'woo-currency'));
 		} else
 			$res->pushError($this->getModel()->getErrors());
 		$res->ajaxExec();
 	}
+	/**
+	 * addTourFinish.
+	 *
+	 * @version 2.4.0
+	 */
 	public function addTourFinish() {
 		$res = new responseWcu();
 		if($this->getModel()->addTourFinish(reqWcu::get('post'))) {
-			$res->addMessage(__('Information was saved. Thank you!', WCU_LANG_CODE));
+			$res->addMessage(__('Information was saved. Thank you!', 'woo-currency'));
 		} else
 			$res->pushError($this->getModel()->getErrors());
 		$res->ajaxExec();
 	}
+	/**
+	 * saveDeactivateData.
+	 *
+	 * @version 2.4.0
+	 */
 	public function saveDeactivateData() {
 		$res = new responseWcu();
 		if($this->getModel()->saveDeactivateData(reqWcu::get('post'))) {
-			$res->addMessage(__('Thank you for Feedback!', WCU_LANG_CODE));
+			$res->addMessage(__('Thank you for Feedback!', 'woo-currency'));
 		} else
 			$res->pushError($this->getModel()->getErrors());
 		$res->ajaxExec();

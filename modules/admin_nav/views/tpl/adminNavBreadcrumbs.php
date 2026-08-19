@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - Admin Nav Breadcrumbs
+ *
+ * @version 4.2.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 	$countBreadcrumbs = count($this->breadcrumbsList);
 ?>
 <nav id="woobewoo-breadcrumbs" class="woobewoo-breadcrumbs <?php dispatcherWcu::doAction('adminBreadcrumbsClassAdd')?>">

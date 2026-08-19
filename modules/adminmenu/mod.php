@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - adminmenuWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class adminmenuWcu extends moduleWcu {
 	protected $_mainSlug = 'woo-currency';
 	private $_mainCap = 'manage_options';

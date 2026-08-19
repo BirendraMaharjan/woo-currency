@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Options Tab
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <table class="form-table">
 	<tbody>
 	<?php foreach($this->optionsParams as $index => $optBlock) {?>

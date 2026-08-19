@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - mailControllerWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class mailControllerWcu extends controllerWcu {
 	public function testEmail() {
 		$res = new responseWcu();

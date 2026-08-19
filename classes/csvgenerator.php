@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - csvgeneratorWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class csvgeneratorWcu {
     protected $_filename = '';
     protected $_delimiter = ';';

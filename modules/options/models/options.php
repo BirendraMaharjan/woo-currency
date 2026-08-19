@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - optionsModelWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class optionsModelWcu extends modelWcu {
 	private $_values = array();
 	private $_valuesLoaded = false;

@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - Deactivate Page
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 	$title = WCU_WP_PLUGIN_NAME;
 ?>
 <html>

@@ -1,6 +1,6 @@
 <?php
 /**
- * WBW Currency Switcher for WooCommerce - currencyTabContent
+ * WBW Currency Switcher for WooCommerce - Currency Tab Content
  *
  * @version 2.2.6
  *

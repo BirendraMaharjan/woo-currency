@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Currency Converter Widget Form
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <script type="text/javascript">
 	g_wcuCurrencyConverterBtnBgColorTimeoutSet = false;
 	g_wcuCurrencyConverterBtnBgColorLast = '';

@@ -1,5 +1,16 @@
 <?php
 /**
+ * WBW Currency Switcher for WooCommerce - dbWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+
+/**
  * Shell - class to work with $wpdb global object
  */
 class dbWcu {

@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - tableModules_typeWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class tableModules_typeWcu extends tableWcu {
     public function __construct() {
         $this->_table = '@__modules_type';

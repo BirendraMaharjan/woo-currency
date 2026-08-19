@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - Children Multiple Tab
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
     $moduleName = $this->moduleName;
     $moduleTab = $this->moduleTab;
     $moduleIsPro = $this->moduleIsPro;

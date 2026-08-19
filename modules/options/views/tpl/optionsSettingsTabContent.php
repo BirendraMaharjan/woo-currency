@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Options Settings Tab Content
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <section class="woobewoo-bar">
 	<ul class="woobewoo-bar-controls">
 		<li title="<?php _e('Save all options')?>">

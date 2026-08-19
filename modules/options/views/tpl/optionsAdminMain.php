@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Options Admin Main
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <style type="text/css">
 	.wcuAdminMainLeftSide {
 		width: 56%;

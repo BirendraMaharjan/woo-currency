@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Currency Rates Widget
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <style>
 	<?php
 		$show_on_widths = isset($this->instance['show_on_widths']) ? $this->instance['show_on_widths'] : false;

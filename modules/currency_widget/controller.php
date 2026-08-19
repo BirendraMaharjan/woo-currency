@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - currency_widgetControllerWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class currency_widgetControllerWcu extends controllerWcu {
 	public function getCurrencyRate() {
 		$res = new responseWcu();

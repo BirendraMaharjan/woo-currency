@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - Children One Tab
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
     $moduleName = $this->moduleName;
     $moduleIsPro = $this->moduleIsPro;
     $optionsDb = $this->getModule()->optionsDbOpt;

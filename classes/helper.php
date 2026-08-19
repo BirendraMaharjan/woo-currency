@@ -1,5 +1,15 @@
 <?php
 /**
+ * WBW Currency Switcher for WooCommerce - helperWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/**
  * Abstract class of module helper
  * Module helper has all the functions that are needed in module workflow
  * Besides it contains the methods to build html elements

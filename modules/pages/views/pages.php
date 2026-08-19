@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - pagesViewWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class pagesViewWcu extends viewWcu {
     public function displayDeactivatePage() {
         $this->assign('GET', reqWcu::get('get'));

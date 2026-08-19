@@ -1,4 +1,13 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - mailModelWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
 class mailModelWcu extends modelWcu {
 	public function testEmail($email) {
 		$email = trim($email);

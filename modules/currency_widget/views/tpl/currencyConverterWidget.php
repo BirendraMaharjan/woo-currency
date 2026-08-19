@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - Currency Converter Widget
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 	$btn_bg_color = isset($this->instance['btn_bg_color']) ? $this->instance['btn_bg_color'] : '#fafafa';
 	$btn_bg_color_h = isset($this->instance['btn_bg_color_h']) ? $this->instance['btn_bg_color_h'] : '#fafafa';
 	$btn_txt_color = isset($this->instance['btn_txt_color']) ? $this->instance['btn_txt_color'] : 'black';

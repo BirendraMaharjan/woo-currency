@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - currency_widgetViewWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class currency_widgetViewWcu extends viewWcu {
 	public function displayForm($data, $widget, $template) {
 		$this->addCommonValidation();

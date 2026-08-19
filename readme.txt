@@ -152,6 +152,9 @@ Please report security bugs found in the source code of the plugin through the [
 == Changelog ==
 
 = 2.3.2 - 28/07/2026 =
+* WC tested up to: 11.0.
+
+= 2.3.2 - 28/07/2026 =
 * Fix - Shipping tax (VAT) not converting on currency switch when using inclusive-VAT rates like Flat Rate.
 * WC tested up to: 10.9.
 * Tested up to: 7.0.

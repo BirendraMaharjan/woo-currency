@@ -1,4 +1,13 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - wcuCurrencySwitcherWidget Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
 class wcuCurrencySwitcherWidget extends WP_Widget {
 	public $widgetName = 'wcuCurrencySwitcherWidget';
 	public $widgetTemplate = 'currencySwitcher';

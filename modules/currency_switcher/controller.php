@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - currency_switcherControllerWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class currency_switcherControllerWcu extends controllerWcu {
 
 	public function drawCurrencySwitcherAjax() {

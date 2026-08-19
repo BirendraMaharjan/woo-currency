@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Admin Tour
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <div id="woobewoo-admin-tour" class="">
 	<div id="woobewoo-welcome-first_welcome">
 		<div class="woobewoo-tour-content">

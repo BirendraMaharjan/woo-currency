@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - Currency Switcher Form
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 	$showFlags = false;
 	if (!empty(frameWcu::_()->getModule('flags'))) {
 		$showFlags = true;

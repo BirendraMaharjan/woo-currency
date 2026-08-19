@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Welcome Page
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <section>
 	<div class="woobewoo-item woobewoo-panel woobewoo-plugin">
 		<div id="containerWrapper">

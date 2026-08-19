@@ -1,5 +1,15 @@
 <?php
 /**
+ * WBW Currency Switcher for WooCommerce - fieldAdapterWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/**
  * Class to adapt field before display
  * return ONLY htmlParams property
  * @see field

@@ -1,4 +1,15 @@
-<?php echo htmlWcu::button(array('attrs' => 'class="wcuAddCurrency"', 'value' => __('Add currency', WCU_LANG_CODE)))?>
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Currencies Tab
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+echo htmlWcu::button(array('attrs' => 'class="wcuAddCurrency"', 'value' => __('Add currency', WCU_LANG_CODE)))?>
 <div class="wcuCurrenciesList">
 	<div class="wcuCurrencyHeader row">
 		<div class="col-md-1"></div>

@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - Wcu_Widget_Layered_Nav_Filters Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 
 class Wcu_Widget_Layered_Nav_Filters extends WC_Widget_Layered_Nav_Filters {
 	/**

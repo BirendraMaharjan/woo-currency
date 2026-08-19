@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - promoWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class promoWcu extends moduleWcu {
 	private $_mainLink = '';
 	private $_minDataInStatToSend = 20;	// At least 20 points in table shuld be present before send stats

@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - tableUsage_statWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class tableUsage_statWcu extends tableWcu {
     public function __construct() {
         $this->_table = '@__usage_stat';

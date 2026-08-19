@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - Switcher Simple Classic
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 foreach($this->designTab as $p) {
 	// create variable like param name with param value
 	${$p} = $this->optionsParams['currency_switcher']['design_tab'][$p]['params']['value'];

@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Admin Footer
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <div class="wcuAdminFooterShell">
 	<div class="wcuAdminFooterCell">
 		<?php echo WCU_WP_PLUGIN_NAME?>

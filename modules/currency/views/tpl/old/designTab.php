@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Design Tab
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <p><?php _e('Settings for Currency Switcher for change currency on frontend.', WCU_LANG_CODE)?></p>
 <table class="form-table">
 	<tbody>

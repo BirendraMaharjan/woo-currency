@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - modulesModelWcu class
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class modulesModelWcu extends modelWcu {
 	public function __construct() {
 		$this->_setTbl('modules');

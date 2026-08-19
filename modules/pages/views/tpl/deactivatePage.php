@@ -9,7 +9,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-	$title = WCU_WP_PLUGIN_NAME;
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$title = WCU_WP_PLUGIN_NAME;
 ?>
 <html>
     <head>
@@ -49,3 +50,5 @@ defined( 'ABSPATH' ) || exit;
     </div>
 </body>
 </html>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

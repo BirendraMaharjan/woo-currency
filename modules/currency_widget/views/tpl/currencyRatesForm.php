@@ -7,6 +7,7 @@
  * @author woobewoo
  */
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 defined( 'ABSPATH' ) || exit;
 
 	$showFlags = false;
@@ -106,3 +107,5 @@ defined( 'ABSPATH' ) || exit;
 	));?>
 	<span style="margin-left:3px; margin-top:6px; float:left"><?php echo __('px', 'woo-currency')?></span>
 </div>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

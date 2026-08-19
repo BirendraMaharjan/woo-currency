@@ -9,12 +9,13 @@
 
 defined( 'ABSPATH' ) || exit;
 
-	$showFlags = false;
-	if (!empty(frameWcu::_()->getModule('flags'))) {
-		$showFlags = true;
-	}
-	$proFlagsDisabled = !$showFlags ? 'disabled' : '' ;
-	$proFlagsSup =  !$showFlags ? '<sup>PRO</sup>' : '' ;
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$showFlags = false;
+if (!empty(frameWcu::_()->getModule('flags'))) {
+	$showFlags = true;
+}
+$proFlagsDisabled = !$showFlags ? 'disabled' : '' ;
+$proFlagsSup =  !$showFlags ? '<sup>PRO</sup>' : '' ;
 ?>
 <div class="wcuWidgetRow">
 	<label for="<?php echo $this->widget->get_field_id('title'); ?>"><?php _e('Title', 'woo-currency') ?></label>
@@ -115,3 +116,5 @@ defined( 'ABSPATH' ) || exit;
 	));?>
 	<span style="margin-left:3px; margin-top:6px; float:left"><?php echo __('px', 'woo-currency')?></span>
 </div>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

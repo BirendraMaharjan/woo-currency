@@ -9,6 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 <table class="form-table">
 	<tbody>
@@ -31,3 +32,5 @@ defined( 'ABSPATH' ) || exit;
 	<?php }?>
 	</tbody>
 </table>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

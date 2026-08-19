@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) || exit;
         <section class="woobewoo-content">
             <nav class="woobewoo-navigation woobewoo-sticky <?php dispatcherWcu::doAction('adminMainNavClassAdd')?>">
                 <ul>
-					<?php foreach($this->tabs as $tabKey => $tab) { ?>
+					<?php foreach($this->tabs as $tabKey => $tab) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound ?>
 						<?php if(isset($tab['hidden']) && $tab['hidden']) continue;?>
 						<li class="woobewoo-tab-<?php echo $tabKey;?> <?php echo (($this->activeTab == $tabKey || in_array($tabKey, $this->activeParentTabs)) ? 'active' : '')?>">
 							<a href="<?php echo $tab['url']?>" title="<?php echo $tab['label']?>">

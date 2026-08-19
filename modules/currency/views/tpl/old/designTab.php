@@ -9,6 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 <p><?php _e('Settings for Currency Switcher for change currency on frontend.', 'woo-currency')?></p>
 <table class="form-table">
@@ -32,3 +33,5 @@ defined( 'ABSPATH' ) || exit;
 	<?php }?>
 	</tbody>
 </table>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

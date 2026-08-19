@@ -9,6 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 <form id="wcuMailTestForm">
 	<label>
@@ -81,5 +82,5 @@ defined( 'ABSPATH' ) || exit;
 		<?php _e('Save', 'woo-currency')?>
 	</button>
 </form>
-
-
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

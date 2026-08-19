@@ -8,6 +8,8 @@
  */
 
 defined( 'ABSPATH' ) || exit;
+
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 ?>
 
 <?php $wcuShowPro = !empty($this->optionsProModule) ? '' : 'wcuShowPro'; ?>
@@ -334,3 +336,5 @@ defined( 'ABSPATH' ) || exit;
 	<?php echo htmlWcu::hidden('pl', array('value' => WCU_CODE))?>
 	<?php wp_nonce_field('wbw_currency_nonce', '_wbw_currency_nonce'); ?>
 </div>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

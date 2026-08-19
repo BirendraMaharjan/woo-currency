@@ -9,12 +9,14 @@
 
 defined( 'ABSPATH' ) || exit;
 
-    $moduleName = $this->moduleName;
-    $moduleIsPro = $this->moduleIsPro;
-    $optionsDb = $this->getModule()->optionsDbOpt;
-    if (!empty($moduleIsPro) && $moduleIsPro) {
-        $optionsDb = $this->getModule()->optionsDbOptPro;
-    }
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
+$moduleName = $this->moduleName;
+$moduleIsPro = $this->moduleIsPro;
+$optionsDb = $this->getModule()->optionsDbOpt;
+if (!empty($moduleIsPro) && $moduleIsPro) {
+    $optionsDb = $this->getModule()->optionsDbOptPro;
+}
  ?>
 
 <table class="form-table">
@@ -45,3 +47,5 @@ defined( 'ABSPATH' ) || exit;
         <?php }?>
     </tbody>
 </table>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

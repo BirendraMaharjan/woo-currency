@@ -9,14 +9,16 @@
 
 defined( 'ABSPATH' ) || exit;
 
-    $moduleName = $this->moduleName;
-    $moduleTab = $this->moduleTab;
-    $moduleIsPro = $this->moduleIsPro;
-    $showPreviewAjax = $this->showPreviewAjax;
-    $optionsDb = $this->getModule()->optionsDbOpt;
-    if (!empty($moduleIsPro) && $moduleIsPro) {
-        $optionsDb = $this->getModule()->optionsDbOptPro;
-    }
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
+$moduleName = $this->moduleName;
+$moduleTab = $this->moduleTab;
+$moduleIsPro = $this->moduleIsPro;
+$showPreviewAjax = $this->showPreviewAjax;
+$optionsDb = $this->getModule()->optionsDbOpt;
+if (!empty($moduleIsPro) && $moduleIsPro) {
+    $optionsDb = $this->getModule()->optionsDbOptPro;
+}
  ?>
 
  <?php if ($showPreviewAjax) { ?>
@@ -120,3 +122,5 @@ defined( 'ABSPATH' ) || exit;
     });
     </script>
 <?php } ?>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

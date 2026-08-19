@@ -9,7 +9,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-	$countBreadcrumbs = count($this->breadcrumbsList);
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+$countBreadcrumbs = count($this->breadcrumbsList);
 ?>
 <nav id="woobewoo-breadcrumbs" class="woobewoo-breadcrumbs <?php dispatcherWcu::doAction('adminBreadcrumbsClassAdd')?>">
 	<?php dispatcherWcu::doAction('beforeAdminBreadcrumbs')?>
@@ -21,3 +22,5 @@ defined( 'ABSPATH' ) || exit;
 	<?php }?>
 	<?php dispatcherWcu::doAction('afterAdminBreadcrumbs')?>
 </nav>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

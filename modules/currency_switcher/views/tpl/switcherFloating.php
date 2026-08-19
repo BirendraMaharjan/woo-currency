@@ -9,6 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 foreach ($this->designTab as $p) {
     // create variable like param name with param value
     ${$p} = $this->optionsParams['currency_switcher']['design_tab'][$p]['params']['value'];
@@ -263,3 +264,5 @@ foreach ($this->displayRulesTab as $p) {
         }
     });
 </script>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

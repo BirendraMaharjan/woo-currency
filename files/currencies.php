@@ -7,6 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 $currencies = array(
 	'AFN' => array( 'AF' ),
 	'ALL' => array( 'AL' ),

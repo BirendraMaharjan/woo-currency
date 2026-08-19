@@ -9,10 +9,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-	$btn_bg_color = isset($this->instance['btn_bg_color']) ? $this->instance['btn_bg_color'] : '#fafafa';
-	$btn_bg_color_h = isset($this->instance['btn_bg_color_h']) ? $this->instance['btn_bg_color_h'] : '#fafafa';
-	$btn_txt_color = isset($this->instance['btn_txt_color']) ? $this->instance['btn_txt_color'] : 'black';
-	$layout = isset($this->instance['layout']) ? $this->instance['layout'] : 'horizontal';
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
+$btn_bg_color = isset($this->instance['btn_bg_color']) ? $this->instance['btn_bg_color'] : '#fafafa';
+$btn_bg_color_h = isset($this->instance['btn_bg_color_h']) ? $this->instance['btn_bg_color_h'] : '#fafafa';
+$btn_txt_color = isset($this->instance['btn_txt_color']) ? $this->instance['btn_txt_color'] : 'black';
+$layout = isset($this->instance['layout']) ? $this->instance['layout'] : 'horizontal';
 ?>
 
 <style>
@@ -274,3 +276,5 @@ if (!$this->moduleFlags) {
 		});
 	}
 </script>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

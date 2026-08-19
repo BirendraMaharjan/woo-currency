@@ -22,6 +22,7 @@ use League\OAuth2\Client\Token\AccessToken;
 use League\OAuth2\Client\Tool\BearerAuthorizationTrait;
 use Psr\Http\Message\ResponseInterface;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
 session_start();
 
 //If this automatic URL doesn't work, set it yourself manually
@@ -160,3 +161,4 @@ if (!isset($_GET['code'])) {
     // Use this to get a new access token if the old one expires
     echo 'Refresh Token: ' . $token->getRefreshToken();
 }
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

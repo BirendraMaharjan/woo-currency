@@ -9,6 +9,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+// phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
+
 echo htmlWcu::button(array('attrs' => 'class="wcuAddCurrency"', 'value' => __('Add currency', 'woo-currency')))?>
 <div class="wcuCurrenciesList">
 	<div class="wcuCurrencyHeader row">
@@ -90,3 +92,5 @@ echo htmlWcu::button(array('attrs' => 'class="wcuAddCurrency"', 'value' => __('A
 		</div>
 	<?php }?>
 </div>
+<?php
+// phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

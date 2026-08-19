@@ -6,7 +6,7 @@ require_once(dirname(__FILE__) . "/../ConsumerStrategies/CurlConsumer.php");
 /**
  * Provides an API to track events on Mixpanel
  */
-class Producers_MixpanelEvents extends Producers_MixpanelBaseProducer {
+class Producers_MixpanelEvents extends Producers_MixpanelBaseProducer { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
     /**
      * An array of properties to attach to every tracked event

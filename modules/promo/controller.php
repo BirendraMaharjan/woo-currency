@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class promoControllerWcu extends controllerWcu {
+class promoControllerWcu extends controllerWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * welcomePageSaveInfo.

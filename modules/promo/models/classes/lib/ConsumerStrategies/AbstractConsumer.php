@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . "/../Base/MixpanelBase.php");
 /**
  * Provides some base methods for use by a Consumer implementation
  */
-abstract class ConsumerStrategies_AbstractConsumer extends Base_MixpanelBase {
+abstract class ConsumerStrategies_AbstractConsumer extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
     /**
      * Creates a new AbstractConsumer

@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class mailViewWcu extends viewWcu {
+class mailViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	public function getTabContent() {
 		frameWcu::_()->getModule('templates')->loadJqueryUi();
 		frameWcu::_()->addScript('admin.'. $this->getCode(), $this->getModule()->getModPath(). 'js/admin.'. $this->getCode(). '.js');

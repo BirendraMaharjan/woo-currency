@@ -8,7 +8,7 @@
  */
 
 defined( 'ABSPATH' ) || exit;
-class mailModelWcu extends modelWcu {
+class mailModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * testEmail.

@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class pagesControllerWcu extends controllerWcu {
+class pagesControllerWcu extends controllerWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 }
 

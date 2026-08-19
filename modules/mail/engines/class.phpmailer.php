@@ -25,8 +25,7 @@
  * @author Andy Prevost (codeworxtech) <codeworxtech@users.sourceforge.net>
  * @author Brent R. Matzelle (original founder)
  */
-class PHPMailer
-{
+class PHPMailer { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     /**
      * The PHPMailer Version number.
      * @var string
@@ -4025,8 +4024,7 @@ class PHPMailer
  * PHPMailer exception handler
  * @package PHPMailer
  */
-class phpmailerException extends Exception
-{
+class phpmailerException extends Exception { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     /**
      * Prettify error message output
      * @return string

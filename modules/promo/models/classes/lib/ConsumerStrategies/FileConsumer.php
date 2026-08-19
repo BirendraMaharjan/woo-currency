@@ -3,7 +3,7 @@ require_once(dirname(__FILE__) . "/AbstractConsumer.php");
 /**
  * Consumes messages and writes them to a file
  */
-class ConsumerStrategies_FileConsumer extends ConsumerStrategies_AbstractConsumer {
+class ConsumerStrategies_FileConsumer extends ConsumerStrategies_AbstractConsumer { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
     /**
      * @var string path to a file that we want to write the messages to

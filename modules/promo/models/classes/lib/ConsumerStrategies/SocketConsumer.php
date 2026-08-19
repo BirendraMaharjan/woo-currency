@@ -36,7 +36,7 @@ require_once(dirname(__FILE__) . "/AbstractConsumer.php");
 /**
  * Consumes messages and writes them to host/endpoint using a persistent socket
  */
-class ConsumerStrategies_SocketConsumer extends ConsumerStrategies_AbstractConsumer {
+class ConsumerStrategies_SocketConsumer extends ConsumerStrategies_AbstractConsumer { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
     /**
      * @var string the host to connect to (e.g. api.mixpanel.com)

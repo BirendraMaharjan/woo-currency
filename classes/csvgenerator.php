@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class csvgeneratorWcu {
+class csvgeneratorWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     protected $_filename = '';
     protected $_delimiter = ';';
     protected $_enclosure = "\n";

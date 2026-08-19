@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class currencyModelWcu extends modelWcu {
+class currencyModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	public static $savedCurrencies = null;
 

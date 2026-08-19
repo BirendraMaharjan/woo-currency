@@ -106,7 +106,7 @@ require_once(dirname(__FILE__) . "/Producers/MixpanelEvents.php");
  * ));
  *
  */
-class Mixpanel extends Base_MixpanelBase {
+class Mixpanel extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 
     /**

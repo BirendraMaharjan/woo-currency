@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class promoModelWcu extends modelWcu {
+class promoModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	private $_apiUrl = '';
 	private $_bigCli = null;
 	private function _getApiUrl() {

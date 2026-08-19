@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . "/MixpanelBaseProducer.php");
 /**
  * Provides an API to create/update profiles on Mixpanel
  */
-class Producers_MixpanelPeople extends Producers_MixpanelBaseProducer {
+class Producers_MixpanelPeople extends Producers_MixpanelBaseProducer { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
     /**
      * Internal method to prepare a message given the message data

@@ -23,8 +23,7 @@
  * @author @sherryl4george
  * @author Marcus Bointon (@Synchro) <phpmailer@synchromedia.co.uk>
  */
-class PHPMailerOAuth extends PHPMailer
-{
+class PHPMailerOAuth extends PHPMailer { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     /**
      * The OAuth user's email address
      * @var string

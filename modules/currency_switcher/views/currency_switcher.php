@@ -9,8 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class currency_switcherViewWcu extends viewWcu
-{
+class currency_switcherViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     /**
      * Retrive main module functionality to display
      *

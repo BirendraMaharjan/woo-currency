@@ -5,7 +5,7 @@
  * debugging and logging functionality. It also serves to persist $_options across the library.
  *
  */
-class Base_MixpanelBase {
+class Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 
     /**

@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class CountryCodes {
+class CountryCodes { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * @var string

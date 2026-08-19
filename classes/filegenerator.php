@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Class to generate fiels and output them in attachment by http (https) protocol
  */
-class filegeneratorWcu {
+class filegeneratorWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     static protected $_instances = array();
     protected $_filename = '';
     protected $_data = '';

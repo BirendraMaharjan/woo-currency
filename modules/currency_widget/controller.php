@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class currency_widgetControllerWcu extends controllerWcu {
+class currency_widgetControllerWcu extends controllerWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	/**
 	 * getCurrencyRate.
 	 *

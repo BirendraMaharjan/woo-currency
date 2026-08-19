@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class currency_widgetViewWcu extends viewWcu {
+class currency_widgetViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	public function displayForm($data, $widget, $template) {
 		$this->addCommonValidation();
 		$this->addCommonAdminAssets();

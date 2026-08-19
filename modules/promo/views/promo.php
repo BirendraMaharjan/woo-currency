@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class promoViewWcu extends viewWcu {
+class promoViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * pluginSlug.

@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class admin_navControllerWcu extends controllerWcu {
+class admin_navControllerWcu extends controllerWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	public function getPermissions() {
 		return array(
 			WCU_USERLEVELS => array(

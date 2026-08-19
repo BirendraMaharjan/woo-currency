@@ -13,7 +13,7 @@
 define ('SXGEO_FILE', 0);
 define ('SXGEO_MEMORY', 1);
 define ('SXGEO_BATCH',  2);
-class SxGeo {
+class SxGeo { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	protected $fh;
 	protected $ip1c;
 	protected $info;

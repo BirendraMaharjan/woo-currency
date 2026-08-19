@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class currency_switcherControllerWcu extends controllerWcu {
+class currency_switcherControllerWcu extends controllerWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	public function drawCurrencySwitcherAjax() {
 		$res  = new responseWcu();

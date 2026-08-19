@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class mailControllerWcu extends controllerWcu {
+class mailControllerWcu extends controllerWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	public function testEmail() {
 		$res = new responseWcu();
 		$email = reqWcu::getVar('test_email', 'post');

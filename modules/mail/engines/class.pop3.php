@@ -27,8 +27,7 @@
  * @author Jim Jagielski (jimjag) <jimjag@gmail.com>
  * @author Andy Prevost (codeworxtech) <codeworxtech@users.sourceforge.net>
  */
-class POP3
-{
+class POP3 { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     /**
      * The POP3 PHPMailer Version number.
      * @var string

@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class optionsViewWcu extends viewWcu {
+class optionsViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * tabs.

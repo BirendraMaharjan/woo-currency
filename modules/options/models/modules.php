@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class modulesModelWcu extends modelWcu {
+class modulesModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	public function __construct() {
 		$this->_setTbl('modules');
 	}

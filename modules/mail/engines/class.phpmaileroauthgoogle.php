@@ -24,8 +24,7 @@
  * @author Marcus Bointon (@Synchro) <phpmailer@synchromedia.co.uk>
  * @link https://github.com/thephpleague/oauth2-client
  */
-class PHPMailerOAuthGoogle
-{
+class PHPMailerOAuthGoogle { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     private $oauthUserEmail = '';
     private $oauthRefreshToken = '';
     private $oauthClientId = '';

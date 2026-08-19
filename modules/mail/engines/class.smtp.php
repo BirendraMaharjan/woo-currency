@@ -24,8 +24,7 @@
  * @author Chris Ryan
  * @author Marcus Bointon <phpmailer@synchromedia.co.uk>
  */
-class SMTP
-{
+class SMTP { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     /**
      * The PHPMailer SMTP version number.
      * @var string

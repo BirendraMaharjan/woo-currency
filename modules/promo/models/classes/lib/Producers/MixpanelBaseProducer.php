@@ -11,7 +11,7 @@ if (!function_exists('json_encode')) {
 /**
  * Provides some base methods for use by a message Producer
  */
-abstract class Producers_MixpanelBaseProducer extends Base_MixpanelBase {
+abstract class Producers_MixpanelBaseProducer extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 
     /**

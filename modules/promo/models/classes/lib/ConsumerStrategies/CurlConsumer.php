@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . "/AbstractConsumer.php");
 /**
  * Consumes messages and sends them to a host/endpoint using cURL
  */
-class ConsumerStrategies_CurlConsumer extends ConsumerStrategies_AbstractConsumer {
+class ConsumerStrategies_CurlConsumer extends ConsumerStrategies_AbstractConsumer { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
     /**
      * @var string the host to connect to (e.g. api.mixpanel.com)

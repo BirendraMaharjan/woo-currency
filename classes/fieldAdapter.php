@@ -140,38 +140,53 @@ class fieldAdapterWcu {
         $states = self::getStates();
         return empty($states[$sid]) ? $sid : $states[$sid][$key];
     }
+
 	/**
 	 * getCountries.
 	 *
 	 * @version 2.4.0
 	 */
-    static public function getCountries($notSelected = false) {
-        static $options = array();
-        if(empty($options[ $notSelected ])) {
+	static public function getCountries( $notSelected = false ) {
+		static $options = array();
+		if ( empty( $options[ $notSelected ] ) ) {
 			$options[ $notSelected ] = array();
-            if(empty(self::$countries))
-                self::$countries = self::getCachedCountries();
-            if($notSelected) {
-				$options[ $notSelected ][0] = is_bool($notSelected) ? __('Not selected', 'woo-currency') : __($notSelected);
+			if ( empty( self::$countries ) ) {
+				self::$countries = self::getCachedCountries();
 			}
-            foreach(self::$countries as $c) $options[ $notSelected ][$c['id']] = $c['name'];
-        }
-        return $options[ $notSelected ];
-    }
-    static public function getStates($notSelected = false) {
-        static $options = array();
-        if(empty($options[ $notSelected ])) {
+			if ( $notSelected ) {
+				$options[ $notSelected ][0] = is_bool( $notSelected ) ? __( 'Not selected', 'woo-currency' ) : $notSelected;
+			}
+			foreach ( self::$countries as $c ) {
+				$options[ $notSelected ][ $c['id'] ] = $c['name'];
+			}
+		}
+
+		return $options[ $notSelected ];
+	}
+
+	/**
+	 * getStates.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function getStates( $notSelected = false ) {
+		static $options = array();
+		if ( empty( $options[ $notSelected ] ) ) {
 			$options[ $notSelected ] = array();
-            if(empty(self::$states))
-                self::$states = self::getCachedStates();
-            if($notSelected) {
-				$notSelectedLabel = is_bool($notSelected) ? 'Not selected' : $notSelected;
-				$options[ $notSelected ][0] = array('name' => __( $notSelectedLabel ), 'country_id' => NULL);
+			if ( empty( self::$states ) ) {
+				self::$states = self::getCachedStates();
 			}
-            foreach(self::$states as $s) $options[ $notSelected ][$s['id']] = $s;
-        }
-        return $options[ $notSelected ];
-    }
+			if ( $notSelected ) {
+				$notSelectedLabel           = is_bool( $notSelected ) ? __( 'Not selected', 'woo-currency' ) : $notSelected;
+				$options[ $notSelected ][0] = array( 'name' => $notSelectedLabel, 'country_id' => null );
+			}
+			foreach ( self::$states as $s ) {
+				$options[ $notSelected ][ $s['id'] ] = $s;
+			}
+		}
+
+		return $options[ $notSelected ];
+	}
     /**
      * Function to get extra field options 
      * 
@@ -196,21 +211,22 @@ class fieldAdapterWcu {
      * 
      * @param object $params 
      */
-    static public function getFieldAttributes($params){
-        $output = '';
-        if (!empty($params->attr)) {
-            foreach ($params->attr as $key=>$value) {
-                $output .= __($key).':<br />';
-                $output .= htmlWcu::text('params[attr]['.$key.']',array('value'=>$value)).'<br />';
-            }
-        } else {
-                $output .= __('class', 'woo-currency').':<br />';
-                $output .= htmlWcu::text('params[attr][class]',array('value'=>'')).'<br />';
-                $output .= __('id', 'woo-currency').':<br />';
-                $output .= htmlWcu::text('params[attr][id]',array('value'=>'')).'<br />';
-        }
-        return $output;
-    }
+	static public function getFieldAttributes( $params ) {
+		$output = '';
+		if ( ! empty( $params->attr ) ) {
+			foreach ( $params->attr as $key => $value ) {
+				$output .= $key . ':<br />';
+				$output .= htmlWcu::text( 'params[attr][' . $key . ']', array( 'value' => $value ) ) . '<br />';
+			}
+		} else {
+			$output .= __( 'class', 'woo-currency' ) . ':<br />';
+			$output .= htmlWcu::text( 'params[attr][class]', array( 'value' => '' ) ) . '<br />';
+			$output .= __( 'id', 'woo-currency' ) . ':<br />';
+			$output .= htmlWcu::text( 'params[attr][id]', array( 'value' => '' ) ) . '<br />';
+		}
+
+		return $output;
+	}
     /**
      * Generating the list of categories for product extra fields
      *

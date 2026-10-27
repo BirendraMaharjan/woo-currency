@@ -17,7 +17,14 @@ defined( 'ABSPATH' ) || exit;
 			<div class="row">
 				<div class="col-sm-12">
 					<h2>
-						<?php printf(__('Welcome to the %s v %s', 'woo-currency'), WCU_WP_PLUGIN_NAME, WCU_VERSION)?>
+						<?php
+						printf(
+							/* Translators: %1$s: Plugin Name, %2$s: Plugin version. */
+							__( 'Welcome to the %1$s v %2$s', 'woo-currency' ),
+							WCU_WP_PLUGIN_NAME,
+							WCU_VERSION
+						);
+						?>
 						<a style="margin-top: -8px; margin-left: 5px;" href="<?php echo $this->skipTutorLink;?>" class="button"><?php _e('Skip tutorial', 'woo-currency')?></a>
 					</h2>
 					<p>
@@ -34,7 +41,18 @@ defined( 'ABSPATH' ) || exit;
 						</div>
 						<div class="col-sm-6">
 							<h3><?php _e('Support', 'woo-currency')?></h3>
-							<p><?php printf(__("We love our plugin and do the best to improve all features for You. But sometimes issues happened, or you can't find required feature that you need. Don't worry, just <a href='%s' target='_blank'>contact us</a> and we will help you!", 'woo-currency'), $this->getModule()->getContactLink())?></p>
+							<p>
+								<?php
+								printf(
+									/* Translators: %s: URL. */
+									__(
+										"We love our plugin and do the best to improve all features for You. But sometimes issues happened, or you can't find required feature that you need. Don't worry, just <a href='%s' target='_blank'>contact us</a> and we will help you!",
+										'woo-currency'
+									),
+									$this->getModule()->getContactLink()
+								);
+								?>
+							</p>
 						</div>
 					</div>
 					<?php /*<div class="row">

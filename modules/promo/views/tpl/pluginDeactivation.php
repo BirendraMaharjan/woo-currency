@@ -50,7 +50,15 @@ defined( 'ABSPATH' ) || exit;
 	}
 </style>
 <div id="wcuDeactivateWnd" style="display: none;" title="<?php _e('Your Feedback', 'woo-currency')?>">
-	<h4><?php printf(__('If you have a moment, please share why you are deactivating %s', 'woo-currency'), WCU_WP_PLUGIN_NAME)?></h4>
+	<h4>
+		<?php
+		printf(
+			/* Translators: %s: Plugin Name. */
+			__( 'If you have a moment, please share why you are deactivating %s', 'woo-currency' ),
+			esc_html( WCU_WP_PLUGIN_NAME )
+		);
+		?>
+	</h4>
 	<form id="wcuDeactivateForm">
 		<label class="wcuDeactivateReasonShell">
 			<?php echo htmlWcu::radiobutton('deactivate_reason', array(
@@ -58,7 +66,13 @@ defined( 'ABSPATH' ) || exit;
 			))?>
 			<?php _e('Couldn\'t get the plugin to work', 'woo-currency')?>
 			<div class="wcuDeactivateDescShell">
-				<?php printf(__('If you have a question, <a href="%s" target="_blank">contact us</a> and will do our best to help you'), 'https://woobewoo.com/contact-us/?utm_source=plugin&utm_medium=deactivated_contact&utm_campaign=woocurrency')?>
+				<?php
+				printf(
+					/* Translators: %s: URL. */
+					__( 'If you have a question, <a href="%s" target="_blank">contact us</a> and will do our best to help you', 'woo-currency' ),
+					'https://woobewoo.com/contact-us/?utm_source=plugin&utm_medium=deactivated_contact&utm_campaign=woocurrency'
+				);
+				?>
 			</div>
 		</label>
 		<label class="wcuDeactivateReasonShell">

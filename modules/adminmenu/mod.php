@@ -25,7 +25,11 @@ class adminmenuWcu extends moduleWcu {
 	 */
 	public function addSettingsLinkForPlug($links) {
 		$mainLink = 'http://woobewoo.com/';
-		$twitterStatus = sprintf(__('Cool WordPress plugins from woobewoo.com developers. I tried %s - and this was what I need! #woobewoo.com', 'woo-currency'), WCU_WP_PLUGIN_NAME);
+		$twitterStatus = sprintf(
+			/* Translators: %s: Name. */
+			__( 'Cool WordPress plugins from woobewoo.com developers. I tried %s - and this was what I need! #woobewoo.com', 'woo-currency' ),
+			WCU_WP_PLUGIN_NAME
+		);
 		array_unshift($links, '<a href="'. $this->getMainLink(). '">'. __('Settings', 'woo-currency'). '</a>');
 		array_push($links, '<a title="'. __('More plugins for your WordPress site here!', 'woo-currency'). '" href="'. $mainLink. '" target="_blank">woobewoo.com</a>');
 		array_push($links, '<a title="'. __('Spread the word!', 'woo-currency'). '" href="https://www.facebook.com/sharer/sharer.php?u='. urlencode($mainLink). '" target="_blank" class="dashicons-before dashicons-facebook-alt"></a>');

@@ -316,13 +316,24 @@ class htmlWcu {
 		$params['type'] = 'file';
 		return self::input($name, $params);
 	}
+
+	/**
+	 * ajaxfile.
+	 *
+	 * @version 2.4.0
+	 */
     static public function ajaxfile($name, $params = array('url' => '', 'value' => '', 'fid' => '', 'buttonName' => '', 'class' => '')) {
 		frameWcu::_()->addScript('ajaxupload', WCU_JS_PATH. 'ajaxupload.js');
         $out = '';
 		$params['class'] = isset($params['class']) ? $params['class'] : '';
         if(strpos($params['url'], 'pl='. WCU_CODE) === false)
 			$params['url'] = uriWcu::_(array('baseUrl' => $params['url'], 'pl' => WCU_CODE));
-        $out .= self::button(array('value' => __( empty($params['buttonName']) ? 'Upload' :  $params['buttonName'] ), 'attrs' => 'id="toeUploadbut_'.$name.'" class="button button-large '.$params['class'].'"'));
+	    $out .= self::button(
+		    array(
+			    'value' => empty( $params['buttonName'] ? __( 'Upload', 'woo-currency' ) : $params['buttonName'] ),
+			    'attrs' => 'id="toeUploadbut_' . $name . '" class="button button-large ' . $params['class'] . '"'
+		    )
+	    );
         $display = (empty($params['value']) ? 'style="display: none;"' : '');
         if(isset($params['preview']) && $params['preview'])
             $out .= self::img($params['value'], 0, array('attrs' => 'id="prev_'.$name.'" '.$display.' class="previewpicture"'));
@@ -508,6 +519,12 @@ class htmlWcu {
         $params['attrs'] .= ' type="country"';
         return self::selectlist($name, $params);
     }
+
+	/**
+	 * textFieldsDynamicTable.
+	 *
+	 * @version 2.4.0
+	 */
     static public function textFieldsDynamicTable($name, $params = array('value' => '', 'attrs' => '', 'options' => array())) {
         $res = '';
         if(empty($params['options']))
@@ -547,7 +564,7 @@ class htmlWcu {
                     $paramsForText = array(
                         'value' => $value,
                     );
-                    $res .= __($p['label']). htmlWcu::text($name. '['. $i. ']['. $key. ']', $paramsForText);
+	                $res .= $p['label'] . htmlWcu::text( $name . '[' . $i . '][' . $key . ']', $paramsForText );
                 }
                 $res .= $remove. '</div>';
                 $i++;
@@ -713,6 +730,11 @@ class htmlWcu {
 		return self::selectbox($name, $params);
 	}
 
+	/**
+	 * slideInput.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function slideInput($name, $params = array('attrs' => '', 'checked' => false, 'id' => '')) {
 		$params = !isset($params) || empty($params) ? array() : $params;
 		if(!isset($params['id'])) {
@@ -725,11 +747,11 @@ class htmlWcu {
 		$params['attrs'] = isset($params['attrs']) && !empty($params['attrs']) ? $params['attrs'] : '';
 		$params['attrs'] .= ' id="'. $params['id']. '"';
 
-		return '<a class="toeSlideShellWcu" href="#"'. $params['attrs']. '>
+		return '<a class="toeSlideShellWcu" href="#"' . $params['attrs'] . '>
 			<span class="toeSlideButtWcu"></span>
-			<span class="toeSlideOnWcu">'. __('ON'). '</span>
-			<span class="toeSlideOffWcu">'. __('OFF'). '</span>
-			<input type="hidden" name="'. $name. '" />
+			<span class="toeSlideOnWcu">' . __( 'ON', 'woo-currency') . '</span>
+			<span class="toeSlideOffWcu">' . __( 'OFF', 'woo-currency' ) . '</span>
+			<input type="hidden" name="' . $name . '" />
 		</a>
 		<script type="text/javascript">
 		// <!--
@@ -758,7 +780,11 @@ class htmlWcu {
 		$out = self::hidden($name, array('value' => $params['value'], 'attrs' => 'id="'. $inputId. '"'));
 		$onChange = isset($params['onChange']) ? $params['onChange'] : '';
 		$buttonParams = $params;
-		$buttonParams['value'] = isset($params['btnVal']) ? $params['btnVal'] : sprintf(__('Select %s', 'woo-currency'), strFirstUp($galleryType));
+		$buttonParams['value'] = $params['btnVal'] ?? sprintf(
+			/* Translators: %s: Gallery Type. */
+			__( 'Select %s', 'woo-currency' ),
+			strFirstUp( $galleryType )
+		);
 		$out .= self::button($buttonParams);
 		$out .= '<script type="text/javascript">
 		// <!--

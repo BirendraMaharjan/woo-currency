@@ -13,10 +13,10 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <section class="woobewoo-bar">
 	<ul class="woobewoo-bar-controls">
-		<li title="<?php _e('Save all options')?>">
+		<li title="<?php _e('Save all options', 'woo-currency'); ?>">
 			<button class="button button-primary" id="wcuSettingsSaveBtn" data-toolbar-button>
 				<i class="fa fa-fw fa-save"></i>
-				<?php _e('Save', 'woo-currency')?>
+				<?php _e('Save', 'woo-currency'); ?>
 			</button>
 		</li>
 	</ul>
@@ -27,8 +27,12 @@ defined( 'ABSPATH' ) || exit;
 	<form id="wcuSettingsForm" class="wcuInputsWithDescrForm">
 		<div class="woobewoo-item woobewoo-panel">
 			<div id="containerWrapper">
-				<a href="<?php echo frameWcu::_()->getModule('currency')->getCurrencyTabUrl()?>" class="button button-primary"><?php _e('Go to Woo Currency Settings')?></a><br />
-				<span class="description"><?php _e("To start work with Woo Currencies - go to it's section in your Woo Store")?></span>
+				<a href="<?php echo frameWcu::_()->getModule( 'currency' )->getCurrencyTabUrl(); ?>" class="button button-primary">
+					<?php _e( 'Go to Woo Currency Settings', 'woo-currency' ); ?>
+				</a><br/>
+				<span class="description">
+					<?php _e( "To start work with Woo Currencies - go to it's section in your Woo Store", 'woo-currency' ); ?>
+				</span>
 				<table class="form-table">
 					<?php foreach($this->options as $optCatKey => $optCatData) { ?>
 						<?php if(isset($optCatData['opts']) && !empty($optCatData['opts'])) { ?>
@@ -60,16 +64,24 @@ defined( 'ABSPATH' ) || exit;
 											<br />
 											<span class="description">
 												<?php
-												$opt['value']
-													? printf(__('Turned On %s', 'woo-currency'), dateWcu::_($opt['changed_on']))
-													: printf(__('Turned Off %s', 'woo-currency'), dateWcu::_($opt['changed_on']))
+												$opt['value'] ?
+													printf(
+														/* Translators: %s: Date. */
+														__( 'Turned On %s', 'woo-currency' ),
+														dateWcu::_( $opt['changed_on'] )
+													) :
+													printf(
+														/* Translators: %s: Date. */
+														__( 'Turned Off %s', 'woo-currency' ),
+														dateWcu::_( $opt['changed_on'] )
+													);
 												?>
 											</span>
 										<?php }?>
 										<?php if(isset($opt['pro']) && !empty($opt['pro'])) { ?>
 											<span class="wcuProOptMiniLabel">
 												<a href="<?php echo $opt['pro']?>" target="_blank">
-													<?php _e('PRO option', 'woo-currency')?>
+													<?php _e('PRO option', 'woo-currency');?>
 												</a>
 											</span>
 										<?php }?>
@@ -78,13 +90,10 @@ defined( 'ABSPATH' ) || exit;
 										<i class="fa fa-question woobewoo-tooltip" title="<?php echo esc_html($opt['desc'])?>"></i>
 									</td>
 									<td class="col-w-1perc">
-										<?php echo htmlWcu::$htmlType('opt_values['. $optKey. ']', $htmlOpts)?>
+										<?php echo htmlWcu::$htmlType('opt_values['. $optKey. ']', $htmlOpts);?>
 									</td>
 									<td class="col-w-60perc">
 										<div id="wcuFormOptDetails_<?php echo $optKey?>" class="wcuOptDetailsShell">
-										<?php switch($optKey) {
-
-										}?>
 										<?php
 											if(isset($opt['add_sub_opts']) && !empty($opt['add_sub_opts'])) {
 												if(is_string($opt['add_sub_opts'])) {
@@ -104,8 +113,8 @@ defined( 'ABSPATH' ) || exit;
 				<div style="clear: both;"></div>
 			</div>
 		</div>
-		<?php echo htmlWcu::hidden('mod', array('value' => 'options'))?>
-		<?php echo htmlWcu::hidden('action', array('value' => 'saveGroup'))?>
+		<?php echo htmlWcu::hidden( 'mod', array( 'value' => 'options' ) ); ?>
+		<?php echo htmlWcu::hidden( 'action', array( 'value' => 'saveGroup' ) ); ?>
 	</form>
 </section>
 <?php

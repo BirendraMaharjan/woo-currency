@@ -57,7 +57,7 @@ class Wcu_Widget_Layered_Nav_Filters extends WC_Widget_Layered_Nav_Filters {
 
 						$filter_classes = array( 'chosen', 'chosen-' . sanitize_html_class( str_replace( 'pa_', '', $taxonomy ) ), 'chosen-' . sanitize_html_class( str_replace( 'pa_', '', $taxonomy ) . '-' . $term_slug ) );
 
-						echo '<li class="' . esc_attr( implode( ' ', $filter_classes ) ) . '"><a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woocommerce' ) . '" href="' . esc_url( $link ) . '">' . esc_html( $term->name ) . '</a></li>';
+						echo '<li class="' . esc_attr( implode( ' ', $filter_classes ) ) . '"><a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woo-currency' ) . '" href="' . esc_url( $link ) . '">' . esc_html( $term->name ) . '</a></li>';
 					}
 				}
 			}
@@ -66,15 +66,22 @@ class Wcu_Widget_Layered_Nav_Filters extends WC_Widget_Layered_Nav_Filters {
 				$link = remove_query_arg( 'min_price', $base_link );
 				$formatted_price = ( $min_price < 0 ? '-' : '' ) . sprintf( get_woocommerce_price_format(), '<span class="woocommerce-Price-currencySymbol">' . get_woocommerce_currency_symbol() . '</span>', $min_price );
 				$return          = '<span class="woocommerce-Price-amount amount"><bdi>' . $formatted_price . '</bdi></span>';
-				echo '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woocommerce' ) . '" href="' . esc_url( $link ) . '">' . sprintf( __( 'Min %s', 'woocommerce' ), $return . '</a></li>' ); // WPCS: XSS ok.
+				echo '<li class="chosen">
+						<a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woo-currency' ) . '" href="' . esc_url( $link ) . '">' .
+					     sprintf(
+							 /* Translators: %s: Price. */
+						     __( 'Min %s', 'woo-currency' ),
+						     $return
+					     ) .
+				     '</a></li>';
 			}
 
 			if ( $max_price ) {
 				$link = remove_query_arg( 'max_price', $base_link );
 				$formatted_price = ( $max_price < 0 ? '-' : '' ) . sprintf( get_woocommerce_price_format(), '<span class="woocommerce-Price-currencySymbol">' . get_woocommerce_currency_symbol() . '</span>', $max_price );
 				$return          = '<span class="woocommerce-Price-amount amount"><bdi>' . $formatted_price . '</bdi></span>';
-				/* translators: %s: maximum price */
-				echo '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woocommerce' ) . '" href="' . esc_url( $link ) . '">' . sprintf( __( 'Max %s', 'woocommerce' ), $return ) . '</a></li>'; // WPCS: XSS ok.
+				/* Translators: %s: maximum price */
+				echo '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woo-currency' ) . '" href="' . esc_url( $link ) . '">' . sprintf( __( 'Max %s', 'woo-currency' ), $return ) . '</a></li>';
 			}
 
 			if ( ! empty( $rating_filter ) ) {
@@ -82,8 +89,8 @@ class Wcu_Widget_Layered_Nav_Filters extends WC_Widget_Layered_Nav_Filters {
 					$link_ratings = implode( ',', array_diff( $rating_filter, array( $rating ) ) );
 					$link         = $link_ratings ? add_query_arg( 'rating_filter', $link_ratings ) : remove_query_arg( 'rating_filter', $base_link );
 
-					/* translators: %s: rating */
-					echo '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woocommerce' ) . '" href="' . esc_url( $link ) . '">' . sprintf( esc_html__( 'Rated %s out of 5', 'woocommerce' ), esc_html( $rating ) ) . '</a></li>';
+					/* Translators: %s: rating */
+					echo '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woo-currency' ) . '" href="' . esc_url( $link ) . '">' . sprintf( esc_html__( 'Rated %s out of 5', 'woo-currency' ), esc_html( $rating ) ) . '</a></li>';
 				}
 			}
 

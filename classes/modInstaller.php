@@ -16,6 +16,8 @@ class modInstallerWcu {
      * @param string $module new moduleWcu data (@see classes/tables/modules.php)
      * @param string $path path to the main plugin file from what module is installed
      * @return bool true - if install success, else - false
+     *
+     * @version 2.4.0
      */
     static public function install($module, $path) {
         $exPlugDest = explode('plugins', $path);
@@ -41,10 +43,24 @@ class modInstallerWcu {
                     self::_installTables($module);
                     return true;
                 } else {
-                    errorsWcu::push(sprintf(__('Move files for %s failed'), $module['code']), errorsWcu::MOD_INSTALL);
+	                errorsWcu::push(
+						sprintf(
+							/* Translators: %s: Code. */
+							__( 'Move files for %s failed', 'woo-currency' ),
+							$module['code']
+						),
+						errorsWcu::MOD_INSTALL
+	                );
                 }
             } else
-                errorsWcu::push(sprintf(__('%s is not plugin module'), $module['code']), errorsWcu::MOD_INSTALL);
+	            errorsWcu::push(
+					sprintf(
+						/* Translators: %s: Code. */
+						__( '%s is not plugin module', 'woo-currency' ),
+						$module['code']
+					),
+					errorsWcu::MOD_INSTALL
+	            );
         }
         return false;
     }
@@ -80,17 +96,27 @@ class modInstallerWcu {
      * @param string $path path from what module will be moved
      * @return bool is success - true, else - false
      */
-    static public function moveFiles($code, $path) {
-        if(!is_dir(WCU_MODULES_DIR. $code)) {
-            if(mkdir(WCU_MODULES_DIR. $code)) {
-                utilsWcu::copyDirectories($path, WCU_MODULES_DIR. $code);
-                return true;
-            } else 
-                errorsWcu::push(__('Cannot create module directory. Try to set permission to '. WCU_MODULES_DIR. ' directory 755 or 777', 'woo-currency'), errorsWcu::MOD_INSTALL);
-        } else
-            return true;
-        return false;
-    }
+	static public function moveFiles( $code, $path ) {
+		if ( ! is_dir( WCU_MODULES_DIR . $code ) ) {
+			if ( mkdir( WCU_MODULES_DIR . $code ) ) {
+				utilsWcu::copyDirectories( $path, WCU_MODULES_DIR . $code );
+
+				return true;
+			} else {
+				errorsWcu::push(
+					sprintf(
+						/* Translators: %s: Directory path. */
+						__( 'Cannot create module directory. Try to set permission to %s directory 755 or 777', 'woo-currency' ),
+						WCU_MODULES_DIR
+					)
+				);
+			}
+		} else {
+			return true;
+		}
+
+		return false;
+	}
     static private function _getPluginLocations() {
         $locations = array();
         $plug = reqWcu::getVar('plugin');
@@ -128,43 +154,54 @@ class modInstallerWcu {
             errorsWcu::push(__('No XML file were found', 'woo-currency'), errorsWcu::MOD_INSTALL);
         return false;
     }
-    /**
-     * Check whether modules is installed or not, if not and must be activated - install it.
-     *
-     * @version 2.4.0
-     *
-     * @param array $codes array with modules data to store in database
-     * @param string $path path to plugin file where modules is stored (__FILE__ for example)
-     * @return bool true if check ok, else - false
-     */
-    static public function check($extPlugName = '') {
-		if(WCU_TEST_MODE) {
-			add_action('activated_plugin', array(frameWcu::_(), 'savePluginActivationErrors'));
+
+	/**
+	 * Check whether modules is installed or not, if not and must be activated - install it.
+	 *
+	 * @param array $codes array with modules data to store in database
+	 * @param string $path path to plugin file where modules is stored (__FILE__ for example)
+	 *
+	 * @return bool true if check ok, else - false
+	 * @version 2.4.0
+	 */
+	static public function check( $extPlugName = '' ) {
+		if ( WCU_TEST_MODE ) {
+			add_action( 'activated_plugin', array( frameWcu::_(), 'savePluginActivationErrors' ) );
 		}
-        $locations = self::_getPluginLocations();
-        if($modules = self::_getModulesFromXml($locations['xmlPath'])) {
-            foreach($modules as $m) {
-                $modDataArr = utilsWcu::xmlNodeAttrsToArr($m);
-                if(!empty($modDataArr)) {
+		$locations = self::_getPluginLocations();
+		if ( $modules = self::_getModulesFromXml( $locations['xmlPath'] ) ) {
+			foreach ( $modules as $m ) {
+				$modDataArr = utilsWcu::xmlNodeAttrsToArr( $m );
+				if ( ! empty( $modDataArr ) ) {
 					//If module Exists - just activate it, we can't check this using frameWcu::moduleExists because this will not work for multy-site WP
-                    if(frameWcu::_()->getTable('modules')->exists($modDataArr['code'], 'code') /*frameWcu::_()->moduleExists($modDataArr['code'])*/) {
-                        self::activate($modDataArr);
-                    } else {                                           //  if not - install it
-                        if(!self::install($modDataArr, $locations['plugDir'])) {
-                            errorsWcu::push(sprintf(__('Install %s failed'), $modDataArr['code']), errorsWcu::MOD_INSTALL);
-                        }
-                    }
-                }
-            }
-        } else
-            errorsWcu::push(__('Error Activate module', 'woo-currency'), errorsWcu::MOD_INSTALL);
-        if(errorsWcu::haveErrors(errorsWcu::MOD_INSTALL)) {
-            self::displayErrors();
-            return false;
-        }
-		update_option(WCU_CODE. '_full_installed', 1);
-        return true;
-    }
+					if ( frameWcu::_()->getTable( 'modules' )->exists( $modDataArr['code'], 'code' ) /*frameWcu::_()->moduleExists($modDataArr['code'])*/ ) {
+						self::activate( $modDataArr );
+					} else {                                           //  if not - install it
+						if ( ! self::install( $modDataArr, $locations['plugDir'] ) ) {
+							errorsWcu::push(
+								sprintf(
+									/* Translators: %s: Code. */
+									__( 'Install %s failed', 'woo-currency' ),
+									$modDataArr['code']
+								),
+								errorsWcu::MOD_INSTALL
+							);
+						}
+					}
+				}
+			}
+		} else {
+			errorsWcu::push( __( 'Error Activate module', 'woo-currency' ), errorsWcu::MOD_INSTALL );
+		}
+		if ( errorsWcu::haveErrors( errorsWcu::MOD_INSTALL ) ) {
+			self::displayErrors();
+
+			return false;
+		}
+		update_option( WCU_CODE . '_full_installed', 1 );
+
+		return true;
+	}
     /**
 	 * Public alias for _getCheckRegPlugs()
 	 */

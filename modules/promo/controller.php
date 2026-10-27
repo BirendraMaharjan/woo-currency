@@ -41,7 +41,7 @@ class promoControllerWcu extends controllerWcu { // phpcs:ignore WordPress.Namin
 		$time = time();
 		$prevSendTime = (int) get_option(WCU_CODE. '_last__time_contact_send');
 		if($prevSendTime && ($time - $prevSendTime) < 5 * 60) {	// Only one message per five minutes
-			$res->pushError(__('Please don\'t send contact requests so often - wait for response for your previous requests.'));
+			$res->pushError( __( 'Please don\'t send contact requests so often - wait for response for your previous requests.', 'woo-currency' ) );
 			$res->ajaxExec();
 		}
         $data = reqWcu::get('post');
@@ -57,7 +57,11 @@ class promoControllerWcu extends controllerWcu { // phpcs:ignore WordPress.Namin
 					switch($v) {
 						case 'notEmpty':
 							if(empty($data[ $fName ])) {
-								$error = $fData['html'] == 'selectbox' ? __('Please select %s', 'woo-currency') : __('Please enter %s', 'woo-currency');
+								$error = $fData['html'] == 'selectbox' ?
+									/* Translators: %s: Option. */
+									__( 'Please select %s', 'woo-currency' ) :
+									/* Translators: %s: Option. */
+									__( 'Please enter %s', 'woo-currency' );
 								$error = sprintf($error, $fData['label']);
 							}
 							break;

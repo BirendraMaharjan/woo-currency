@@ -50,18 +50,59 @@ class promoWcu extends moduleWcu {
 		$currTime = time();
 		$day = 24 * 3600;
 		if($startUsage) {	// Already saved
-			$rateMsg = sprintf(__("<h3>Hey, I noticed you just use %s over a week – that’s awesome!</h3><p>Could you please do me a BIG favor and give it a 5-star rating on WordPress? Just to help us spread the word and boost our motivation.</p>", 'woo-currency'), WCU_WP_PLUGIN_NAME);
+			$rateMsg = sprintf(
+				'<h3>%s</h3><p>%s</p>',
+				sprintf(
+					/* Translators: %s: Plugin Name. */
+					__( 'Hey, I noticed you just use %s over a week – that’s awesome!', 'woo-currency' ),
+					esc_html( WCU_WP_PLUGIN_NAME )
+				),
+				__( 'Could you please do me a BIG favor and give it a 5-star rating on WordPress? Just to help us spread the word and boost our motivation.', 'woo-currency' )
+			);
 			$rateMsg .= '<p><a href="#" target="_blank" class="button button-primary" data-statistic-code="done">'. __('Ok, you deserve it', 'woo-currency'). '</a>
 			<a href="#" class="button" data-statistic-code="later">'. __('Nope, maybe later', 'woo-currency'). '</a>
 			<a href="#" class="button" data-statistic-code="hide">'. __('I already did', 'woo-currency'). '</a></p>';
-			$enbPromoLinkMsg = sprintf(__("<h3>More then eleven days with our %s plugin - Congratulations!</h3>", 'woo-currency'), WCU_WP_PLUGIN_NAME);
-			$enbPromoLinkMsg .= __('<p>On behalf of the entire <a href="https://woobewoo.com/" target="_blank">woobewoo.com</a> company I would like to thank you for been with us, and I really hope that our software helped you. If you found it useful - please, share your opinion leaving a review.</p>', 'woo-currency');
+
+			$enbPromoLinkMsg = sprintf(
+				'<h3>%s</h3>',
+				sprintf(
+					/* Translators: %s: Plugin Name. */
+					__( 'More than eleven days with our %s plugin - Congratulations!', 'woo-currency' ),
+					esc_html( WCU_WP_PLUGIN_NAME )
+				)
+			);
+			$enbPromoLinkMsg .= sprintf(
+				'<p>%s</p>',
+				sprintf(
+					/* Translators: %s: Link. */
+					__(
+						'On behalf of the entire %s company, I would like to thank you for being with us, and I really hope that our software has helped you. If you found it useful, please share your opinion by leaving a review.',
+						'woo-currency'
+					),
+					'<a href="https://woobewoo.com/" target="_blank" rel="noopener noreferrer">woobewoo.com</a>'
+				)
+			);
 			$enbPromoLinkMsg .= '<p><a href="https://wordpress.org/plugins/woo-currency/#reviews" class="button button-primary" data-statistic-code="done">'. __('Ok, you deserve it', 'woo-currency'). '</a>
 			<a href="#" class="button" data-statistic-code="later">'. __('Nope, maybe later', 'woo-currency'). '</a>
 			<a href="#" class="button" data-statistic-code="hide">'. __('Skip', 'woo-currency'). '</a></p>';
-			$enbStatsMsg = '<p>'
-				. sprintf(__('You can help us improve our plugin - by <a href="%s" data-statistic-code="hide" class="button button-primary wcuEnbStatsAdBtn">enabling Usage Statistics</a>. We will collect only our plugin usage statistics data - to understand Your needs and make our solution better for You.', 'woo-currency'), frameWcu::_()->getModule('options')->getTabUrl('settings'))
-			. '</p>';
+
+			$enbStatsMsg = sprintf(
+				'<p>%s</p>',
+				sprintf(
+					/* Translators: %s: Link. */
+					__(
+						'You can help us improve our plugin by %s. We will collect only our plugin usage statistics data to understand your needs and make our solution better for you.',
+						'woo-currency'
+					),
+					sprintf(
+						/* Translators: %1$s: URL, %2$s: Text. */
+						'<a href="%1$s" data-statistic-code="hide" class="button button-primary wcuEnbStatsAdBtn">%2$s</a>',
+						esc_url( frameWcu::_()->getModule( 'options' )->getTabUrl( 'settings' ) ),
+						esc_html__( 'enabling Usage Statistics', 'woo-currency' )
+					)
+				)
+			);
+
 			$notices = array(
 				'rate_msg' => array('html' => $rateMsg, 'show_after' => 7 * $day),
 				'enb_promo_link_msg' => array('html' => $enbPromoLinkMsg, 'show_after' => 11 * $day),

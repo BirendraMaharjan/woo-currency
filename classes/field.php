@@ -461,9 +461,9 @@ class fieldWcu {
 						$htmlParams = array_merge($htmlParams, $configOptions[$key]['htmlParams']);
 					}
 					// output label and html element
-					$output .= '<label>'.__($configOptions[$key]['label']);
-					if ($configOptions[$key]['description'] != '') {
-						$output .= '<a class="toeOptTip" tip="'.__($configOptions[$key]['description']).'"></a>';
+					$output .= '<label>' . $configOptions[ $key ]['label'];
+					if ( $configOptions[ $key ]['description'] != '' ) {
+						$output .= '<a class="toeOptTip" tip="' . $configOptions[ $key ]['description'] . '"></a>';
 					}
 					$output .= '</label><br />';
 					$output .= htmlWcu::$method($name,$htmlParams).'<br />';

@@ -35,7 +35,13 @@ class currency_widgetControllerWcu extends controllerWcu { // phpcs:ignore WordP
 			$res->addMessage(__('Done', 'woo-currency'));
 			$res->addData('result', round($amount * $rateTo / $rateFrom, 7));
 		} else {
-			$res->pushError(sprintf(__('no data for %s', 'woo-currency'), $toCurrency));
+			$res->pushError(
+				sprintf(
+					/* Translators: %s: Currency code. */
+					__( 'no data for %s', 'woo-currency' ),
+					$toCurrency
+				)
+			);
 		}
 
 

@@ -35,26 +35,56 @@ class validatorWcu {
         }
         return self::$errors;
     }
-    static public function validLen($field, $label = '', $validate = array()) {
-        if( !(bool) (strlen($field->value) <= $field->maxlen)) {
-			self::addError(sprintf(__('Invalid length for %s, max length is %s'), $field->label, $field->maxlen), $field->name);
+
+	/**
+	 * validLen.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function validLen( $field, $label = '', $validate = array() ) {
+		if ( ! (bool) ( strlen( $field->value ) <= $field->maxlen ) ) {
+			self::addError(
+				sprintf(
+					/* Translators: %1$: Label, %2$s: Max length. */
+					__( 'Invalid length for %1$s, max length is %2$s', 'woo-currency' ),
+					$field->label,
+					$field->maxlen ),
+				$field->name
+			);
+
 			return false;
 		}
+
 		return true;
-    }
+	}
     static public function _($field) {
         return self::validate($field);
     }
     static public function getErrors() {
         return self::$errors;
     }
-    static public function numeric($field) {
-        if(!is_numeric($field->value) && !empty($field->value)) {
-            self::addError(sprintf(__('Invalid numeric value for %s'), $field->label), $field->name);
-            return false;
-        }
-        return true;
-    }
+
+	/**
+	 * numeric.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function numeric( $field ) {
+		if ( ! is_numeric( $field->value ) && ! empty( $field->value ) ) {
+			self::addError(
+				sprintf(
+					/* Translators: %s: Label. */
+					__( 'Invalid numeric value for %s', 'woo-currency' ),
+					$field->label
+				),
+				$field->name
+			);
+
+			return false;
+		}
+
+		return true;
+	}
     static public function int($field) {
         return self::numeric($field);
     }
@@ -76,71 +106,144 @@ class validatorWcu {
             $res = !empty($value);
         return $res;
     }
-    static public function notEmpty($field) {
-        if(!self::_notEmpty($field->value)) {
-            self::addError(sprintf(__('Please enter %s'), $field->label), $field->name);
-            return false;
-        }
-        return true;
-    }
-    static public function selectNotEmpty($field) {
-        if(empty($field->value)) {
-            self::addError(sprintf(__('Please select %s'), $field->label), $field->name);
-            return false;
-        }
-        return true;
-    }
-    static public function email($field) {
-        if(!is_email($field->value)) {
-            self::addError(sprintf(__('Invalid %s'), $field->label), $field->name);
-            return false;
-        } elseif(email_exists($field->value)) {
-            self::addError(sprintf(__('%s is already registered'), $field->label), $field->name);
-            return false;
-        }
-        return true;
-    }
+
+	/**
+	 * notEmpty.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function notEmpty( $field ) {
+		if ( ! self::_notEmpty( $field->value ) ) {
+			self::addError(
+				sprintf(
+					/* Translators: %s: Label. */
+					__( 'Please enter %s', 'woo-currency' ),
+					$field->label
+				),
+				$field->name
+			);
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * selectNotEmpty.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function selectNotEmpty( $field ) {
+		if ( empty( $field->value ) ) {
+			self::addError(
+				sprintf(
+					/* Translators: %s: Label. */
+					__( 'Please select %s', 'woo-currency' ),
+					$field->label
+				),
+				$field->name
+			);
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * email.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function email( $field ) {
+		if ( ! is_email( $field->value ) ) {
+			self::addError(
+				sprintf(
+					/* Translators: %s: Label. */
+					__( 'Invalid %s', 'woo-currency' ),
+					$field->label
+				),
+				$field->name
+			);
+
+			return false;
+		} elseif ( email_exists( $field->value ) ) {
+			self::addError(
+				sprintf(
+					/* Translators: %s: Label. */
+					__( '%s is already registered', 'woo-currency' ),
+					$field->label
+				),
+				$field->name
+			);
+
+			return false;
+		}
+
+		return true;
+	}
     static public function addError($error, $key = '') {
         if($key)
             self::$errors[$key] = $error;
         else
             self::$errors[] = $error;
     }
-    static public function string($field) {
-        if (preg_match('/([0-9].*)/', $field->value)) {
-            self::addError(sprintf(__('Invalid %s'), $field->label), $field->name);
-            return false;
-        }
-        return true;
-    }
+
+	/**
+	 * string.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function string( $field ) {
+		if ( preg_match( '/([0-9].*)/', $field->value ) ) {
+			self::addError(
+				sprintf(
+				/* Translators: %s: Label. */
+					__( 'Invalid %s', 'woo-currency' ),
+					$field->label ),
+				$field->name
+			);
+
+			return false;
+		}
+
+		return true;
+	}
     /**
-     * Fective method
+     * getProductValidationMethods.
+     *
+     * @version 2.4.0
      */
-    /*static public function none($fileld) {
-        return true;
-    }*/
-    static public function getProductValidationMethods() {
-        $res = array();
-        $all = get_class_methods('validatorWcu');
-        foreach($all as $m) {
-            if(in_array($m, array('int', 'none', 'string'))) {
-                $res[$m] = __($m);
-            }
-        }
-        return $res;
-    }
-    
-    static public function getUserValidationMethods() {
-        // here validation for user fields
-        $res = array();
-        $all = get_class_methods('validatorWcu');
-        foreach($all as $m) {
-            if(in_array($m, array('int', 'none', 'string', 'email', 'validLen'))) {
-                $res[$m] = __($m);
-            }
-        }
-        return $res;
-    }
+	static public function getProductValidationMethods() {
+		$res = array();
+		$all = get_class_methods( 'validatorWcu' );
+		foreach ( $all as $m ) {
+			if ( in_array( $m, array( 'int', 'none', 'string' ) ) ) {
+				$res[ $m ] = $m;
+			}
+		}
+
+		return $res;
+	}
+
+	/**
+	 * getUserValidationMethods.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function getUserValidationMethods() {
+		// here validation for user fields
+		$res = array();
+		$all = get_class_methods( 'validatorWcu' );
+		foreach ( $all as $m ) {
+			if ( in_array( $m, array( 'int', 'none', 'string', 'email', 'validLen' ) ) ) {
+				$res[ $m ] = $m;
+			}
+		}
+
+		return $res;
+	}
     static public function prepareInput($input) {
 		global $wpdb;
         if(is_array($input)) {

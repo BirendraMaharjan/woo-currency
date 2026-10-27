@@ -10,13 +10,20 @@
 defined( 'ABSPATH' ) || exit;
 
 class mailControllerWcu extends controllerWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+
+	/**
+	 * testEmail.
+	 *
+	 * @version 2.4.0
+	 */
 	public function testEmail() {
-		$res = new responseWcu();
-		$email = reqWcu::getVar('test_email', 'post');
-		if($this->getModel()->testEmail($email)) {
-			$res->addMessage(__('Now check your email inbox / spam folders for test mail.'));
-		} else 
-			$res->pushError ($this->getModel()->getErrors());
+		$res   = new responseWcu();
+		$email = reqWcu::getVar( 'test_email', 'post' );
+		if ( $this->getModel()->testEmail( $email ) ) {
+			$res->addMessage( __( 'Now check your email inbox / spam folders for test mail.', 'woo-currency' ) );
+		} else {
+			$res->pushError( $this->getModel()->getErrors() );
+		}
 		$res->ajaxExec();
 	}
 	public function saveMailTestRes() {

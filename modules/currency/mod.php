@@ -1425,7 +1425,14 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'free_converter',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the free API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a free API key for the converter. If the field is empty, Free Converter will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://free.currencyconverterapi.com/free-api-key'),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the free API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a free API key for the converter. If the field is empty, Free Converter will use the default API key - this may create an error when getting the exchange rate.',
+							'woo-currency'
+						),
+						'https://free.currencyconverterapi.com/free-api-key'
+					),
 					'label' => __('Free Converter API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
@@ -1438,7 +1445,13 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'currencyapi',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the Currency Conversion API key in this field. Get <a target="blank" href="%s"> API key </a> for the Currency Conversion API. If the field is empty, Currency Conversion API will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://currencyapi.com/'),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the Currency Conversion API key in this field. Get <a target="blank" href="%s"> API key </a> for the Currency Conversion API. If the field is empty, Currency Conversion API will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'
+						),
+						'https://currencyapi.com/'
+					),
 					'label' => __('Currency Conversion API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
@@ -1451,7 +1464,14 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'ecb',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the European Central Bank API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a European Central Bank API key for the converter. If the field is empty, European Central Bank will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://exchangeratesapi.io/faq/'),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the European Central Bank API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a European Central Bank API key for the converter. If the field is empty, European Central Bank will use the default API key - this may create an error when getting the exchange rate.',
+							'woo-currency'
+						),
+						'https://exchangeratesapi.io/faq/'
+					),
 					'label' => __('European Central Bank API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
@@ -1464,7 +1484,14 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'fixer',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the Fixer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Fixer converter. If the field is empty, Fixer will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://fixer.io/product'),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the Fixer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Fixer converter. If the field is empty, Fixer will use the default API key - this may create an error when getting the exchange rate.',
+							'woo-currency'
+						),
+						'https://fixer.io/product'
+					),
 					'label' => __('Fixer API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
@@ -1477,7 +1504,11 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'currencylayer',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the currencylayer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the currencylayer converter. If the field is empty, currencylayer will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://currencylayer.com/product'),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__( 'Insert the currencylayer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the currencylayer converter. If the field is empty, currencylayer will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency' ),
+						'https://currencylayer.com/product'
+					),
 					'label' => __('Currencylayer API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
@@ -1490,7 +1521,14 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'oer',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the Open Exchange Rates API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Open Exchange Rates converter. If the field is empty, Open Exchange Rates will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'), 'https://openexchangerates.org/signup'),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the Open Exchange Rates API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Open Exchange Rates converter. If the field is empty, Open Exchange Rates will use the default API key - this may create an error when getting the exchange rate.',
+							'woo-currency'
+						),
+						'https://openexchangerates.org/signup'
+					),
 					'label' => __('Open Exchange Rates API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',

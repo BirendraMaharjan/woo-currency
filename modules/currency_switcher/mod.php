@@ -1367,7 +1367,23 @@ class currency_switcherWcu extends moduleWcu
 		            'row_show' => '',
 		            'row_hide' => '',
 		            'tooltip' => __('Show popup message "Do you want change currency?". Read more in the <a href="https://woobewoo.com/documentation/currency-switcher-mode/">documentation</a>.', 'woo-currency'),
-		            'label' => __('Show popup message for switcher', 'woo-currency') . ' <sup>PRO</sup>' . ($proModule ? (method_exists(frameWcu::_()->getModule('options_pro'), 'getProShowPopupSwitcherMessage') ? '' : __(' (since version 1.4.0)')) : ''),
+		            'label' => sprintf(
+		                /* Translators: %s: Option. */
+			            __(
+				            'Show popup message for switcher <sup>PRO</sup> %s',
+				            'woo-currency'
+			            ),
+			            $proModule ?
+				            (
+								method_exists(
+									frameWcu::_()->getModule('options_pro'),
+				            'getProShowPopupSwitcherMessage'
+								) ?
+								'' :
+								__( '(since version 1.4.0)', 'woo-currency' )
+				            ) :
+				            ''
+		            ),
 		            'params' => array(
 			            'value'=>'1',
 			            'attrs' => 'disabled',
@@ -1397,7 +1413,14 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-					'tooltip' => __('<p>The shortcode can take parameters, read more in the documentation</p>. <img src="' . WCU_IMG_PATH . 'switcher-extended.png" />', 'woo-currency'),
+                    'tooltip' => sprintf(
+                        /* translators: %s: Image URL. */
+	                    __(
+		                    '<p>The shortcode can take parameters, read more in the documentation.</p> <img src="%s" />',
+		                    'woo-currency'
+	                    ),
+	                    WCU_IMG_PATH . 'switcher-extended.png'
+                    ),
                     'label' => __('Shortcode extended <sup>PRO</sup>', 'woo-currency'),
                 ),
 				'switcher_shortcode_frontend_extended_php' => array(
@@ -1406,7 +1429,14 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-					'tooltip' => __('<p>The shortcode can take parameters, read more in the documentation.</p> <img src="' . WCU_IMG_PATH . 'switcher-extended.png"/>', 'woo-currency'),
+                    'tooltip' => sprintf(
+                        /* translators: %s: Image URL. */
+	                    __(
+		                    '<p>The shortcode can take parameters, read more in the documentation.</p> <img src="%s" />',
+		                    'woo-currency'
+	                    ),
+	                    WCU_IMG_PATH . 'switcher-extended.png'
+                    ),
                     'label' => __('PHP Shortcode extended <sup>PRO</sup>', 'woo-currency'),
                 ),
                 'switcher_shortcode' => array(

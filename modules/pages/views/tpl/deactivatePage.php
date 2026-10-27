@@ -14,11 +14,11 @@ $title = WCU_WP_PLUGIN_NAME;
 ?>
 <html>
     <head>
-        <title><?php _e( $title )?></title>
+        <title><?php echo esc_html( $title )?></title>
     </head>
     <body>
 <div style="position: fixed; margin-left: 40%; margin-right: auto; text-align: center; background-color: #fdf5ce; padding: 10px; margin-top: 10%;">
-    <div><?php _e( $title )?></div>
+    <div><?php echo esc_html( $title )?></div>
     <?php echo htmlWcu::formStart('deactivatePlugin', array('action' => $this->REQUEST_URI, 'method' => $this->REQUEST_METHOD))?>
     <?php
         $formData = array();

@@ -14,7 +14,15 @@ defined( 'ABSPATH' ) || exit;
 
 <?php $wcuShowPro = !empty($this->optionsProModule) ? '' : 'wcuShowPro'; ?>
 <div class="wcuCurrenciesShell">
-	<h3 style="margin-bottom: 1px;"><?php printf(__('WooCurrency %s', 'woo-currency'), WCU_VERSION) ?></h3>
+	<h3 style="margin-bottom: 1px;">
+		<?php
+		printf(
+			/* Translators: %s: VERSION. */
+			__( 'WooCurrency %s', 'woo-currency' ),
+			WCU_VERSION
+		);
+		?>
+	</h3>
 	<div class="nav-tab-wrapper">
 		<a href="#" data-target="wcuCurrenciesTab" class="nav-tab nav-tab-active" ><?php _e('Currencies', 'woo-currency')?></a>
 		<a href="#" data-target="wcuOptionsTab" class="nav-tab"><?php _e('Options', 'woo-currency')?></a>

@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <form id="wcuMailTestForm">
 	<label>
-		<?php _e('Send test email to')?>
+		<?php _e('Send test email to', 'woo-currency')?>
 		<?php echo htmlWcu::text('test_email', array('value' => $this->testEmail))?>
 	</label>
 	<?php echo htmlWcu::hidden('mod', array('value' => 'mail'))?>
@@ -55,10 +55,18 @@ defined( 'ABSPATH' ) || exit;
 					<?php if(!empty($opt['changed_on'])) {?>
 						<br />
 						<span class="description">
-							<?php 
-							$opt['value'] 
-								? printf(__('Turned On %s', 'woo-currency'), dateWcu::_($opt['changed_on']))
-								: printf(__('Turned Off %s', 'woo-currency'), dateWcu::_($opt['changed_on']))
+							<?php
+							$opt['value'] ?
+								printf(
+									/* Translators: %s: Date. */
+									__( 'Turned On %s', 'woo-currency' ),
+									dateWcu::_( $opt['changed_on'] )
+								) :
+								printf(
+									/* Translators: %s: Date. */
+									__( 'Turned Off %s', 'woo-currency' ),
+									dateWcu::_( $opt['changed_on'] )
+								);
 							?>
 						</span>
 					<?php }?>

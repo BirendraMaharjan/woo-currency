@@ -123,7 +123,7 @@ foreach($this->displayRulesTab as $p) {
 			<?php foreach ( $this->currencies as $key => $currency ) { ?>
 				<?php $current = $key == $this->currentCurrency ? 'wcuCurrent' : ''; ?>
 				<li class="<?php echo esc_attr( $current ); ?>" data-currency="<?php echo esc_attr( $key ); ?>">
-					<?php echo esc_html( $currency ); ?>
+					<?php echo wp_kses_post( $currency ); ?>
 				</li>
 			<?php } ?>
 		</ul>

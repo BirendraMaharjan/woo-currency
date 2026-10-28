@@ -240,7 +240,7 @@ foreach ($this->displayRulesTab as $p) {
 						<?php if (!empty($switcher_opening_button) && ($switcher_opening_button !== 'text')) { ?>
 							<?php if ($cur_currency_top) { ?>
 								<td class="wcuCurrent">
-									<div class="wcuCurrencySwitcherButtonDiv"><?php echo esc_html(  $this->currenciesButton[$this->currentCurrency] ); ?></div>
+									<div class="wcuCurrencySwitcherButtonDiv"><?php echo wp_kses_post(  $this->currenciesButton[$this->currentCurrency] ); ?></div>
 								</td>
 							<?php } ?>
 							<?php foreach ($this->currenciesButton as $key => $currency) { ?>
@@ -249,7 +249,7 @@ foreach ($this->displayRulesTab as $p) {
 									<?php continue; ?>
 								<?php } ?>
 								<td class="<?php echo esc_attr( $current ); ?>">
-									<div class="wcuCurrencySwitcherButtonDiv wcuCurrencySwitcherFloating_<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $currency ); ?></div>
+									<div class="wcuCurrencySwitcherButtonDiv wcuCurrencySwitcherFloating_<?php echo esc_attr( $key ); ?>"><?php echo wp_kses_post( $currency ); ?></div>
 								</td>
 							<?php } ?>
 						<?php } else { ?>

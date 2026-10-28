@@ -41,97 +41,97 @@ foreach ($this->displayRulesTab as $p) {
 	<?php if (!wp_is_mobile()) {
         ?>
 		.wcuCurrencySwitcher.left, .wcuCurrencySwitcher.right {
-			top: <?php echo $vertical_offset_desktop?><?php echo $vertical_offset_desktop_dimension?> !important;
+			top: <?php echo (float) $vertical_offset_desktop . esc_attr( $vertical_offset_desktop_dimension ); ?> !important;
 		}
 		.wcuCurrencySwitcher.top {
-			top:0px;
-			left: <?php echo $horizontal_offset_desktop?><?php echo $horizontal_offset_desktop_dimension?> !important;
+			top:0;
+			left: <?php echo (float) $horizontal_offset_desktop . esc_attr( $horizontal_offset_desktop_dimension ); ?> !important;
 		}
 		.wcuCurrencySwitcher.bottom {
-			bottom:0px;
-			left: <?php echo $horizontal_offset_desktop?><?php echo $horizontal_offset_desktop_dimension?> !important;
+			bottom:0;
+			left: <?php echo (float) $horizontal_offset_desktop . esc_attr( $horizontal_offset_desktop_dimension ); ?> !important;
 		}
 	<?php
     } else {
         ?>
 		.wcuCurrencySwitcher.left, .wcuCurrencySwitcher.right {
-			top: <?php echo $vertical_offset_mobile?><?php echo $vertical_offset_mobile_dimension?> !important;
+			top: <?php echo (float) $vertical_offset_mobile . esc_attr( $vertical_offset_mobile_dimension ); ?> !important;
 		}
 		.wcuCurrencySwitcher.top {
-			top:0px;
-			left: <?php echo $horizontal_offset_mobile?><?php echo $horizontal_offset_mobile_dimension?> !important;
+			top: 0;
+			left: <?php echo (float) $horizontal_offset_mobile . esc_attr( $horizontal_offset_mobile_dimension ); ?> !important;
 		}
 		.wcuCurrencySwitcher.bottom {
-			bottom:0px;
-			left: <?php echo $horizontal_offset_mobile?><?php echo $horizontal_offset_mobile_dimension?> !important;
+			bottom: 0;
+			left: <?php echo (float) $horizontal_offset_mobile . esc_attr( $horizontal_offset_mobile_dimension ); ?> !important;
 		}
 	<?php
     } ?>
 	.wcuCurrencySwitcher .wcuHeader {
-		background-color: <?php echo $bg_color?>;
-        background: <?php echo $bg_color?>;
-		color: <?php echo $txt_color?>;
+		background-color: <?php echo esc_attr( $bg_color ); ?>;
+        background: <?php echo esc_attr( $bg_color ); ?>;
+		color: <?php echo esc_attr( $txt_color ); ?>;
 	}
 	.wcuCurrencySwitcher tr, .wcuCurrencySwitcher tr.wcuHeader:hover {
-		background-color: <?php echo $bg_color?>;
-        background: <?php echo $bg_color?>;
-		color: <?php echo $txt_color?>;
+		background-color: <?php echo esc_attr( $bg_color ); ?>;
+        background: <?php echo esc_attr( $bg_color ); ?>;
+		color: <?php echo esc_attr( $txt_color ); ?>;
 		border: none;
 	}
 	.wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableCurrencies tr:hover td {
-		background-color: <?php echo $bg_color_h?>;
-        background: <?php echo $bg_color_h?>;
-		color: <?php echo $txt_color_h?>;
+		background-color: <?php echo esc_attr( $bg_color_h ); ?>;
+        background: <?php echo esc_attr( $bg_color_h ); ?>;
+		color: <?php echo esc_attr( $txt_color_h ); ?>;
 	}
 	.wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableCurrencies tr.wcuCurrent td, .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableButton tr td.wcuCurrent {
 		border: none;
-		background-color: <?php echo $bg_color_cur?>;
-        background: <?php echo $bg_color_cur?>;
-		color: <?php echo $txt_color_cur?>;
+		background-color: <?php echo esc_attr( $bg_color_cur ); ?>;
+        background: <?php echo esc_attr( $bg_color_cur ); ?>;
+		color: <?php echo esc_attr( $txt_color_cur ); ?>;
 	}
 	.wcuCurrencySwitcher.wcuFloatShowBorder_1 {
-		border:1px solid <?php echo $bor_color?>;
+		border:1px solid <?php echo esc_attr( $bor_color ); ?>;
 	}
 	.wcuCurrencySwitcher.wcuFloatToggleSwitcher_on_click .wcuCurrencySwitcherButtonClose {
-		background-color: <?php echo $bg_color?>;
-        background: <?php echo $bg_color?>;
-		color: <?php echo $txt_color?>;
+		background-color: <?php echo esc_attr( $bg_color ); ?>;
+        background: <?php echo esc_attr( $bg_color ); ?>;
+		color: <?php echo esc_attr( $txt_color ); ?>;
 		border: none;
 	}
 	.wcuCurrencySwitcher.wcuFloatToggleSwitcher_on_click .wcuCurrencySwitcherButtonClose:hover {
-		background-color: <?php echo $bg_color_h?>;
-        background: <?php echo $bg_color_h?>;
-		color: <?php echo $txt_color_h?>;
+		background-color: <?php echo esc_attr(  $bg_color_h ); ?>;
+        background: <?php echo esc_attr( $bg_color_h ); ?>;
+		color: <?php echo esc_attr( $txt_color_h ); ?>;
 	}
 	.wcuCurrencySwitcher table, .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableCurrencies tbody tr td, .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableButton tr td {
-		background-color: <?php echo $bg_color?>;
-        background: <?php echo $bg_color?>;
+		background-color: <?php echo esc_attr( $bg_color ); ?>;
+        background: <?php echo esc_attr( $bg_color ); ?>;
 	}
 	#wcuCurrencySwitcherFloating {
-		background-color: <?php echo $bg_color?>;
-        background: <?php echo $bg_color?>;
+		background-color: <?php echo esc_attr( $bg_color ); ?>;
+        background: <?php echo esc_attr( $bg_color ); ?>;
 	}
     .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableButton tr td:hover  {
-		background-color: <?php echo $bg_color_h?>;
-        background: <?php echo $bg_color_h?>;
-		color: <?php echo $txt_color_h?>;
+		background-color: <?php echo esc_attr( $bg_color_h ); ?>;
+        background: <?php echo esc_attr( $bg_color_h ); ?>;
+		color: <?php echo esc_attr( $txt_color_h ); ?>;
 	}
 	.wcuFloatToggleSwitcher_full_size {
-		opacity: <?php echo $floating_opacity_panel*0.01 ?>;
+		opacity: <?php echo esc_attr( $floating_opacity_panel ) * 0.01; ?>;
 		transition:.4s;
 	}
 	.wcuFloatToggleSwitcher_full_size:hover {
 		opacity:1;
 	}
 	.wcuCurrencySwitcherButton {
-		opacity: <?php echo $floating_opacity_button*0.01 ?>;
+		opacity: <?php echo esc_attr( $floating_opacity_button ) * 0.01; ?>;
 		transition:.4s;
 	}
 	.wcuCurrencySwitcherButton:hover {
 		opacity:1;
 	}
 	.wcuFloatToggleSwitcherClick {
-		opacity: <?php echo $floating_opacity_panel*0.01 ?>;
+		opacity: <?php echo esc_attr(  $floating_opacity_panel ) * 0.01; ?>;
 		transition:.4s;
 	}
 	.wcuFloatToggleSwitcherClick:hover {
@@ -139,8 +139,8 @@ foreach ($this->displayRulesTab as $p) {
 	}
 	.wcuCurrencySwitcher .wcuCurrencySwitcherButton,
 	.wcuCurrencySwitcherFloatingTableButton tr td {
-		font-family:'<?php echo $floating_opening_btn_font ?>', sans-serif !important;
-		font-size:<?php echo $floating_opening_btn_size ?>px !important;
+		font-family:'<?php echo esc_attr( $floating_opening_btn_font ); ?>', sans-serif !important;
+		font-size:<?php echo (float) $floating_opening_btn_size; ?>px !important;
 		<?php if (!empty($floating_opening_btn_bold)) {?>
 			font-weight:bold !important;
 		<?php }?>
@@ -149,8 +149,8 @@ foreach ($this->displayRulesTab as $p) {
 		<?php }?>
 	}
 	.wcuCurrencySwitcher .wcuCurrencySwitcherFloatingTableCurrencies {
-		font-family:'<?php echo $floating_panel_txt_font ?>', sans-serif !important;
-		font-size:<?php echo $floating_panel_txt_size ?>px !important;
+		font-family:'<?php echo esc_attr( $floating_panel_txt_font ); ?>', sans-serif !important;
+		font-size:<?php echo (float) $floating_panel_txt_size; ?>px !important;
 		<?php if (!empty($floating_panel_txt_bold)) {?>
 			font-weight:bold !important;
 		<?php }?>
@@ -159,16 +159,16 @@ foreach ($this->displayRulesTab as $p) {
 		<?php }?>
 	}
 	.wcuCurrencySwitcher .wcuHeader {
-		font-family:'<?php echo $floating_panel_header_font ?>', sans-serif !important;
-		font-size:<?php echo $floating_panel_header_size ?>px !important;
+		font-family:'<?php echo esc_attr(  $floating_panel_header_font ); ?>', sans-serif !important;
+		font-size:<?php echo (float) $floating_panel_header_size; ?>px !important;
 		<?php if (!empty($floating_panel_header_bold)) {?>
 			font-weight:bold !important;
 		<?php }?>
 		<?php if (!empty($floating_panel_header_italic)) {?>
 			font-style:italic !important;
 		<?php }?>
-		color: <?php echo $floating_panel_header_txt_color ?> !important;
-		background: <?php echo $floating_panel_header_bg_color ?> !important;
+		color: <?php echo esc_attr( $floating_panel_header_txt_color ) ?> !important;
+		background: <?php echo esc_attr( $floating_panel_header_bg_color ) ?> !important;
 	}
 	<?php if ($show_on_screen) { ?>
 	}
@@ -179,13 +179,18 @@ foreach ($this->displayRulesTab as $p) {
     $switcher_opening_button = 'currency_codes';
 } ?>
 
-<div id="wcuCurrencySwitcherFloating" class="wcuCurrencySwitcher <?php echo $side_floating?>  wcuFloatToggleSwitcher_<?php echo $toggle_switcher?> wcuFloatOpeningButtonIconSize_<?php echo $floating_icon_size?> wcuFloatOpeningButton_<?php echo $switcher_opening_button?> wcuFloatShowBorder_<?php echo $show_border?> " data-type="<?php echo $type?>" style="display:none;">
+<div
+	id="wcuCurrencySwitcherFloating"
+	class="wcuCurrencySwitcher <?php echo esc_attr( $side_floating ); ?>  wcuFloatToggleSwitcher_<?php echo esc_attr( $toggle_switcher ); ?> wcuFloatOpeningButtonIconSize_<?php echo esc_attr( $floating_icon_size ); ?> wcuFloatOpeningButton_<?php echo esc_attr( $switcher_opening_button ); ?> wcuFloatShowBorder_<?php echo esc_attr( $show_border ); ?> "
+	data-type="<?php echo esc_attr( $type ); ?>"
+	style="display:none;"
+>
 	<?php dispatcherWcu::doAction('beforeCurrencySwitcherList', $this->optionsParams); ?>
 	   <?php if ( isset($floating_panel_header_show) && ($floating_panel_header_show) ) {?>
 			<div class="wcuHeader">
-				<?php if ( isset($floating_panel_header_text) ) {?>
-					<?php echo $floating_panel_header_text ?>
-				<?php }?>
+				<?php if ( isset( $floating_panel_header_text ) ) { ?>
+					<?php echo esc_html( $floating_panel_header_text ); ?>
+				<?php } ?>
 			</div>
 		<?php }?>
 
@@ -199,10 +204,10 @@ foreach ($this->displayRulesTab as $p) {
                 }?>
                 <?php foreach ($this->currencies as $key => $currency) { ?>
                     <?php $current = $key == $this->currentCurrency ? 'wcuCurrent' : ''; ?>
-                    <tr class="<?php echo $current?>" data-currency="<?php echo $key?>">
+                    <tr class="<?php echo esc_attr( $current )?>" data-currency="<?php echo esc_attr( $key ); ?>">
                         <?php foreach ($currency as $key => $option) { ?>
                             <?php if ( ( ($key === 'flag') || ($key === 'rate') ) && !$this->proModule ) continue; ?>
-                            <td><div class="wcuCurrencySwitcherFloatingDiv wcuCurrencySwitcherFloating_<?php echo $key ?>"><?php echo $option ?></div></td>
+                            <td><div class="wcuCurrencySwitcherFloatingDiv wcuCurrencySwitcherFloating_<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $option  ); ?></div></td>
                         <?php } ?>
                     </tr>
                 <?php }?>
@@ -219,7 +224,7 @@ foreach ($this->displayRulesTab as $p) {
 						<?php if (!empty($switcher_opening_button) && ($switcher_opening_button !== 'text')) { ?>
 							<?php if ($cur_currency_top) { ?>
 								<td class="wcuCurrent">
-									<div class="wcuCurrencySwitcherButtonDiv"><?php echo $this->currenciesButton[$this->currentCurrency]; ?></div>
+									<div class="wcuCurrencySwitcherButtonDiv"><?php echo esc_html(  $this->currenciesButton[$this->currentCurrency] ); ?></div>
 								</td>
 							<?php } ?>
 							<?php foreach ($this->currenciesButton as $key => $currency) { ?>
@@ -227,13 +232,13 @@ foreach ($this->displayRulesTab as $p) {
 								<?php if ( ($switcher_button_show_current && empty($current)) || ($cur_currency_top && !empty($current)) ) { ?>
 									<?php continue; ?>
 								<?php } ?>
-								<td class="<?php echo $current?>">
-									<div class="wcuCurrencySwitcherButtonDiv wcuCurrencySwitcherFloating_<?php echo $key ?>"><?php echo $currency ?></div>
+								<td class="<?php echo esc_attr( $current ); ?>">
+									<div class="wcuCurrencySwitcherButtonDiv wcuCurrencySwitcherFloating_<?php echo esc_attr( $key ); ?>"><?php echo esc_html( $currency ); ?></div>
 								</td>
 							<?php } ?>
 						<?php } else { ?>
 							<td nowrap>
-								<div class="wcuCurrencySwitcherButtonDiv wcuCurrencySwitcherButtonStaticText"><?php echo $switcher_opening_button_text; ?></div>
+								<div class="wcuCurrencySwitcherButtonDiv wcuCurrencySwitcherButtonStaticText"><?php echo esc_html( $switcher_opening_button_text ); ?></div>
 							</td>
 						<?php } ?>
 					</tr>

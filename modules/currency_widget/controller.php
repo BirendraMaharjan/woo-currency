@@ -48,11 +48,11 @@ class currency_widgetControllerWcu extends controllerWcu { // phpcs:ignore WordP
 		return $res->ajaxExec();
 	}
 	/**
-	 * getCurrencyRatesList.
+	 * woobewoo_cs_get_currency_rates_list.
 	 *
 	 * @version 2.4.0
 	 */
-	public function getCurrencyRatesList() {
+	public function woobewoo_cs_get_currency_rates_list() {
 		$res = new responseWcu();
 		$exclude = reqWcu::getVar('exclude');
 		$exclude = !empty($exclude) ? array_filter(array_map('trim', explode(',', $exclude))) : array();
@@ -98,10 +98,16 @@ class currency_widgetControllerWcu extends controllerWcu { // phpcs:ignore WordP
 
 		return $res->ajaxExec();
 	}
+
+	/**
+	 * getPermissions.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getPermissions() {
 		return array(
-			WCU_USERLEVELS => array(
-				WCU_ADMIN => array()
+			WCU_METHODS => array(
+				'woobewoo_cs_get_currency_rates_list' => array( WCU_ADMIN, WCU_LOGGED, WCU_GUEST ),
 			),
 		);
 	}

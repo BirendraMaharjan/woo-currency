@@ -23,11 +23,11 @@ defined( 'ABSPATH' ) || exit;
 	    } else {
 	        $show_on_screen_compare = 'min-width';
 	    } ?>
-		#wcuCurrencyRatesWidget_<?php echo $this->randId?> {
+		#wcuCurrencyRatesWidget_<?php echo esc_attr( $this->randId ); ?> {
 			display:none !important;
 		}
-		@media (<?php echo $show_on_screen_compare ?>:<?php echo $show_on_screen_value?>px) {
-			#wcuCurrencyRatesWidget_<?php echo $this->randId?> {
+		@media (<?php echo esc_attr( $show_on_screen_compare ); ?>:<?php echo esc_attr( $show_on_screen_value ); ?>px) {
+			#wcuCurrencyRatesWidget_<?php echo esc_attr( $this->randId ); ?> {
 				display:block !important;
 			}
 		}
@@ -44,10 +44,10 @@ if (!$this->moduleFlags) {
 }
 ?>
 <?php $excluded = !empty($excluded) ? implode(',', $excluded) : ''; ?>
-<div id="wcuCurrencyRatesWidget_<?php echo $this->randId?>" class="wcuCurrencyRatesWidget" data-exclude="<?php echo $excluded; ?>" style="margin-bottom: 20px; <?php echo $styles['width'];?>">
+<div id="wcuCurrencyRatesWidget_<?php echo esc_attr( $this->randId ); ?>" class="wcuCurrencyRatesWidget" data-exclude="<?php echo esc_attr( $excluded ); ?>" style="margin-bottom: 20px; <?php echo esc_attr( $styles['width'] );?>">
 
 	<?php if(!empty($this->instance['title'])) {?>
-		<div style="margin-bottom: 10px;"><?php echo $this->instance['title']?></div>
+		<div style="margin-bottom: 10px;"><?php echo esc_html( $this->instance['title'] ); ?></div>
 	<?php }?>
 
 	<?php if ($this->showFlags && !empty($this->instance['show_flag_dropdown']) && $this->instance['show_flag_dropdown'] != 'false') {?>
@@ -55,7 +55,7 @@ if (!$this->moduleFlags) {
 			<select name="wcu_currency_item" class="wcuFlagsSelectBoxDropdown">
 				<?php foreach ($this->currenciesOpts as $key => $currency) {?>
 						<?php $current = $key == $this->currentCurrency ? 'selected' : ''; ?>
-						<option <?php echo $current?> value="<?php echo $key?>" title="<?php echo $currency['flag']?>"><?php echo $currency['name']?></option>
+						<option <?php echo esc_attr( $current ); ?> value="<?php echo esc_attr( $key ); ?>" title="<?php echo esc_html( $currency['flag'] ); ?>"><?php echo esc_html( $currency['name'] ); ?></option>
 				<?php }?>
 			</select>
 		</div>
@@ -63,7 +63,7 @@ if (!$this->moduleFlags) {
 		<select name="wcu_currency_item">
 				<?php foreach ($this->currenciesOpts as $key => $currency) {?>
 						<?php $current = $key == $this->currentCurrency ? 'selected' : ''; ?>
-						<option <?php echo $current?> value="<?php echo $key?>" ><?php echo $currency['name']?></option>
+						<option <?php echo esc_attr( $current ); ?> value="<?php echo esc_attr( $key ); ?>" ><?php echo esc_html( $currency['name'] ); ?></option>
 				<?php }?>
 		</select>
 	<?php }?>
@@ -71,15 +71,19 @@ if (!$this->moduleFlags) {
 	<table class="wcuCurrencyRatesList">
 		<?php foreach($this->currenciesOpts as $key => $item) {?>
 			<?php $display = $key == $this->currentCurrency ? 'display: none;' : ''?>
-				<tr data-currency="<?php echo $key?>" style="<?php echo $display?>">
+				<tr data-currency="<?php echo esc_attr( $key ); ?>" style="<?php echo esc_attr( $display ); ?>">
 					<?php if ($this->showFlags && !empty($this->instance['show_flag_currency_list']) && $this->instance['show_flag_currency_list'] != 'false' ) {?>
-						<?php if (!empty($item['flag'])) {?>
-							<td><img src="<?php echo $item['flag'] ?>"></td>
-						<?php }?>
+						<?php if ( ! empty( $item['flag'] ) ) { ?>
+							<td><img src="<?php echo esc_url( $item['flag'] ); ?>"></td>
+						<?php } ?>
 						<?php $wcuCurrencyRatesFlag = 'wcuCurrencyRatesListRateFlag'; ?>
 					<?php }?>
-					<td><?php echo $key?>:</td>
-					<td class="<?php if ($this->showFlags && !empty($wcuCurrencyRatesFlag)) echo $wcuCurrencyRatesFlag;?> wcuCurrencyRatesListRate"><div class="wcuCurrencyRateVal"></div></td>
+					<td><?php echo esc_html( $key ); ?>:</td>
+					<td
+						class="<?php if ( $this->showFlags && ! empty( $wcuCurrencyRatesFlag ) ) { echo esc_attr( $wcuCurrencyRatesFlag );} ?> wcuCurrencyRatesListRate"
+					>
+						<div class="wcuCurrencyRateVal"></div>
+					</td>
 				</tr>
 		<?php }?>
 	</table>
@@ -104,7 +108,7 @@ if (!$this->moduleFlags) {
 			jQuery.sendFormWcu({
 				data: {
 					mod: 'currency_widget',
-					action: 'getCurrencyRatesList',
+					action: 'woobewoo_cs_get_currency_rates_list',
 					current: current,
 					exclude: shell.data('exclude')
 				},

@@ -20,160 +20,176 @@ foreach ($this->displayRulesTab as $p) {
 }
 ?>
 
-<style>
-
-<?php if ($show_on_screen && $show_on_screen_compare && $show_on_screen_value) {
-    ?>
-	<?php if ($show_on_screen_compare === 'less') {
-        $show_on_screen_compare = 'max-width';
-    } else {
-        $show_on_screen_compare = 'min-width';
-    } ?>
-	.wcuCurrencySwitcher {
-		display:none !important;
-	}
-	@media (<?php echo $show_on_screen_compare ?>:<?php echo $show_on_screen_value?>px) {
+	<style>
+		<?php if ( $show_on_screen && $show_on_screen_compare && $show_on_screen_value ) {
+			?>
+		<?php if ( $show_on_screen_compare === 'less' ) {
+			$show_on_screen_compare = 'max-width';
+		} else {
+			$show_on_screen_compare = 'min-width';
+		} ?>
 		.wcuCurrencySwitcher {
-			display:inline-block !important;
+			display: none !important;
 		}
-<?php
-}?>
-	<?php if (!wp_is_mobile()) {
-        ?>
+
+		@media ( <?php echo esc_attr( $show_on_screen_compare ) ?>:<?php echo esc_attr( $show_on_screen_value ) ?>px ) {
+		.wcuCurrencySwitcher {
+			display: inline-block !important;
+		}
+
+		<?php
+	} ?>
+		<?php if ( ! wp_is_mobile() ) {
+			?>
 		.wcuCurrencySwitcher.left, .wcuCurrencySwitcher.right {
 			top: <?php echo (float) $vertical_offset_desktop . esc_attr( $vertical_offset_desktop_dimension ); ?> !important;
 		}
+
 		.wcuCurrencySwitcher.top {
-			top:0;
+			top: 0;
 			left: <?php echo (float) $horizontal_offset_desktop . esc_attr( $horizontal_offset_desktop_dimension ); ?> !important;
 		}
+
 		.wcuCurrencySwitcher.bottom {
-			bottom:0;
+			bottom: 0;
 			left: <?php echo (float) $horizontal_offset_desktop . esc_attr( $horizontal_offset_desktop_dimension ); ?> !important;
 		}
-	<?php
-    } else {
-        ?>
+
+		<?php
+	} else {
+		?>
 		.wcuCurrencySwitcher.left, .wcuCurrencySwitcher.right {
 			top: <?php echo (float) $vertical_offset_mobile . esc_attr( $vertical_offset_mobile_dimension ); ?> !important;
 		}
+
 		.wcuCurrencySwitcher.top {
 			top: 0;
 			left: <?php echo (float) $horizontal_offset_mobile . esc_attr( $horizontal_offset_mobile_dimension ); ?> !important;
 		}
+
 		.wcuCurrencySwitcher.bottom {
 			bottom: 0;
 			left: <?php echo (float) $horizontal_offset_mobile . esc_attr( $horizontal_offset_mobile_dimension ); ?> !important;
 		}
-	<?php
-    } ?>
-	.wcuCurrencySwitcher .wcuHeader {
-		background-color: <?php echo esc_attr( $bg_color ); ?>;
-        background: <?php echo esc_attr( $bg_color ); ?>;
-		color: <?php echo esc_attr( $txt_color ); ?>;
-	}
-	.wcuCurrencySwitcher tr, .wcuCurrencySwitcher tr.wcuHeader:hover {
-		background-color: <?php echo esc_attr( $bg_color ); ?>;
-        background: <?php echo esc_attr( $bg_color ); ?>;
-		color: <?php echo esc_attr( $txt_color ); ?>;
-		border: none;
-	}
-	.wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableCurrencies tr:hover td {
-		background-color: <?php echo esc_attr( $bg_color_h ); ?>;
-        background: <?php echo esc_attr( $bg_color_h ); ?>;
-		color: <?php echo esc_attr( $txt_color_h ); ?>;
-	}
-	.wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableCurrencies tr.wcuCurrent td, .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableButton tr td.wcuCurrent {
-		border: none;
-		background-color: <?php echo esc_attr( $bg_color_cur ); ?>;
-        background: <?php echo esc_attr( $bg_color_cur ); ?>;
-		color: <?php echo esc_attr( $txt_color_cur ); ?>;
-	}
-	.wcuCurrencySwitcher.wcuFloatShowBorder_1 {
-		border:1px solid <?php echo esc_attr( $bor_color ); ?>;
-	}
-	.wcuCurrencySwitcher.wcuFloatToggleSwitcher_on_click .wcuCurrencySwitcherButtonClose {
-		background-color: <?php echo esc_attr( $bg_color ); ?>;
-        background: <?php echo esc_attr( $bg_color ); ?>;
-		color: <?php echo esc_attr( $txt_color ); ?>;
-		border: none;
-	}
-	.wcuCurrencySwitcher.wcuFloatToggleSwitcher_on_click .wcuCurrencySwitcherButtonClose:hover {
-		background-color: <?php echo esc_attr(  $bg_color_h ); ?>;
-        background: <?php echo esc_attr( $bg_color_h ); ?>;
-		color: <?php echo esc_attr( $txt_color_h ); ?>;
-	}
-	.wcuCurrencySwitcher table, .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableCurrencies tbody tr td, .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableButton tr td {
-		background-color: <?php echo esc_attr( $bg_color ); ?>;
-        background: <?php echo esc_attr( $bg_color ); ?>;
-	}
-	#wcuCurrencySwitcherFloating {
-		background-color: <?php echo esc_attr( $bg_color ); ?>;
-        background: <?php echo esc_attr( $bg_color ); ?>;
-	}
-    .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableButton tr td:hover  {
-		background-color: <?php echo esc_attr( $bg_color_h ); ?>;
-        background: <?php echo esc_attr( $bg_color_h ); ?>;
-		color: <?php echo esc_attr( $txt_color_h ); ?>;
-	}
-	.wcuFloatToggleSwitcher_full_size {
-		opacity: <?php echo esc_attr( $floating_opacity_panel ) * 0.01; ?>;
-		transition:.4s;
-	}
-	.wcuFloatToggleSwitcher_full_size:hover {
-		opacity:1;
-	}
-	.wcuCurrencySwitcherButton {
-		opacity: <?php echo esc_attr( $floating_opacity_button ) * 0.01; ?>;
-		transition:.4s;
-	}
-	.wcuCurrencySwitcherButton:hover {
-		opacity:1;
-	}
-	.wcuFloatToggleSwitcherClick {
-		opacity: <?php echo esc_attr(  $floating_opacity_panel ) * 0.01; ?>;
-		transition:.4s;
-	}
-	.wcuFloatToggleSwitcherClick:hover {
-		opacity:1;
-	}
-	.wcuCurrencySwitcher .wcuCurrencySwitcherButton,
-	.wcuCurrencySwitcherFloatingTableButton tr td {
-		font-family:'<?php echo esc_attr( $floating_opening_btn_font ); ?>', sans-serif !important;
-		font-size:<?php echo (float) $floating_opening_btn_size; ?>px !important;
-		<?php if (!empty($floating_opening_btn_bold)) {?>
-			font-weight:bold !important;
-		<?php }?>
-		<?php if (!empty($floating_opening_btn_italic)) {?>
-			font-style:italic !important;
-		<?php }?>
-	}
-	.wcuCurrencySwitcher .wcuCurrencySwitcherFloatingTableCurrencies {
-		font-family:'<?php echo esc_attr( $floating_panel_txt_font ); ?>', sans-serif !important;
-		font-size:<?php echo (float) $floating_panel_txt_size; ?>px !important;
-		<?php if (!empty($floating_panel_txt_bold)) {?>
-			font-weight:bold !important;
-		<?php }?>
-		<?php if (!empty($floating_panel_txt_italic)) {?>
-			font-style:italic !important;
-		<?php }?>
-	}
-	.wcuCurrencySwitcher .wcuHeader {
-		font-family:'<?php echo esc_attr(  $floating_panel_header_font ); ?>', sans-serif !important;
-		font-size:<?php echo (float) $floating_panel_header_size; ?>px !important;
-		<?php if (!empty($floating_panel_header_bold)) {?>
-			font-weight:bold !important;
-		<?php }?>
-		<?php if (!empty($floating_panel_header_italic)) {?>
-			font-style:italic !important;
-		<?php }?>
-		color: <?php echo esc_attr( $floating_panel_header_txt_color ) ?> !important;
-		background: <?php echo esc_attr( $floating_panel_header_bg_color ) ?> !important;
-	}
-	<?php if ($show_on_screen) { ?>
-	}
-	<?php }?>
-</style>
+
+		<?php
+	} ?>
+		.wcuCurrencySwitcher .wcuHeader {
+			background-color: <?php echo esc_attr( $bg_color ); ?>;
+			background: <?php echo esc_attr( $bg_color ); ?>;
+			color: <?php echo esc_attr( $txt_color ); ?>;
+		}
+
+		.wcuCurrencySwitcher tr, .wcuCurrencySwitcher tr.wcuHeader:hover {
+			background-color: <?php echo esc_attr( $bg_color ); ?>;
+			background: <?php echo esc_attr( $bg_color ); ?>;
+			color: <?php echo esc_attr( $txt_color ); ?>;
+			border: none;
+		}
+
+		.wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableCurrencies tr:hover td {
+			background-color: <?php echo esc_attr( $bg_color_h ); ?>;
+			background: <?php echo esc_attr( $bg_color_h ); ?>;
+			color: <?php echo esc_attr( $txt_color_h ); ?>;
+		}
+
+		.wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableCurrencies tr.wcuCurrent td, .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableButton tr td.wcuCurrent {
+			border: none;
+			background-color: <?php echo esc_attr( $bg_color_cur ); ?>;
+			background: <?php echo esc_attr( $bg_color_cur ); ?>;
+			color: <?php echo esc_attr( $txt_color_cur ); ?>;
+		}
+
+		.wcuCurrencySwitcher.wcuFloatShowBorder_1 {
+			border: 1px solid<?php echo esc_attr( $bor_color ); ?>;
+		}
+
+		.wcuCurrencySwitcher.wcuFloatToggleSwitcher_on_click .wcuCurrencySwitcherButtonClose {
+			background-color: <?php echo esc_attr( $bg_color ); ?>;
+			background: <?php echo esc_attr( $bg_color ); ?>;
+			color: <?php echo esc_attr( $txt_color ); ?>;
+			border: none;
+		}
+
+		.wcuCurrencySwitcher.wcuFloatToggleSwitcher_on_click .wcuCurrencySwitcherButtonClose:hover {
+			background-color: <?php echo esc_attr( $bg_color_h ); ?>;
+			background: <?php echo esc_attr( $bg_color_h ); ?>;
+			color: <?php echo esc_attr( $txt_color_h ); ?>;
+		}
+
+		.wcuCurrencySwitcher table, .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableCurrencies tbody tr td, .wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableButton tr td {
+			background-color: <?php echo esc_attr( $bg_color ); ?>;
+			background: <?php echo esc_attr( $bg_color ); ?>;
+		}
+
+		#wcuCurrencySwitcherFloating {
+			background-color: <?php echo esc_attr( $bg_color ); ?>;
+			background: <?php echo esc_attr( $bg_color ); ?>;
+		}
+
+		.wcuCurrencySwitcher table.wcuCurrencySwitcherFloatingTableButton tr td:hover {
+			background-color: <?php echo esc_attr( $bg_color_h ); ?>;
+			background: <?php echo esc_attr( $bg_color_h ); ?>;
+			color: <?php echo esc_attr( $txt_color_h ); ?>;
+		}
+
+		.wcuFloatToggleSwitcher_full_size {
+			opacity: <?php echo esc_attr( $floating_opacity_panel ) * 0.01; ?>;
+			transition: .4s;
+		}
+
+		.wcuFloatToggleSwitcher_full_size:hover {
+			opacity: 1;
+		}
+
+		.wcuCurrencySwitcherButton {
+			opacity: <?php echo esc_attr( $floating_opacity_button ) * 0.01; ?>;
+			transition: .4s;
+		}
+
+		.wcuCurrencySwitcherButton:hover {
+			opacity: 1;
+		}
+
+		.wcuFloatToggleSwitcherClick {
+			opacity: <?php echo esc_attr( $floating_opacity_panel ) * 0.01; ?>;
+			transition: .4s;
+		}
+
+		.wcuFloatToggleSwitcherClick:hover {
+			opacity: 1;
+		}
+
+		.wcuCurrencySwitcher .wcuCurrencySwitcherButton,
+		.wcuCurrencySwitcherFloatingTableButton tr td {
+			font-family: '<?php echo esc_attr( $floating_opening_btn_font ); ?>', sans-serif !important;
+			font-size: <?php echo (float) $floating_opening_btn_size; ?>px !important;
+		<?php if ( ! empty( $floating_opening_btn_bold ) ) { ?> font-weight: bold !important;
+		<?php } ?><?php if ( ! empty( $floating_opening_btn_italic ) ) { ?> font-style: italic !important;
+		<?php } ?>
+		}
+
+		.wcuCurrencySwitcher .wcuCurrencySwitcherFloatingTableCurrencies {
+			font-family: '<?php echo esc_attr( $floating_panel_txt_font ); ?>', sans-serif !important;
+			font-size: <?php echo (float) $floating_panel_txt_size; ?>px !important;
+		<?php if ( ! empty( $floating_panel_txt_bold ) ) { ?> font-weight: bold !important;
+		<?php } ?><?php if ( ! empty( $floating_panel_txt_italic ) ) { ?> font-style: italic !important;
+		<?php } ?>
+		}
+
+		.wcuCurrencySwitcher .wcuHeader {
+			font-family: '<?php echo esc_attr( $floating_panel_header_font ); ?>', sans-serif !important;
+			font-size: <?php echo (float) $floating_panel_header_size; ?>px !important;
+		<?php if ( ! empty( $floating_panel_header_bold ) ) { ?> font-weight: bold !important;
+		<?php } ?><?php if ( ! empty( $floating_panel_header_italic ) ) { ?> font-style: italic !important;
+		<?php } ?> color: <?php echo esc_attr( $floating_panel_header_txt_color ) ?> !important;
+			background: <?php echo esc_attr( $floating_panel_header_bg_color ) ?> !important;
+		}
+
+		<?php if ( $show_on_screen ) { ?>
+		}
+		<?php } ?>
+	</style>
 
 <?php if ( ($switcher_opening_button === 'flags') && !$this->proModule ) {
     $switcher_opening_button = 'currency_codes';

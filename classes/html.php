@@ -12,6 +12,243 @@ defined( 'ABSPATH' ) || exit;
 class htmlWcu {
     static public $categoriesOptions = array();
     static public $productsOptions = array();
+
+	/**
+	 * getAllowedHtmlTags.
+	 *
+	 * Returns a comprehensive wp_kses() allowed-tags array for filter widget
+	 * output. Extends the 'post' context with form elements and data-* / aria-*
+	 * attributes that the filter widget emits.
+	 *
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 *
+	 * @return array
+	 */
+	public static function get_allowed_html_tags() {
+		$allowed = wp_kses_allowed_html( 'post' );
+
+		$common = array(
+			'id'       => true,
+			'class'    => true,
+			'style'    => true,
+			'title'    => true,
+			'role'     => true,
+			'tabindex' => true,
+			'data-*'   => true,
+			'aria-*'   => true,
+		);
+
+		// Extend elements that 'post' already defines.
+		foreach (
+			array(
+				'div',
+				'span',
+				'ul',
+				'ol',
+				'li',
+				'p',
+				'a',
+				'img',
+				'section',
+				'nav',
+				'header',
+				'footer',
+			) as $tag
+		) {
+			$allowed[ $tag ] = isset( $allowed[ $tag ] ) ?
+				array_merge( $allowed[ $tag ], $common ) :
+				$common;
+		}
+		$allowed['a']   = array_merge(
+			$allowed['a'] ??
+			array(),
+			$common,
+			array(
+				'href'   => true,
+				'target' => true,
+				'rel'    => true,
+			)
+		);
+		$allowed['img'] = array_merge(
+			$allowed['img'] ??
+			array(),
+			$common,
+			array(
+				'src'    => true,
+				'alt'    => true,
+				'width'  => true,
+				'height' => true,
+			)
+		);
+
+		// Form elements (stripped by wp_kses_post).
+		$allowed['form']     = array_merge(
+			$common,
+			array(
+				'action'     => true,
+				'method'     => true,
+				'enctype'    => true,
+				'name'       => true,
+				'novalidate' => true,
+			)
+		);
+		$allowed['input']    = array_merge(
+			$common,
+			array(
+				'type'         => true,
+				'name'         => true,
+				'value'        => true,
+				'checked'      => true,
+				'disabled'     => true,
+				'readonly'     => true,
+				'placeholder'  => true,
+				'min'          => true,
+				'max'          => true,
+				'step'         => true,
+				'autocomplete' => true,
+				'required'     => true,
+				'size'         => true,
+				'maxlength'    => true,
+			)
+		);
+		$allowed['select']   = array_merge(
+			$common,
+			array(
+				'name'     => true,
+				'multiple' => true,
+				'size'     => true,
+				'disabled' => true,
+				'required' => true,
+			)
+		);
+		$allowed['option']   = array_merge(
+			$common,
+			array(
+				'value'    => true,
+				'selected' => true,
+				'disabled' => true,
+			)
+		);
+		$allowed['optgroup'] = array_merge(
+			$common,
+			array(
+				'label'    => true,
+				'disabled' => true,
+			)
+		);
+		$allowed['button']   = array_merge(
+			$common,
+			array(
+				'type'     => true,
+				'name'     => true,
+				'value'    => true,
+				'disabled' => true,
+			)
+		);
+		$allowed['label']    = array_merge( $common, array( 'for' => true ) );
+		$allowed['textarea'] = array_merge(
+			$common,
+			array(
+				'name'        => true,
+				'rows'        => true,
+				'cols'        => true,
+				'disabled'    => true,
+				'readonly'    => true,
+				'placeholder' => true,
+				'required'    => true,
+				'maxlength'   => true,
+			)
+		);
+
+		// SVG subset (used for icons inside filter items).
+		$allowed['svg']      = array_merge(
+			$common,
+			array(
+				'xmlns'   => true,
+				'viewbox' => true,
+				'width'   => true,
+				'height'  => true,
+				'fill'    => true,
+				'stroke'  => true,
+			)
+		);
+		$allowed['symbol']   = array_merge(
+			$common,
+			array(
+				'id'      => true,
+				'viewbox' => true,
+				'width'   => true,
+				'height'  => true,
+				'fill'    => true,
+				'stroke'  => true,
+			)
+		);
+		$allowed['path']     = array(
+			'd'            => true,
+			'fill'         => true,
+			'stroke'       => true,
+			'stroke-width' => true,
+		);
+		$allowed['circle']   = array(
+			'cx'   => true,
+			'cy'   => true,
+			'r'    => true,
+			'fill' => true,
+		);
+		$allowed['polyline'] = array(
+			'points' => true,
+			'fill'   => true,
+			'stroke' => true,
+		);
+		$allowed['line']     = array(
+			'x1'     => true,
+			'y1'     => true,
+			'x2'     => true,
+			'y2'     => true,
+			'stroke' => true,
+		);
+		$allowed['use']      = array(
+			'xlink:href' => true,
+			'href'       => true,
+		);
+
+		// Inline CSS and stylesheet links injected by the filter widget.
+		$allowed['style'] = array(
+			'type'  => true,
+			'media' => true,
+			'id'    => true,
+		);
+		$allowed['link']  = array(
+			'rel'   => true,
+			'href'  => true,
+			'type'  => true,
+			'media' => true,
+			'id'    => true,
+		);
+
+		return $allowed;
+	}
+
+	/**
+	 * Returns HTML sanitized with the plugin's allowed HTML tags.
+	 *
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 */
+	public static function escaped_html( $html ) {
+		return wp_kses( $html, self::get_allowed_html_tags() );
+	}
+
+	/**
+	 * Outputs HTML sanitized with the plugin's allowed HTML tags.
+	 *
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 */
+	public static function echo_escaped_html( $html ) {
+		echo wp_kses( $html, self::get_allowed_html_tags() );
+	}
     static public function block($name, $params= array('attrs' => '', 'value' => '')){
         $output = '<p class="toe_'. self::nameToClassId($name). '">'.$params['value'].'</p>';
         //$output .= self::hidden($name, $params);

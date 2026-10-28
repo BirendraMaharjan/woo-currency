@@ -2,6 +2,8 @@
 /**
  * WBW Currency Switcher for WooCommerce - Functions
  *
+ * @version 2.4.0
+ *
  * @author  woobewoo
  */
 
@@ -145,14 +147,16 @@ if(!function_exists('toeCreateObjWcu')) {
 /**
  * Redirect user to specified location. Be advised that it should redirect even if headers already sent.
  *
+ * @version 2.4.0
+ *
  * @param string $url where page must be redirected
  */
-if(!function_exists('redirectWcu')) {
-	function redirectWcu($url) {
-		if(headers_sent()) {
-			echo '<script type="text/javascript"> document.location.href = "'. $url. '"; </script>';
+if ( ! function_exists( 'redirectWcu' ) ) {
+	function redirectWcu( $url ) {
+		if ( headers_sent() ) {
+			echo '<script type="text/javascript"> document.location.href = "' . esc_url_raw( $url ) . '"; </script>';
 		} else {
-			header('Location: '. $url);
+			header( 'Location: ' . $url );
 		}
 		exit();
 	}

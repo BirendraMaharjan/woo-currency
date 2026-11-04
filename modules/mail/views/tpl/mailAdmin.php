@@ -13,33 +13,33 @@ defined( 'ABSPATH' ) || exit;
 ?>
 <form id="wcuMailTestForm">
 	<label>
-		<?php _e('Send test email to', 'woo-currency')?>
-		<?php echo htmlWcu::text('test_email', array('value' => $this->testEmail))?>
+		<?php esc_html_e('Send test email to', 'woo-currency')?>
+		<?php htmlWcu::echo_escaped_html( htmlWcu::text( 'test_email', array( 'value' => $this->testEmail ) ) ); ?>
 	</label>
-	<?php echo htmlWcu::hidden('mod', array('value' => 'mail'))?>
-	<?php echo htmlWcu::hidden('action', array('value' => 'testEmail'))?>
+	<?php htmlWcu::echo_escaped_html( htmlWcu::hidden( 'mod', array( 'value' => 'mail' ) ) ); ?>
+	<?php htmlWcu::echo_escaped_html( htmlWcu::hidden( 'action', array( 'value' => 'testEmail' ) ) ); ?>
 	<button class="button button-primary">
 		<i class="fa fa-paper-plane"></i>
-		<?php _e('Send test', 'woo-currency')?>
+		<?php esc_html_e('Send test', 'woo-currency')?>
 	</button><br />
-	<i><?php _e('This option allows you to check your server mail functionality', 'woo-currency')?></i>
+	<i><?php esc_html_e('This option allows you to check your server mail functionality', 'woo-currency')?></i>
 </form>
 <div id="wcuMailTestResShell" style="display: none;">
-	<?php _e('Did you receive test email?', 'woo-currency')?><br />
+	<?php esc_html_e('Did you receive test email?', 'woo-currency')?><br />
 	<button class="wcuMailTestResBtn button button-primary" data-res="1">
 		<i class="fa fa-check-square-o"></i>
-		<?php _e('Yes! It works!', 'woo-currency')?>
+		<?php esc_html_e('Yes! It works!', 'woo-currency')?>
 	</button>
 	<button class="wcuMailTestResBtn button button-primary" data-res="0">
 		<i class="fa fa-exclamation-triangle"></i>
-		<?php _e('No, I need to contact my hosting provider with mail function issue.', 'woo-currency')?>
+		<?php esc_html_e('No, I need to contact my hosting provider with mail function issue.', 'woo-currency')?>
 	</button>
 </div>
 <div id="wcuMailTestResSuccess" style="display: none;">
-	<?php _e('Great! Mail function was tested and is working fine.', 'woo-currency')?>
+	<?php esc_html_e('Great! Mail function was tested and is working fine.', 'woo-currency')?>
 </div>
 <div id="wcuMailTestResFail" style="display: none;">
-	<?php _e('Bad, please contact your hosting provider and ask them to setup mail functionality on your server.', 'woo-currency')?>
+	<?php esc_html_e('Bad, please contact your hosting provider and ask them to setup mail functionality on your server.', 'woo-currency')?>
 </div>
 <div style="clear: both;"></div>
 <form id="wcuMailSettingsForm">
@@ -51,7 +51,7 @@ defined( 'ABSPATH' ) || exit;
 			?>
 			<tr>
 				<th scope="row" class="col-w-30perc">
-					<?php echo $opt['label']?>
+					<?php echo esc_html( $opt['label'] ); ?>
 					<?php if(!empty($opt['changed_on'])) {?>
 						<br />
 						<span class="description">
@@ -59,35 +59,45 @@ defined( 'ABSPATH' ) || exit;
 							$opt['value'] ?
 								printf(
 									/* Translators: %s: Date. */
-									__( 'Turned On %s', 'woo-currency' ),
-									dateWcu::_( $opt['changed_on'] )
+									esc_html__( 'Turned On %s', 'woo-currency' ),
+									esc_html( dateWcu::_( $opt['changed_on'] ) )
 								) :
 								printf(
 									/* Translators: %s: Date. */
-									__( 'Turned Off %s', 'woo-currency' ),
-									dateWcu::_( $opt['changed_on'] )
+									esc_html__( 'Turned Off %s', 'woo-currency' ),
+									esc_html( dateWcu::_( $opt['changed_on'] ) )
 								);
 							?>
 						</span>
 					<?php }?>
 				</th>
 				<td class="col-w-10perc">
-					<i class="fa fa-question woobewoo-tooltip" title="<?php echo $opt['desc']?>"></i>
+					<i class="fa fa-question woobewoo-tooltip" title="<?php echo esc_html( $opt['desc'] ); ?>"></i>
 				</td>
 				<td class="col-w-1perc">
-					<?php echo htmlWcu::$htmlType('opt_values['. $optKey. ']', array('value' => $opt['value'], 'attrs' => 'data-optkey="'. $optKey. '"'))?>
+					<?php
+					htmlWcu::echo_escaped_html(
+						htmlWcu::$htmlType(
+							'opt_values[' . $optKey . ']',
+							array(
+								'value' => $opt['value'],
+								'attrs' => 'data-optkey="' . $optKey . '"'
+							)
+						)
+					);
+					?>
 				</td>
 				<td class="col-w-50perc">
-					<div id="wcuFormOptDetails_<?php echo $optKey?>" class="wcuOptDetailsShell"></div>
+					<div id="wcuFormOptDetails_<?php echo esc_attr( $optKey ); ?>" class="wcuOptDetailsShell"></div>
 				</td>
 			</tr>
 		<?php }?>
 	</table>
-	<?php echo htmlWcu::hidden('mod', array('value' => 'mail'))?>
-	<?php echo htmlWcu::hidden('action', array('value' => 'saveOptions'))?>
+	<?php htmlWcu::echo_escaped_html( htmlWcu::hidden( 'mod', array( 'value' => 'mail' ) ) ); ?>
+	<?php htmlWcu::echo_escaped_html( htmlWcu::hidden( 'action', array( 'value' => 'saveOptions' ) ) ); ?>
 	<button class="button button-primary">
 		<i class="fa fa-fw fa-save"></i>
-		<?php _e('Save', 'woo-currency')?>
+		<?php esc_html_e('Save', 'woo-currency')?>
 	</button>
 </form>
 <?php

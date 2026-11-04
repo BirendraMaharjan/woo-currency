@@ -29,18 +29,18 @@ if (!empty($moduleIsPro) && $moduleIsPro) {
         <?php $opt['row_show'] = !empty($opt['row_show']) ? $opt['row_show'] : '' ?>
         <?php $opt['row_hide_with_all'] = !empty($opt['row_hide_with_all']) ? $opt['row_hide_with_all'] : '' ?>
         <?php $opt['tooltip'] = !empty($opt['tooltip']) ? $opt['tooltip'] : '' ?>
-        <tr valign="top" class="single_select_page <?php echo $opt['row_classes']?>" data-target-show="<?php echo $opt['row_show']?>" style="<?php echo $display?>">
+        <tr valign="top" class="single_select_page <?php echo esc_attr( $opt['row_classes']);?>" data-target-show="<?php echo esc_attr( $opt['row_show'] ); ?>" style="<?php echo esc_attr( $display ); ?>">
             <th scope="row" class="col-md-3 titledesc">
-                <div><?php echo $opt['label']?></div>
+                <div><?php echo esc_html( $opt['label'] ); ?></div>
             </th>
             <td class="col-md-1 forminp">
                 <?php if ($opt['tooltip']) {?>
-                    <i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php echo htmlspecialchars($opt['tooltip'])?>"></i>
+                    <i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php echo esc_html($opt['tooltip']);?>"></i>
                 <?php }?>
             </td>
             <td class="col-md-7 forminp">
                 <?php $htmlField = $opt['html'];?>
-                <?php echo htmlWcu::$htmlField("{$optionsDb}[{$index}][{$key}]", $opt['params'])?>
+                <?php htmlWcu::echo_escaped_html( htmlWcu::$htmlField( "{$optionsDb}[{$index}][{$key}]", $opt['params'] ) ); ?>
             </td>
         </tr>
         <?php }?>

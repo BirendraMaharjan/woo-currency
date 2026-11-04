@@ -741,3 +741,39 @@ jQuery(document).ready(function(){
 		jQuery(".icheckbox_minimal").parent().parent().find("label:nth-child(2)").hide();
 	}
 })
+
+jQuery( function ( $ ) {
+	'use strict';
+
+	// WordPress color picker.
+	$( '.woobewoo-cs-color-picker' ).each( function () {
+		$( this ).wpColorPicker();
+	} );
+
+	// Sync checkbox value with its hidden input.
+	$( document ).on(
+		'change',
+		'.woobewoo-cs-checkbox-hidden-val',
+		function () {
+			const hideId = $( this ).attr( 'data-hideid' );
+
+			if ( ! hideId ) {
+				return;
+			}
+
+			$( '#' + $.escapeSelector( hideId ) ).val(
+				$( this ).prop( 'checked' ) ? '1' : '0'
+			);
+		}
+	);
+
+	$( '.woobewoo-cs-select-sortable' ).each( function () {
+		const sortable = this.id;
+
+		if ( !sortable ) {
+			return;
+		}
+		wcuSelectMultipleSortableFunction( sortable );
+		wcuInitCustomCheckRadio();
+	} );
+} );

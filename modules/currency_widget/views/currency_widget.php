@@ -96,7 +96,7 @@ class currency_widgetViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingC
 	 */
 	public function addCommonValidation() {
 		if(!class_exists('WooCommerce')) {
-			echo "<div class='notice'>" . __('Warning: Woocommerce is not activated!', 'woo-currency') . "</div>";
+			echo "<div class='notice'>" . esc_html__('Warning: Woocommerce is not activated!', 'woo-currency') . "</div>";
 		}
 		return false;
 	}

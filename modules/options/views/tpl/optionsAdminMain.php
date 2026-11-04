@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 <section>
 	<div class="woobewoo-item woobewoo-panel">
 		<div id="containerWrapper">
-			<?php _e('Main page Go here!!!!', 'woo-currency')?>
+			<?php esc_html_e( 'Main page Go here!!!!', 'woo-currency' ); ?>
 		</div>
 		<div style="clear: both;"></div>
 	</div>

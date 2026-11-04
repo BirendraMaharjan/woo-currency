@@ -166,7 +166,7 @@ class frameWcu {
 		if($this->havePermissions($code, $action))
 			return true;
 		else {
-			exit(_e('You have no permissions to view this page', 'woo-currency'));
+			wp_die( esc_html__( 'You have no permissions to view this page', 'woo-currency' ) );
 		}
 	}
 

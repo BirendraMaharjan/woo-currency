@@ -70,8 +70,8 @@ class Wcu_Widget_Layered_Nav_Filters extends WC_Widget_Layered_Nav_Filters {
 						<a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woo-currency' ) . '" href="' . esc_url( $link ) . '">' .
 					     sprintf(
 							 /* Translators: %s: Price. */
-						     __( 'Min %s', 'woo-currency' ),
-						     $return
+						     esc_html__( 'Min %s', 'woo-currency' ),
+						     esc_html( $return )
 					     ) .
 				     '</a></li>';
 			}
@@ -81,7 +81,7 @@ class Wcu_Widget_Layered_Nav_Filters extends WC_Widget_Layered_Nav_Filters {
 				$formatted_price = ( $max_price < 0 ? '-' : '' ) . sprintf( get_woocommerce_price_format(), '<span class="woocommerce-Price-currencySymbol">' . get_woocommerce_currency_symbol() . '</span>', $max_price );
 				$return          = '<span class="woocommerce-Price-amount amount"><bdi>' . $formatted_price . '</bdi></span>';
 				/* Translators: %s: maximum price */
-				echo '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woo-currency' ) . '" href="' . esc_url( $link ) . '">' . sprintf( __( 'Max %s', 'woo-currency' ), $return ) . '</a></li>';
+				echo '<li class="chosen"><a rel="nofollow" aria-label="' . esc_attr__( 'Remove filter', 'woo-currency' ) . '" href="' . esc_url( $link ) . '">' . sprintf( esc_html__( 'Max %s', 'woo-currency' ), esc_html( $return ) ) . '</a></li>';
 			}
 
 			if ( ! empty( $rating_filter ) ) {

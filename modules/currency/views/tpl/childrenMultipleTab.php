@@ -10,14 +10,13 @@
 defined( 'ABSPATH' ) || exit;
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-
-$moduleName = $this->moduleName;
-$moduleTab = $this->moduleTab;
-$moduleIsPro = $this->moduleIsPro;
+$moduleName      = $this->moduleName;
+$moduleTab       = $this->moduleTab;
+$moduleIsPro     = $this->moduleIsPro;
 $showPreviewAjax = $this->showPreviewAjax;
-$optionsDb = $this->getModule()->optionsDbOpt;
-if (!empty($moduleIsPro) && $moduleIsPro) {
-    $optionsDb = $this->getModule()->optionsDbOptPro;
+$optionsDb       = $this->getModule()->optionsDbOpt;
+if ( ! empty( $moduleIsPro ) && $moduleIsPro ) {
+	$optionsDb = $this->getModule()->optionsDbOptPro;
 }
  ?>
 
@@ -27,7 +26,7 @@ if (!empty($moduleIsPro) && $moduleIsPro) {
      <div class="col-md-8 wcuTabContentChildOptions">
  <?php } ?>
 
-<table class="form-table moduleName<?php echo $moduleName?>">
+<table class="form-table moduleName<?php echo esc_attr( $moduleName ); ?>">
     <tbody>
         <?php foreach($this->optionsParams as $indexTab => $optTab) {?>
         <?php if($indexTab != $moduleName) continue;?>
@@ -43,14 +42,15 @@ if (!empty($moduleIsPro) && $moduleIsPro) {
         <?php $opt['row_show'] = !empty($opt['row_show']) ? $opt['row_show'] : '' ?>
         <?php $opt['tooltip'] = !empty($opt['tooltip']) ? $opt['tooltip'] : '' ?>
         <?php $opt['row_hide_with_all'] = !empty($opt['row_hide_with_all']) ? $opt['row_hide_with_all'] : '' ?>
-        <tr valign="top" class="single_select_page <?php echo $opt['row_classes']?>" data-target-show="<?php echo $opt['row_show']?>" data-target-hide="<?php echo $opt['row_hide']?>" data-hide-with-all="<?php echo $opt['row_hide_with_all']?>" style="<?php echo $display?>">
+        <tr valign="top" class="single_select_page <?php echo esc_attr( $opt['row_classes'] ); ?>" data-target-show="<?php echo esc_attr( $opt['row_show'] ); ?>" data-target-hide="<?php echo esc_attr( $opt['row_hide'] ); ?>" data-hide-with-all="<?php echo esc_attr( $opt['row_hide_with_all'] ); ?>" style="<?php echo esc_attr( $display ); ?>">
             <th scope="row" class="col-md-3 titledesc">
-                <div><?php echo $opt['label']?></div>
+                <div><?php echo esc_html( $opt['label'] ); ?></div>
             </th>
             <td class="col-md-1 forminp">
-                <?php if ($opt['tooltip']) {?>
-                    <i class="fa fa-question woobewoo-tooltip tooltipstered" title="<?php echo htmlspecialchars ($opt['tooltip'])?>"></i>
-                <?php }?>
+	            <?php if ( $opt['tooltip'] ) { ?>
+		            <i class="fa fa-question woobewoo-tooltip tooltipstered"
+		               title="<?php echo esc_html( $opt['tooltip'] ); ?>"></i>
+	            <?php } ?>
             </td>
             <td class="col-md-8 forminp">
                 <?php } ?>
@@ -58,7 +58,14 @@ if (!empty($moduleIsPro) && $moduleIsPro) {
 					<div class="wcuTabContentInrowElement">
 				<?php }?>
                 <?php $htmlField = $opt['html'];?>
-                <?php echo htmlWcu::$htmlField("{$optionsDb}[{$indexTab}][{$indexTabSubOpt}][{$key}]", $opt['params']); ?>
+			        <?php
+			        htmlWcu::echo_escaped_html(
+				        htmlWcu::$htmlField(
+					        "{$optionsDb}[{$indexTab}][{$indexTabSubOpt}][{$key}]",
+					        $opt['params']
+				        )
+			        );
+			        ?>
 				<?php if ($inrow) {?>
 					</div>
 				<?php }?>
@@ -75,13 +82,13 @@ if (!empty($moduleIsPro) && $moduleIsPro) {
 <?php if ($showPreviewAjax) {?>
     </div>
     <div class="col-md-4 supsystic-sticky-wrapper">
-        <div class="wcuTabContentPreviewInner supsystic-sticky wcuTabContentPreviewInner<?php echo $moduleName ?> "></div>
+        <div class="wcuTabContentPreviewInner supsystic-sticky wcuTabContentPreviewInner<?php echo esc_attr( $moduleName ); ?> "></div>
     </div>
     </div>
     </div>
     <script type="text/javascript">
     jQuery(document).ready(function () {
-        wcuLookPreviewAjax('<?php echo $moduleName ?>');
+        wcuLookPreviewAjax('<?php echo esc_attr( $moduleName ); ?>');
 
         var wcuCanSendAjax = true;
 
@@ -89,38 +96,35 @@ if (!empty($moduleIsPro) && $moduleIsPro) {
             if (wcuCanSendAjax == true) {
                 wcuCanSendAjax = false;
                 setTimeout(function () {
-                    wcuLookPreviewAjax('<?php echo $moduleName ?>');
+                    wcuLookPreviewAjax('<?php echo esc_attr( $moduleName ); ?>');
                     wcuCanSendAjax = true;
                 }, 1500);
             }
         }
 
-        jQuery(".moduleName<?php echo $moduleName?> .ui-sortable-handle").on("click", function (e) {
+        jQuery(".moduleName<?php echo esc_attr( $moduleName ); ?> .ui-sortable-handle").on("click", function (e) {
             wcuLookPreviewAjaxHandler();
         });
 
-        jQuery(".moduleName<?php echo $moduleName?> .ui-sortable").on("sortupdate", function (event, ui) {
+        jQuery(".moduleName<?php echo esc_attr( $moduleName ); ?> .ui-sortable").on("sortupdate", function (event, ui) {
             wcuLookPreviewAjaxHandler();
         });
 
-        jQuery('.moduleName<?php echo $moduleName?> .wp-color-picker').wpColorPicker({
-            change: function (event, ui) {
-                var element = event.target;
-                var color = ui.color.toString();
+        jQuery( '.moduleName<?php echo esc_attr( $moduleName ); ?> .woobewoo-cs-color-picker' ).wpColorPicker( {
+            change: function ( event, ui ) {
                 wcuLookPreviewAjaxHandler();
             },
-        });
+        } );
 
-        jQuery(".moduleName<?php echo $moduleName?> input").on("change paste keyup", function (e) {
+        jQuery(".moduleName<?php echo esc_attr( $moduleName ); ?> input").on("change paste keyup", function (e) {
             wcuLookPreviewAjaxHandler();
         });
 
-        jQuery(".moduleName<?php echo $moduleName?> select").on("change paste keyup", function () {
+        jQuery(".moduleName<?php echo esc_attr( $moduleName ); ?> select").on("change paste keyup", function () {
             wcuLookPreviewAjaxHandler();
         });
 
     });
     </script>
-<?php } ?>
-<?php
+<?php }
 // phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

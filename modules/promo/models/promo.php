@@ -7,6 +7,7 @@
  * @author  woobewoo
  */
 
+
 defined( 'ABSPATH' ) || exit;
 
 class promoModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
@@ -133,24 +134,23 @@ class promoModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConventio
 		$this->saveUsageStat('tour_finished_on_'. $pointKey);
 	}
 	private function _getBigStatClient() {
-		if(!$this->_bigCli) {
-			if(!class_exists('Mixpanel')) {
-				require_once($this->getModule()->getModDir(). 'models'. DS. 'classes'. DS. 'lib'. DS. 'Mixpanel.php');
+		if ( ! $this->_bigCli ) {
+			if ( ! class_exists( 'Mixpanel' ) ) {
+				require_once WCU_DIR . 'vendor/mixpanel/mixpanel-php/lib/Mixpanel.php';
 			}
+
 			$opts = array();
-			if(!function_exists('curl_init')) {
+
+			if ( ! function_exists( 'curl_init' ) ) {
 				$opts['consumer'] = 'socket';
 			}
-			if(class_exists('Mixpanel')) {
-				$this->_bigCli = Mixpanel::getInstance("42c98b181f5d91000464d0677b80c103", $opts);
-				/*$bigCliId = (int) get_option(WCU_CODE. '_big_cli_id');
-				if(!$bigCliId) {
-					$bigCliId = mt_rand(1, 9999999999);
-					update_option(WCU_CODE. '_big_cli_id', $bigCliId);
-				}
-				$this->_bigCli->identify( $bigCliId );*/
+
+
+			if ( class_exists( 'Mixpanel' ) ) {
+				$this->_bigCli = Mixpanel::getInstance( '2e93c97a5078cd0a8a210ea61cc20baf', $opts );
 			}
 		}
+
 		return $this->_bigCli;
 	}
 	public function bigStatAdd( $key, $properties = array() ) {

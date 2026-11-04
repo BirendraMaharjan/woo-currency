@@ -74,8 +74,17 @@ defined( 'ABSPATH' ) || exit;
 				<?php
 				printf(
 					/* Translators: %s: URL. */
-					esc_html__( 'If you have a question, <a href="%s" target="_blank">contact us</a> and will do our best to help you', 'woo-currency' ),
-					'https://woobewoo.com/contact-us/?utm_source=plugin&utm_medium=deactivated_contact&utm_campaign=woocurrency'
+					wp_kses(
+						__( 'If you have a question, <a href="%s" target="_blank" rel="noopener noreferrer">contact us</a> and we will do our best to help you.', 'woo-currency' ),
+						array(
+							'a' => array(
+								'href'   => array(),
+								'target' => array(),
+								'rel'    => array(),
+							),
+						)
+					),
+					esc_url( 'https://woobewoo.com/contact-us/?utm_source=plugin&utm_medium=deactivated_contact&utm_campaign=woocurrency' )
 				);
 				?>
 			</div>

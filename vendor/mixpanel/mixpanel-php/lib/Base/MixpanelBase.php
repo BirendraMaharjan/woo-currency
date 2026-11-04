@@ -5,7 +5,7 @@
  * debugging and logging functionality. It also serves to persist $_options across the library.
  *
  */
-class Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+class Base_MixpanelBase {
 
 
     /**
@@ -15,11 +15,12 @@ class Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllG
     private $_defaults = array(
         "max_batch_size"    => 50, // the max batch size Mixpanel will accept is 50,
         "max_queue_size"    => 1000, // the max num of items to hold in memory before flushing
-        "debug"             => true, // enable/disable debug mode
+        "debug"             => false, // enable/disable debug mode
         "consumer"          => "curl", // which consumer to use
         "host"              => "api.mixpanel.com", // the host name for api calls
         "events_endpoint"   => "/track", // host relative endpoint for events
         "people_endpoint"   => "/engage", // host relative endpoint for people updates
+        "groups_endpoint"   => "/groups", // host relative endpoint for groups updates
         "use_ssl"           => true, // use ssl when available
         "error_callback"    => null // callback to use on consumption failures
     );
@@ -47,8 +48,6 @@ class Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllG
      * @param $msg
      */
     protected function _log($msg) {
-		// No logs for us
-		return;
         $arr = debug_backtrace();
         $class = $arr[0]['class'];
         $line = $arr[0]['line'];
@@ -61,7 +60,7 @@ class Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllG
      * @return bool
      */
     protected function _debug() {
-        return array_key_exists("debug", $this->_options) && $this->_options["debug"] == true;
+        return isset($this->_options["debug"]) && $this->_options["debug"] == true;
     }
 
 }

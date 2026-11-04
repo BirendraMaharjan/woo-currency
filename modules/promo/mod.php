@@ -196,9 +196,6 @@ class promoWcu extends moduleWcu {
 	public function getOverviewTabContent() {
 		return $this->getView()->getOverviewTabContent();
 	}
-	public function showWelcomePage() {
-		$this->getView()->showWelcomePage();
-	}
 	public function displayAdminFooter() {
 		if(frameWcu::_()->isAdminPlugPage()) {
 			$this->getView()->displayAdminFooter();
@@ -416,7 +413,7 @@ class promoWcu extends moduleWcu {
 			if($screen && isset($screen->base) && $screen->base == 'plugins') {
 				frameWcu::_()->getModule('templates')->loadCoreJs();
 				frameWcu::_()->getModule('templates')->loadCoreCss();
-				//frameWcu::_()->getModule('templates')->loadJqueryUi();
+				frameWcu::_()->getModule('templates')->loadJqueryUi();
 				wp_enqueue_style('jquery-ui','//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css');
 				frameWcu::_()->addScript('jquery-ui-dialog');
 				frameWcu::_()->addScript(WCU_CODE. '.admin.plugins', $this->getModPath(). 'js/admin.plugins.js');

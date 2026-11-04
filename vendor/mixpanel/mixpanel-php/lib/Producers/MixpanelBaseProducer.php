@@ -11,7 +11,7 @@ if (!function_exists('json_encode')) {
 /**
  * Provides some base methods for use by a message Producer
  */
-abstract class Producers_MixpanelBaseProducer extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+abstract class Producers_MixpanelBaseProducer extends Base_MixpanelBase {
 
 
     /**
@@ -60,12 +60,12 @@ abstract class Producers_MixpanelBaseProducer extends Base_MixpanelBase { // php
         parent::__construct($options);
 
         // register any customer consumers
-        if (array_key_exists("consumers", $options)) {
+        if (isset($options["consumers"])) {
             $this->_consumers = array_merge($this->_consumers, $options['consumers']);
         }
 
         // set max queue size
-        if (array_key_exists("max_queue_size", $options)) {
+        if (isset($options["max_queue_size"])) {
             $this->_max_queue_size = $options['max_queue_size'];
         }
 
@@ -107,12 +107,14 @@ abstract class Producers_MixpanelBaseProducer extends Base_MixpanelBase { // php
     public function flush($desired_batch_size = 50) {
         $queue_size = count($this->_queue);
         $succeeded = true;
+        $num_threads = $this->_consumer->getNumThreads();
+
         if ($this->_debug()) {
             $this->_log("Flush called - queue size: ".$queue_size);
         }
 
         while($queue_size > 0 && $succeeded) {
-            $batch_size = min(array($queue_size, $desired_batch_size, $this->_options['max_batch_size']));
+            $batch_size = min(array($queue_size, $desired_batch_size*$num_threads, $this->_options['max_batch_size']*$num_threads));
             $batch = array_splice($this->_queue, 0, $batch_size);
             $succeeded = $this->_persist($batch);
 

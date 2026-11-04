@@ -47,13 +47,10 @@ class optionsWcu extends moduleWcu {
 	}
 	public function getAdminPage() {
 		if(!installerWcu::isUsed()) {
-			installerWcu::setUsed();	// Show this welcome page - only one time
-			frameWcu::_()->getModule('promo')->getModel()->bigStatAdd('Welcome Show');
-			frameWcu::_()->getModule('options')->getModel()->save('plug_welcome_show', time());	// Remember this
-		}/* else {
-			 * // No actually welcome page for now
-			return frameWcu::_()->getModule('promo')->showWelcomePage();
-		}*/
+			installerWcu::setUsed();    // Show this welcome page - only one time
+			frameWcu::_()->getModule( 'promo' )->getModel()->bigStatAdd( 'Welcome Show' );
+			frameWcu::_()->getModule( 'options' )->getModel()->save( 'plug_welcome_show', time() );    // Remember this
+		}
 		return $this->getView()->getAdminPage();
 	}
 	/**

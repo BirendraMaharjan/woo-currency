@@ -4,7 +4,7 @@ require_once(dirname(__FILE__) . "/AbstractConsumer.php");
 /**
  * Consumes messages and sends them to a host/endpoint using cURL
  */
-class ConsumerStrategies_CurlConsumer extends ConsumerStrategies_AbstractConsumer { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+class ConsumerStrategies_CurlConsumer extends ConsumerStrategies_AbstractConsumer {
 
     /**
      * @var string the host to connect to (e.g. api.mixpanel.com)
@@ -43,6 +43,12 @@ class ConsumerStrategies_CurlConsumer extends ConsumerStrategies_AbstractConsume
 
 
     /**
+     * @var int number of cURL requests to run in parallel. 1 by default
+     */
+    protected $_num_threads;
+
+
+    /**
      * Creates a new CurlConsumer and assigns properties from the $options array
      * @param array $options
      * @throws Exception
@@ -52,10 +58,11 @@ class ConsumerStrategies_CurlConsumer extends ConsumerStrategies_AbstractConsume
 
         $this->_host = $options['host'];
         $this->_endpoint = $options['endpoint'];
-        $this->_connect_timeout = array_key_exists('connect_timeout', $options) ? $options['connect_timeout'] : 5;
-        $this->_timeout = array_key_exists('timeout', $options) ? $options['timeout'] : 30;
-        $this->_protocol = array_key_exists('use_ssl', $options) && $options['use_ssl'] == true ? "https" : "http";
-        $this->_fork = array_key_exists('fork', $options) ? ($options['fork'] == true) : false;
+        $this->_connect_timeout = isset($options['connect_timeout']) ? $options['connect_timeout'] : 5;
+        $this->_timeout = isset($options['timeout']) ? $options['timeout'] : 30;
+        $this->_protocol = isset($options['use_ssl']) && $options['use_ssl'] == true ? "https" : "http";
+        $this->_fork = isset($options['fork']) ? ($options['fork'] == true) : false;
+        $this->_num_threads = isset($options['num_threads']) ? max(1, intval($options['num_threads'])) : 1;
 
         // ensure the environment is workable for the given settings
         if ($this->_fork == true) {
@@ -83,12 +90,12 @@ class ConsumerStrategies_CurlConsumer extends ConsumerStrategies_AbstractConsume
      */
     public function persist($batch) {
         if (count($batch) > 0) {
-            $data = "data=" . $this->_encode($batch);
             $url = $this->_protocol . "://" . $this->_host . $this->_endpoint;
             if ($this->_fork) {
+                $data = "data=" . $this->_encode($batch);
                 return $this->_execute_forked($url, $data);
             } else {
-                return $this->_execute($url, $data);
+                return $this->_execute($url, $batch);
             }
         } else {
             return true;
@@ -99,38 +106,62 @@ class ConsumerStrategies_CurlConsumer extends ConsumerStrategies_AbstractConsume
     /**
      * Write using the cURL php extension
      * @param $url
-     * @param $data
+     * @param $batch
      * @return bool
      */
-    protected function _execute($url, $data) {
+    protected function _execute($url, $batch) {
         if ($this->_debug()) {
             $this->_log("Making blocking cURL call to $url");
         }
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->_connect_timeout);
-        curl_setopt($ch, CURLOPT_TIMEOUT, $this->_timeout);
-        curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-        $response = curl_exec($ch);
-        if (false === $response) {
-            $curl_error = curl_error($ch);
-            $curl_errno = curl_errno($ch);
-            curl_close($ch);
-            $this->_handleError($curl_errno, $curl_error);
-            return false;
-        } else {
-            curl_close($ch);
-            if (trim($response) == "1") {
-                return true;
-            } else {
-                $this->_handleError(0, $response);
-                return false;
-            }
+        $mh = curl_multi_init();
+        $chs = array();
+
+        $batch_size = ceil(count($batch) / $this->_num_threads);
+        for ($i=0; $i<$this->_num_threads && !empty($batch); $i++) {
+            $ch = curl_init();
+            $chs[] = $ch;
+            $data = "data=" . $this->_encode(array_splice($batch, 0, $batch_size));
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $this->_connect_timeout);
+            curl_setopt($ch, CURLOPT_TIMEOUT, $this->_timeout);
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+            curl_multi_add_handle($mh,$ch);
         }
+
+        $running = 0;
+
+        do {
+            curl_multi_exec($mh, $running);
+            curl_multi_select($mh);
+        } while ($running > 0);
+
+        $info = curl_multi_info_read($mh);
+
+        $error = false;
+        foreach ($chs as $ch) {
+            $response = curl_multi_getcontent($ch);
+            if (false === $response) {
+                $this->_handleError(curl_errno($ch), curl_error($ch));
+                $error = true;
+            }
+            elseif ("1" != trim($response)) {
+                $this->_handleError(0, $response);
+                $error = true;
+            }
+            curl_multi_remove_handle($mh, $ch);
+        }
+
+        if (CURLE_OK != $info['result']) {
+            $this->_handleError($info['result'], "cURL error with code=".$info['result']);
+            $error = true;
+        }
+
+        curl_multi_close($mh);
+        return !$error;
     }
 
 
@@ -218,4 +249,11 @@ class ConsumerStrategies_CurlConsumer extends ConsumerStrategies_AbstractConsume
     }
 
 
+    /**
+     * Number of requests/batches that will be processed in parallel using curl_multi_exec.
+     * @return int
+     */
+    public function getNumThreads() {
+        return $this->_num_threads;
+    }
 }

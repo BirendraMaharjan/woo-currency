@@ -3,10 +3,11 @@
 require_once(dirname(__FILE__) . "/Base/MixpanelBase.php");
 require_once(dirname(__FILE__) . "/Producers/MixpanelPeople.php");
 require_once(dirname(__FILE__) . "/Producers/MixpanelEvents.php");
+require_once(dirname(__FILE__) . "/Producers/MixpanelGroups.php");
 
 /**
- * This is the main class for the Mixpanel PHP Library which provides all of the methods you need to track events and
- * create/update profiles.
+ * This is the main class for the Mixpanel PHP Library which provides all of the methods you need to track events,
+  * create/update profiles and group profiles.
  *
  * Architecture
  * -------------
@@ -106,12 +107,12 @@ require_once(dirname(__FILE__) . "/Producers/MixpanelEvents.php");
  * ));
  *
  */
-class Mixpanel extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+class Mixpanel extends Base_MixpanelBase {
 
 
     /**
      * An instance of the MixpanelPeople class (used to create/update profiles)
-     * @var MixpanelPeople
+     * @var Producers_MixpanelPeople
      */
     public $people;
 
@@ -122,12 +123,19 @@ class Mixpanel extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConve
      */
     private $_events;
 
+    /**
+     * An instance of the MixpanelGroups class (used to create/update group profiles)
+     * @var Producers_MixpanelPeople
+     */
+    public $group;
+ 
+
 
     /**
-     * An instance of the Mixpanel class (for singleton use)
-     * @var Mixpanel
+     * Instances' list of the Mixpanel class (for singleton use, splitted by token)
+     * @var Mixpanel[]
      */
-    private static $_instance;
+    private static $_instances = array();
     
 
     /**
@@ -139,6 +147,7 @@ class Mixpanel extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConve
         parent::__construct($options);
         $this->people = new Producers_MixpanelPeople($token, $options);
         $this->_events = new Producers_MixpanelEvents($token, $options);
+        $this->group = new Producers_MixpanelGroups($token, $options);
     }
 
 
@@ -149,10 +158,10 @@ class Mixpanel extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConve
      * @return Mixpanel
      */
     public static function getInstance($token, $options = array()) {
-        if(!isset(self::$_instance)) {
-            self::$_instance = new Mixpanel($token, $options);
+        if(!isset(self::$_instances[$token])) {
+            self::$_instances[$token] = new Mixpanel($token, $options);
         }
-        return self::$_instance;
+        return self::$_instances[$token];
     }
 
 
@@ -192,11 +201,13 @@ class Mixpanel extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConve
 
 
     /**
-     * Identify the user you want to associate to tracked events
+     * Identify the user you want to associate to tracked events. The $anon_id must be UUID v4 format and not already merged to an $identified_id.
+     * All identify calls with a new and valid $anon_id will trigger a track $identify event, and merge to the $identified_id.
      * @param string|int $user_id
+     * @param string|int $anon_id [optional]
      */
-    public function identify($user_id) {
-        $this->_events->identify($user_id);
+    public function identify($user_id, $anon_id = null) {
+        $this->_events->identify($user_id, $anon_id);
     }
 
     /**
@@ -291,12 +302,12 @@ class Mixpanel extends Base_MixpanelBase { // phpcs:ignore WordPress.NamingConve
 
 
     /**
-     * Alias an existing id with a different unique id. This is helpful when you want to associate a generated id
-     * (such as a session id) to a user id or username.
-     * @param string|int $original_id
-     * @param string|int $new_id
+     * An alias to be merged with the distinct_id. Each alias can only map to one distinct_id.
+     * This is helpful when you want to associate a generated id (such as a session id) to a user id or username.
+     * @param string|int $distinct_id
+     * @param string|int $alias
      */
-    public function createAlias($original_id, $new_id) {
-        $this->_events->createAlias($original_id, $new_id);
+    public function createAlias($distinct_id, $alias) {
+        $this->_events->createAlias($distinct_id, $alias);
     }
 }

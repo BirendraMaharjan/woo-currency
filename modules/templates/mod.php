@@ -220,13 +220,6 @@ class templatesWcu extends moduleWcu {
 			$loaded = true;
 		}
 	}
-	public function loadCssAnims() {
-		static $loaded = false;
-		if(!$loaded) {
-			frameWcu::_()->addStyle('animate.styles', 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.4.0/animate.min.css');
-			$loaded = true;
-		}
-	}
 	public function loadBootstrapSimple() {
 		static $loaded = false;
 		if(!$loaded) {

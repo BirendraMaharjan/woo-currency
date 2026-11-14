@@ -129,21 +129,6 @@ class promoViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions
 	}
 
 	/**
-	 * showWelcomePage.
-	 */
-	public function showWelcomePage() {
-		frameWcu::_()->getModule('templates')->loadJqueryUi();
-		frameWcu::_()->addStyle('sup.bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
-		frameWcu::_()->addStyle('admin.welcome', $this->getModule()->getModPath(). 'css/admin.welcome.css');
-		$goToAdminLink = frameWcu::_()->getModule('options')->getTabUrl('currency');
-		$skipTutorLink = uriWcu::_(array('baseUrl' => $goToAdminLink, 'skip_tutorial' => 1));
-		$this->assign('skipTutorLink', $this->_makeWelcomeLink( $skipTutorLink ));
-		$this->assign('faqList', $this->getMostFaqList());
-		$this->assign('mainLink', $this->getModule()->getMainLink());
-		parent::display('welcomePage');
-	}
-
-	/**
 	 * _makeWelcomeLink.
 	 */
 	private function _makeWelcomeLink($link) {

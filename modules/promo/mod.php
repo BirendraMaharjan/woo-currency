@@ -196,9 +196,6 @@ class promoWcu extends moduleWcu {
 	public function getOverviewTabContent() {
 		return $this->getView()->getOverviewTabContent();
 	}
-	public function showWelcomePage() {
-		$this->getView()->showWelcomePage();
-	}
 	public function displayAdminFooter() {
 		if(frameWcu::_()->isAdminPlugPage()) {
 			$this->getView()->displayAdminFooter();

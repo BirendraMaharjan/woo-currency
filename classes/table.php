@@ -64,10 +64,15 @@ abstract class tableWcu {
 	protected $_limitFrom = '';
 	protected $_limitTo = '';
 
+	/**
+	 * getInstance.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function getInstance($table = '') {
 		static $instances = array();
 		if(!$table) {
-			throw new Exception('Unknown table ['. $table. ']');
+			throw new Exception('Unknown table ['. esc_attr($table). ']');
 		}
 		if(!isset($instances[$table])) {
 			$class = 'table'. strFirstUp($table). strFirstUp(WCU_CODE);

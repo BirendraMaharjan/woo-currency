@@ -187,7 +187,7 @@ class fieldWcu {
 	 *
 	 * @version 2.4.0
 	 */
-	public function displayValue() {
+	public function displayValue( $echo = false ) {
 		$value = '';
 		switch($this->html) {
 			case 'countryList':
@@ -239,18 +239,29 @@ class fieldWcu {
 				}
 				break;
 		}
-		if($echo)
-			echo $value;
-		else
+		if ( $echo ) {
+			htmlWcu::echo_escaped_html( $value );
+		} else {
 			return $value;
+		}
 	}
 
+	/**
+	 * showValue.
+	 *
+	 * @version 2.4.0
+	 */
 	public function showValue() {
-		echo $this->displayValue();
+		htmlWcu::echo_escaped_html( $this->displayValue() );
 	}
 
+	/**
+	 * display.
+	 *
+	 * @version 2.4.0
+	 */
 	public function display($tag = 1, $id = 0) {
-		echo $this->drawHtml($tag, $id);
+		htmlWcu::echo_escaped_html( $this->drawHtml($tag, $id) );
 	}
 
 	public function addHtmlParam($name, $value) {
@@ -476,8 +487,13 @@ class fieldWcu {
 		return $output;
 	}
 
-	public function displayConfig($module) {
-		echo $this->drawConfig($module);
+	/**
+	 * displayConfig.
+	 *
+	 * @version 2.4.0
+	 */
+	public function displayConfig( $module ) {
+		htmlWcu::echo_escaped_html( $this->drawConfig( $module ) );
 	}
 
 	/**

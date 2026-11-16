@@ -526,20 +526,25 @@ class currencyModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConven
 		}
 	}
 
-	private function _fileGetContentsCurl($url) {
-		$ch = curl_init();
+	/**
+	 * _fileGetContentsCurl.
+	 *
+	 * @version 2.4.0
+	 */
+	private function _fileGetContentsCurl( $url ) {
+		$response = wp_remote_get(
+			$url,
+			array(
+				'timeout'     => 15,
+				'redirection' => 3,
+			)
+		);
 
-		curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		@curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			return false;
+		}
 
-		$data = curl_exec($ch);
-
-		curl_close($ch);
-
-		return $data;
+		return wp_remote_retrieve_body( $response );
 	}
 
 	public function changeSettingFlags($setting) {

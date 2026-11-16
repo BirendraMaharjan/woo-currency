@@ -11,34 +11,7 @@ defined( 'ABSPATH' ) || exit;
 
 class templatesWcu extends moduleWcu {
     protected $_styles = array();
-	private $_cdnUrl = '';
 
-	public function __construct($d) {
-		parent::__construct($d);
-		$this->getCdnUrl();	// Init CDN URL
-	}
-	public function getCdnUrl() {
-		if(empty($this->_cdnUrl)) {
-			if((int) frameWcu::_()->getModule('options')->get('use_local_cdn')) {
-				$uploadsDir = wp_upload_dir( null, false );
-				$this->_cdnUrl = $uploadsDir['baseurl']. '/'. WCU_CODE. '/';
-				if(uriWcu::isHttps()) {
-					$this->_cdnUrl = str_replace('http://', 'https://', $this->_cdnUrl);
-				}
-				dispatcherWcu::addFilter('externalCdnUrl', array($this, 'modifyExternalToLocalCdn'));
-			} else {
-				$this->_cdnUrl = (uriWcu::isHttps() ? 'https' : 'http'). '://woobewoo-14700.kxcdn.com/';
-			}
-		}
-		return $this->_cdnUrl;
-	}
-	public function modifyExternalToLocalCdn( $url ) {
-		$url = str_replace(
-			array('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css'),
-			array(FrameWcu::_()->getModule('templates')->getModPath(). 'css'),
-			$url);
-		return $url;
-	}
     public function init() {
         if (is_admin()) {
 			if($isAdminPlugOptsPage = frameWcu::_()->isAdminPlugOptsPage()) {
@@ -112,19 +85,7 @@ class templatesWcu extends moduleWcu {
 	public function loadSlimscroll() {
 		frameWcu::_()->addScript('jquery.slimscroll', WCU_JS_PATH. 'slimscroll.min.js');
 	}
-	public function loadCodemirror() {
-		$modPath = FrameWcu::_()->getModule('templates')->getModPath();
-		frameWcu::_()->addStyle('wcuCodemirror', $modPath. 'lib/codemirror/codemirror.css');
-		frameWcu::_()->addStyle('codemirror-addon-hint', $modPath. 'lib/codemirror/addon/hint/show-hint.css');
-		frameWcu::_()->addScript('wcuCodemirror', $modPath. 'lib/codemirror/codemirror.js');
-		frameWcu::_()->addScript('codemirror-addon-show-hint', $modPath. 'lib/codemirror/addon/hint/show-hint.js');
-		frameWcu::_()->addScript('codemirror-addon-xml-hint', $modPath. 'lib/codemirror/addon/hint/xml-hint.js');
-		frameWcu::_()->addScript('codemirror-addon-html-hint', $modPath. 'lib/codemirror/addon/hint/html-hint.js');
-		frameWcu::_()->addScript('codemirror-mode-xml', $modPath. 'lib/codemirror/mode/xml/xml.js');
-		frameWcu::_()->addScript('codemirror-mode-javascript', $modPath. 'lib/codemirror/mode/javascript/javascript.js');
-		frameWcu::_()->addScript('codemirror-mode-css', $modPath. 'lib/codemirror/mode/css/css.js');
-		frameWcu::_()->addScript('codemirror-mode-htmlmixed', $modPath. 'lib/codemirror/mode/htmlmixed/htmlmixed.js');
-	}
+
 	public function loadCoreCss() {
 		$this->_styles = array(
 			'styleWcu'			=> array('path' => WCU_CSS_PATH. 'style.css', 'for' => 'admin'),
@@ -170,7 +131,6 @@ class templatesWcu extends moduleWcu {
 		}
 	}
 	public function loadFontAwesome() {
-		//frameWcu::_()->addStyle('font-awesomeWcu', dispatcherWcu::applyFilters('externalCdnUrl', 'https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css'));
 		frameWcu::_()->addStyle('font-awesomeWcu', FrameWcu::_()->getModule('templates')->getModPath(). 'css/font-awesome.min.css');
 	}
 	public function loadChosenSelects() {
@@ -225,13 +185,6 @@ class templatesWcu extends moduleWcu {
 		if(!$loaded) {
 			frameWcu::_()->addStyle('bootstrap-simple', WCU_CSS_PATH. 'bootstrap-simple.css');
 			$loaded = true;
-		}
-	}
-	public function loadGoogleFont( $font ) {
-		static $loaded = array();
-		if(!isset($loaded[ $font ])) {
-			frameWcu::_()->addStyle('google.font.'. str_replace(array(' '), '-', $font), 'https://fonts.googleapis.com/css?family='. urlencode($font));
-			$loaded[ $font ] = 1;
 		}
 	}
 }

@@ -98,7 +98,7 @@ class modInstallerWcu {
      */
 	static public function moveFiles( $code, $path ) {
 		if ( ! is_dir( WCU_MODULES_DIR . $code ) ) {
-			if ( mkdir( WCU_MODULES_DIR . $code ) ) {
+			if ( wp_mkdir_p( WCU_MODULES_DIR . $code ) ) {
 				utilsWcu::copyDirectories( $path, WCU_MODULES_DIR . $code );
 
 				return true;
@@ -265,15 +265,19 @@ class modInstallerWcu {
         }
     } 
     /**
-     * Display all errors for module installer, must be used ONLY if You realy need it
+     * Display all errors for module installer, must be used ONLY if You realy need it.
+     *
+     * @version 2.4.0
      */
-    static public function displayErrors($exit = true) {
-        $errors = errorsWcu::get(errorsWcu::MOD_INSTALL);
-        foreach($errors as $e) {
-            echo '<b style="color: red;">'. $e. '</b><br />';
-        }
-        if($exit) exit();
-    }
+	static public function displayErrors( $exit = true ) {
+		$errors = errorsWcu::get( errorsWcu::MOD_INSTALL );
+		foreach ( $errors as $e ) {
+			echo '<b style="color: red;">' . esc_html( $e ) . '</b><br />';
+		}
+		if ( $exit ) {
+			exit();
+		}
+	}
     static public function uninstall() {
         $locations = self::_getPluginLocations();
         if($modules = self::_getModulesFromXml($locations['xmlPath'])) {

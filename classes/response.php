@@ -27,17 +27,22 @@ class responseWcu {
 		return $this->getReqType() == 'ajax';
 	}
 
-    public function ajaxExec($forceAjax = false) {
-        $isAjax = $this->isAjax();
-        $redirect = reqWcu::getVar('redirect');
-        if(count($this->errors) > 0)
-            $this->error = true;
-        if($isAjax || $forceAjax)
-            exit( json_encode_utf_normal($this) );
-        /*if($redirect)
-            redirectWcu($redirect);*/
-        return $this;
-    }
+	/**
+	 * ajaxExec.
+	 *
+	 * @version 2.4.0
+	 */
+	public function ajaxExec( $forceAjax = false ) {
+		$isAjax = $this->isAjax();
+		if ( count( $this->errors ) > 0 ) {
+			$this->error = true;
+		}
+		if ( $isAjax || $forceAjax ) {
+			wp_send_json( $this, 200, JSON_UNESCAPED_UNICODE );
+		}
+
+		return $this;
+	}
 
 	public function mainRedirect($redirectUrl = '') {
 		$redirectUrl = empty($redirectUrl) ? WCU_SITE_URL : $redirectUrl;

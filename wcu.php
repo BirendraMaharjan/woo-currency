@@ -6,7 +6,7 @@
  * Author: woobewoo
  * Author URI: https://woobewoo.com
  * WC requires at least: 3.4
- * WC tested up to: 11.0
+ * WC tested up to: 11.3
  * Requires Plugins: woocommerce
  * Text Domain: woo-currency
  * Domain Path: /languages

@@ -29,18 +29,29 @@ class utilsWcu {
 	static public function escape($data) {
 		return sanitize_text_field(esc_html($data));
 	}
-    static public function createDir($path, $params = array('chmod' => NULL, 'httpProtect' => false)) {
-        if(@mkdir($path)) {
-            if(!is_null($params['chmod'])) {
-                @chmod($path, $params['chmod']);
-            }
-            if(!empty($params['httpProtect'])) {
-                self::httpProtectDir($path);
-            }
-            return true;
-        }
-        return false;
-    }
+
+	/**
+	 * createDir.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function createDir( $path, $params = array( 'chmod' => null, 'httpProtect' => false ) ) {
+		if ( wp_mkdir_p( $path ) ) {
+			if ( ! is_null( $params['chmod'] ) ) {
+				$filesystem = self::getFilesystem();
+				if ( ! $filesystem || ! $filesystem->chmod( $path, $params['chmod'] ) ) {
+					return false;
+				}
+			}
+			if ( ! empty( $params['httpProtect'] ) ) {
+				self::httpProtectDir( $path );
+			}
+
+			return true;
+		}
+
+		return false;
+	}
     static public function httpProtectDir($path) {
         $content = 'DENY FROM ALL';
         if(strrpos($path, DS) != strlen($path))
@@ -52,12 +63,15 @@ class utilsWcu {
     }
     /**
      * Copy all files from one directory ($source) to another ($destination)
+     *
+     * @version 2.4.0
+     *
      * @param string $source path to source directory
      * @params string $destination path to destination directory
      */
     static public function copyDirectories($source, $destination) {
         if(is_dir($source)) {
-            @mkdir($destination);
+	        wp_mkdir_p($destination);
             $directory = dir($source);
             while ( FALSE !== ( $readdirectory = $directory->read() ) ) {
                 if ( $readdirectory == '.' || $readdirectory == '..' ) {
@@ -125,21 +139,47 @@ class utilsWcu {
         }
         return $arr;
     }
-    static public function deleteFile($str) {
-        return @unlink($str);
-    }
-    static public function deleteDir($str){
-        if(is_file($str)){
-            return self::deleteFile($str);
-        }
-        elseif(is_dir($str)){
-            $scan = glob(rtrim($str,'/').'/*');
-            foreach($scan as $index=>$path){
-                utilsWcu::deleteDir($path);
-            }
-            return @rmdir($str);
-        }
-    }
+
+	/**
+	 * getReferalUrl.
+	 *
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 */
+	static private function getFilesystem() {
+		if ( ! function_exists( 'WP_Filesystem' ) ) {
+			require_once ABSPATH . 'wp-admin/includes/file.php';
+		}
+		if ( ! WP_Filesystem() ) {
+			return false;
+		}
+
+		global $wp_filesystem;
+
+		return $wp_filesystem;
+	}
+
+	/**
+	 * deleteFile.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function deleteFile( $str ) {
+		$filesystem = self::getFilesystem();
+
+		return $filesystem && $filesystem->delete( $str );
+	}
+
+	/**
+	 * deleteDir.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function deleteDir( $str ) {
+		$filesystem = self::getFilesystem();
+
+		return $filesystem && $filesystem->is_dir( $str ) ? $filesystem->delete( $str, true ) : self::deleteFile( $str );
+	}
     /**
      * Retrives list of directories ()
      */
@@ -289,6 +329,11 @@ class utilsWcu {
     static public function getFileExt($path) {
         return strtolower( pathinfo($path, PATHINFO_EXTENSION) );
     }
+
+	/**
+	 * getReferalUrl.
+	 * @version 2.4.0
+	 */
     static public function getRandStr($length = 10, $allowedChars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', $params = array()) {
         $result = '';
         $allowedCharsLen = strlen($allowedChars);
@@ -296,7 +341,7 @@ class utilsWcu {
 			$allowedChars = strtolower($allowedChars);
 		}
         while(strlen($result) < $length) {
-          $result .= substr($allowedChars, rand(0, $allowedCharsLen), 1);
+          $result .= substr($allowedChars, wp_rand(0, $allowedCharsLen), 1);
         }
 
         return $result;
@@ -404,8 +449,14 @@ class utilsWcu {
             installerWcu::deactivate();
         }
 	}
+
+	/**
+	 * getReferalUrl.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function isWritable($filename) {
-		return is_writable($filename);
+		return wp_is_writable($filename);
 	}
 	
 	static public function isReadable($filename) {
@@ -645,10 +696,16 @@ class utilsWcu {
 		// Simple for now
 		return reqWcu::getVar('HTTP_REFERER', 'server');
 	}
+
+	/**
+	 * getReferalHost.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function getReferalHost() {
 		$refUrl = self::getReferalUrl();
 		if(!empty($refUrl)) {
-			$refer = parse_url( $refUrl );
+			$refer = wp_parse_url( $refUrl );
 			if($refer && isset($refer['host']) && !empty($refer['host'])) {
 				return $refer['host'];
 			}

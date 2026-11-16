@@ -1170,6 +1170,11 @@ class currencyWcu extends moduleWcu {
 		return $array;
 	}
 
+	/**
+	 * getAllProductCategories.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getAllProductCategories() {
 		global $wpdb;
 		$orderby = 'name';
@@ -1181,7 +1186,7 @@ class currencyWcu extends moduleWcu {
 			'hide_empty' => $hide_empty,
 		);
 		$array = array();
-		$product_categories = get_terms('product_cat', $cat_args);
+		$product_categories = get_terms( array_merge( $cat_args, array( 'taxonomy' => 'product_cat' ) ) );
 		if (!empty($product_categories)) {
 			foreach ($product_categories as $p) {
 				$array[ $p->term_taxonomy_id ] = $p->name;

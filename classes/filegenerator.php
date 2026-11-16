@@ -45,7 +45,7 @@ class filegeneratorWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGl
                 $this->_getDefaultHeader();
                 break;
         }
-        echo $this->_data;
+        echo $this->_data; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- This is a plain-text/CSV file download, not HTML output.
         exit();
     }
     protected function _getTxtHeader() {

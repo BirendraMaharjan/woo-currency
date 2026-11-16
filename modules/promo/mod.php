@@ -145,7 +145,7 @@ class promoWcu extends moduleWcu {
 				$this->getModel()->saveUsageStat($nKey. '.'. 'show', true);
 				$html .= '<div class="updated notice is-dismissible woobewoo-admin-notice" data-code="'. $nKey. '">'. $n['html']. '</div>';
 			}
-			echo $html;
+			htmlWcu::echo_escaped_html( $html );
 		}
 	}
 	/**
@@ -407,20 +407,25 @@ class promoWcu extends moduleWcu {
 	public function getContactFormPlgUrl() {
 		return 'http://wordpress.org/support/plugin/contact-form-by-woobewoo';
 	}
+
+	/**
+	 * checkPluginDeactivation.
+	 *
+	 * @version 2.4.0
+	 */
 	public function checkPluginDeactivation() {
 		if(function_exists('get_current_screen')) {
 			$screen = get_current_screen();
 			if($screen && isset($screen->base) && $screen->base == 'plugins') {
 				frameWcu::_()->getModule('templates')->loadCoreJs();
 				frameWcu::_()->getModule('templates')->loadCoreCss();
-				//frameWcu::_()->getModule('templates')->loadJqueryUi();
-				wp_enqueue_style('jquery-ui','//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css');
-				frameWcu::_()->addScript('jquery-ui-dialog');
+				wp_enqueue_style('wp-jquery-ui-dialog');
+				frameWcu::_()->addScript( 'jquery-ui-dialog' );
 				frameWcu::_()->addScript(WCU_CODE. '.admin.plugins', $this->getModPath(). 'js/admin.plugins.js');
 				frameWcu::_()->addJSVar(WCU_CODE. '.admin.plugins', 'wcuPluginsData', array(
 					'plugName' => WCU_PLUG_NAME. '/'. WCU_MAIN_FILE,
 				));
-				echo $this->getView()->getPluginDeactivation();
+				htmlWcu::echo_escaped_html( $this->getView()->getPluginDeactivation() );
 			}
 		}
 	}

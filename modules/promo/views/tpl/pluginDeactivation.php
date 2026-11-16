@@ -72,12 +72,12 @@ defined( 'ABSPATH' ) || exit;
 			<?php esc_html_e('Couldn\'t get the plugin to work', 'woo-currency')?>
 			<div class="wcuDeactivateDescShell">
 				<?php
-				printf(
-					htmlWcu::escaped_html(
+				htmlWcu::echo_escaped_html(
+					sprintf(
 						/* Translators: %s: URL. */
-						__( 'If you have a question, <a href="%s" target="_blank" rel="noopener noreferrer">contact us</a> and we will do our best to help you.', 'woo-currency' )
-					),
-					esc_url( 'https://woobewoo.com/contact-us/?utm_source=plugin&utm_medium=deactivated_contact&utm_campaign=woocurrency' )
+						__( 'If you have a question, <a href="%s" target="_blank" rel="noopener noreferrer">contact us</a> and we will do our best to help you.', 'woo-currency' ),
+						esc_url( 'https://woobewoo.com/contact-us/?utm_source=plugin&utm_medium=deactivated_contact&utm_campaign=woocurrency' )
+					)
 				);
 				?>
 			</div>

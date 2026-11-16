@@ -55,9 +55,15 @@ class uriWcu {
 
 		return $link;
 	}
-    static public function _e($params) {
-        echo self::_($params);
-    }
+
+	/**
+	 * _e.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function _e( $params ) {
+		echo esc_url( self::_( $params ) );
+	}
     static public function page($id) {
         return get_page_link($id);
     }

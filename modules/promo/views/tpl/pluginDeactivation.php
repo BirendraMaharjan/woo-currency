@@ -73,8 +73,8 @@ defined( 'ABSPATH' ) || exit;
 			<div class="wcuDeactivateDescShell">
 				<?php
 				printf(
-					/* Translators: %s: URL. */
 					htmlWcu::escaped_html(
+						/* Translators: %s: URL. */
 						__( 'If you have a question, <a href="%s" target="_blank" rel="noopener noreferrer">contact us</a> and we will do our best to help you.', 'woo-currency' )
 					),
 					esc_url( 'https://woobewoo.com/contact-us/?utm_source=plugin&utm_medium=deactivated_contact&utm_campaign=woocurrency' )

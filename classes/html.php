@@ -435,6 +435,12 @@ class htmlWcu {
             // -->
         </script>';
 	}
+
+	/**
+	 * datepicker.
+	 *
+	 * @version 2.4.0
+	 */
     static public function datepicker($name, $params = array('attrs' => '', 'value' => '')) {
         if(isset($params['id']) && !empty($params['id']))
             $id = $params['id'];
@@ -443,7 +449,7 @@ class htmlWcu {
 		$params = array_merge(array(
 			'dateFormat' => WCU_DATE_FORMAT_JS,
 			'changeYear' => true,
-			'yearRange' => '1905:'. (date('Y')+5),
+			'yearRange' => '1905:' . ( wp_date( 'Y' ) + 5 ),
 		), $params);
         return self::input($name, array(
                 'attrs' => 'id="'. $id. '" '. (isset($params['attrs']) ? $params['attrs'] : ''),
@@ -896,10 +902,16 @@ class htmlWcu {
 	static public function capcha() {
 		return recapchaWcu::_()->getHtml();
 	}
+
+	/**
+	 * textIncDec.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function textIncDec($name, $params = array('value' => '', 'attrs' => '', 'options' => array(), 'onclick' => '', 'id' => '')) {
 		if(!isset($params['attrs']))
 			$params['attrs'] = '';
-		$textId = (isset($params['id']) && !empty($params['id'])) ? $params['id'] : 'toeTextIncDec_'. mt_rand(9, 9999);
+		$textId = (isset($params['id']) && !empty($params['id'])) ? $params['id'] : 'toeTextIncDec_'. wp_rand(9, 9999);
 		$params['attrs'] .= ' id="'. $textId. '"';
 		$textField = self::text($name, $params);
 		$onClickInc = 'toeTextIncDec(\''. $textId. '\', 1); return false;';
@@ -926,7 +938,7 @@ class htmlWcu {
 		$nameToClass = str_replace('-', '_', self::nameToClassId($name));
 		$textId = self::nameToClassId($name, $params);
 		if(strpos($params['attrs'], 'id="') === false) {
-			$textId .= '_'. mt_rand(9, 9999);
+			$textId .= '_'. wp_rand(9, 9999);
 			$params['attrs'] .= 'id="'. $textId. '"';
 		}
 
@@ -971,7 +983,7 @@ class htmlWcu {
 		if(!isset($params['id'])) {
 			$params['id'] = self::nameToClassId($name, $params);
 			if(strpos($params['attrs'], 'id="') === false) {
-				$params['id'] .= '_'. mt_rand(1, 99999);
+				$params['id'] .= '_'. wp_rand(1, 99999);
 			}
 		}
 		$params['checked'] = isset($params['checked']) ? (int) $params['checked'] : 0;
@@ -1004,7 +1016,7 @@ class htmlWcu {
 		$params['value'] = isset($params['value']) ? $params['value'] : '';
 		$params['attrs'] = isset($params['attrs']) ? $params['attrs'] : '';
 		if(strpos($params['attrs'], 'id="') === false) {
-			$buttonId .= '_'. mt_rand(1, 99999);
+			$buttonId .= '_'. wp_rand(1, 99999);
 			$params['attrs'] .= ' id="'. $buttonId. '"';
 		}
 		$inputId = $buttonId. '_input';

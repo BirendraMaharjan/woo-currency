@@ -4,7 +4,7 @@
  *
  * @author  woobewoo
  *
- * @version 2.2.9
+ * @version 2.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -509,7 +509,9 @@ abstract class tableWcu {
 	}
 
 	/**
-	 * Prepare data after extracting it from database
+	 * Prepare data after extracting it from database.
+	 *
+	 * @version 2.4.0
 	 */
 	public function prepareOutput($d = array()) {
 		$ignore = isset($d['ignore']) ? $d['ignore'] : array();
@@ -519,7 +521,7 @@ abstract class tableWcu {
 					if($d[$key] == '0000-00-00' || empty($d[$key]))
 						$d[$key] = '';
 					else {
-						$d[$key] = date(WCU_DATE_FORMAT, dbWcu::dateToTime($d[$key]));
+						$d[$key] = wp_date(WCU_DATE_FORMAT, dbWcu::dateToTime($d[$key]));
 					}
 					break;
 				case 'int':

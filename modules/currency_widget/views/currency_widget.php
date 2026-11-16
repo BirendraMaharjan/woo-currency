@@ -62,7 +62,7 @@ class currency_widgetViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingC
 
 				$exclude = !empty($instance['exclude']) ? $instance['exclude'] : array();
 
-				$randId = mt_rand(1,99999);
+				$randId = wp_rand( 1, 99999 );
 
 				foreach($currenciesOpts as $key => $opt) {
 					if(in_array($key, $exclude)) {

@@ -91,13 +91,19 @@ class dbWcu {
         global $wpdb;        
         return $wpdb->insert_id;
     }
+
+	/**
+	 * timeToDate.
+	 *
+	 * @version 2.4.0
+	 */
     static public function timeToDate($timestamp = 0) {
         if($timestamp) {
             if(!is_numeric($timestamp))
                 $timestamp = dateToTimestampWcu($timestamp);
-            return date('Y-m-d', $timestamp);
+            return gmdate('Y-m-d', $timestamp);
         } else {
-            return date('Y-m-d');
+            return gmdate('Y-m-d');
         }
     }
     static public function dateToTime($date) {

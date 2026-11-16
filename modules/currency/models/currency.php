@@ -375,7 +375,7 @@ class currencyModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConven
 				} elseif ($fromCurrency == $toCurrency) {
 					$rate = 1;
 				} else {
-					$url = "https://api.privatbank.ua/p24api/exchange_rates?json&date=".date('d.m.Y');
+					$url = "https://api.privatbank.ua/p24api/exchange_rates?json&date=".gmdate('d.m.Y');
 					$res = function_exists('curl_init') ? $this->_fileGetContentsCurl($url) : file_get_contents($url);
 					$currencyData = json_decode($res, true);
 					$rate = $errorMsg;
@@ -453,7 +453,7 @@ class currencyModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConven
 						'USD'
 					);
 				} elseif ($currencyData['error']['code'] == 105) {
-					$queryStr = sprintf("?access_key=%s&amp;currencies=%s,%s&amp;date=%s", $currencylayerConverterApiKey, $fromCurrency, $toCurrency, date('Y-m-d'));
+					$queryStr = sprintf("?access_key=%s&amp;currencies=%s,%s&amp;date=%s", $currencylayerConverterApiKey, $fromCurrency, $toCurrency, gmdate('Y-m-d'));
 					$url = "http://api.currencylayer.com/live" . $queryStr;
 					$res = function_exists('curl_init') ? $this->_fileGetContentsCurl($url) : file_get_contents($url);
 					$currencyData = json_decode($res, true);

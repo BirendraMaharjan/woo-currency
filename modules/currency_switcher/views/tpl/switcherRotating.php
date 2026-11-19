@@ -125,8 +125,5 @@ foreach($this->displayRulesTab as $p) {
 		<?php }?>
 	</ul>
 </div>
-<script type="text/javascript">
-	jQuery('.ddChild').css('height', 'auto');
-</script>
 <?php
 // phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

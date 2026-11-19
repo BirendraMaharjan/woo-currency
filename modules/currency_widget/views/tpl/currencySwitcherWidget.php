@@ -10,32 +10,31 @@
 defined( 'ABSPATH' ) || exit;
 
 // phpcs:disable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound
-?>
+$show_on_widths         = ! empty( $this->instance['show_on_widths'] );
+$show_on_screen_compare = $this->instance['show_on_screen_compare'] ?? '';
+$show_on_screen_value   = absint( $this->instance['show_on_widths_value'] ?? 0 );
+
+if (
+	$show_on_widths &&
+	$show_on_screen_value &&
+	in_array( $show_on_screen_compare, array( 'less', 'more' ), true )
+) {
+	$media_condition = ( 'less' === $show_on_screen_compare ) ? 'max-width' : 'min-width';
+	?>
 	<style>
-		<?php
-			$show_on_widths = isset($this->instance['show_on_widths']) ? $this->instance['show_on_widths'] : false;
-			$show_on_screen_compare = isset($this->instance['show_on_screen_compare']) ? $this->instance['show_on_screen_compare'] : false;
-			$show_on_screen_value = isset($this->instance['show_on_widths_value']) ? $this->instance['show_on_widths_value'] : false;
-		?>
-		<?php if ($show_on_widths && $show_on_screen_compare && $show_on_screen_value) { ?>
-		<?php if ($show_on_screen_compare === 'less') {
-	        $show_on_screen_compare = 'max-width';
-	    } else {
-	        $show_on_screen_compare = 'min-width';
-	    } ?>
 		#wcuCurrencySwitcherWidget_<?php echo absint( $this->randId ); ?> {
 			display: none !important;
 		}
 
-		@media ( <?php echo esc_attr( $show_on_screen_compare ) ?>:<?php echo esc_attr( $show_on_screen_value ) ?>px ) {
-			#wcuCurrencySwitcherWidget_<?php echo absint( $this->randId ); ?> {
-				display: block !important;
-			}
+		@media (<?php echo esc_attr( $media_condition ); ?>: <?php echo esc_attr( $show_on_screen_value ); ?>px) {
+		#wcuCurrencySwitcherWidget_<?php echo absint( $this->randId ); ?> {
+			display: block !important;
 		}
-		<?php } ?>
+		}
 	</style>
+	<?php
+}
 
-<?php
 $formStyles = 'margin-bottom: 20px;';
 $formStyles .= ! empty( $this->instance['width'] ) ? 'width: ' . $this->instance['width'] . ';' : 'width: 100%;';
 
@@ -47,8 +46,7 @@ if ( ! $this->moduleFlags ) {
 ?>
 
 
-	<div id="wcuCurrencySwitcherWidget_<?php echo absint( $this->randId ); ?>" class="wcuCurrencySwitcherWidget"
-	     style="<?php echo esc_attr( $formStyles ); ?>">
+	<div id="wcuCurrencySwitcherWidget_<?php echo absint( $this->randId ); ?>" class="wcuCurrencySwitcherWidget" style="<?php echo esc_attr( $formStyles ); ?>">
 
 		<?php if ( ! empty( $this->instance['title'] ) ) { ?>
 			<div style="margin-bottom: 10px;"><?php echo esc_html( $this->instance['title'] ); ?></div>
@@ -116,53 +114,5 @@ if ( ! $this->moduleFlags ) {
 		<?php } ?>
 
 	</div>
-
-
-	<script type="text/javascript">
-        if ( window.jQuery ) {
-            jQuery( document ).ready( function () {
-
-				<?php if ($this->showFlags && ! empty( $this->instance['show_flag_dropdown'] ) && $this->instance['show_flag_dropdown'] != 'false') {?>
-                var wcuGlobalFlagsDD = window.wcuGlobalFlagsDD || 0,
-                    wcuDDList = window.wcuDDList || [];
-                jQuery( ".wcuFlagsSelectBoxDropdown" ).each( function () {
-                    var $this = jQuery( this );
-                    if ( !$this.attr( 'id' ) && $this.closest( '.ddOutOfVision' ).length == 0 ) {
-                        wcuGlobalFlagsDD++;
-                        var id = 'wcuFlagsSelectBoxDropdown_' + wcuGlobalFlagsDD;
-                        $this.attr( 'id', id );
-                        wcuDDList[ id ] = jQuery( "#" + id ).msDropDown().data( 'dd' );
-                    }
-                } );
-                window.wcuGlobalFlagsDD = wcuGlobalFlagsDD;
-                window.wcuDDList = wcuDDList;
-                //jQuery(".wcuFlagsSelectBoxDropdown").msDropDown();
-				<?php }?>
-
-                if ( !window.wcuWidgetInit ) {
-
-                    var select = jQuery( '.wcuCurrencySwitcherWidget [name="wcu_currency_switcher"]' );
-					<?php if (! $this->showFlags) {?>
-                    select.chosen( { disable_search: true } );
-					<?php }?>
-
-                    select.on( 'change', function () {
-                        wcuUpdateUrlParam( 'currency', jQuery( this ).val() );
-                    } );
-
-                    jQuery( ".wcuCurrencySwitcherWidgetShowAsFlag" ).click( function () {
-                        wcuUpdateUrlParam( 'currency', jQuery( this ).attr( 'data-currency' ) );
-                    } );
-                    jQuery( window ).on( 'resize', function () {
-                        for ( var id in window.wcuDDList ) {
-                            window.wcuDDList[ id ].destroy();
-                            wcuDDList[ id ] = jQuery( "#" + id ).msDropDown().data( 'dd' );
-                        }
-                    } );
-                    window.wcuWidgetInit = true;
-                }
-            } );
-        }
-	</script>
 <?php
 // phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

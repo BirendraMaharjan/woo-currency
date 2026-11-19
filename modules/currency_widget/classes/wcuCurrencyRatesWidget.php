@@ -25,8 +25,14 @@ class wcuCurrencyRatesWidget extends WP_Widget {
 		);
 		parent::__construct( $this->widgetName, WCU_WP_PLUGIN_NAME . ' ' . __('Rates', 'woo-currency'), $this->widgetOps );
 	}
+
+	/**
+	 * widget.
+	 *
+	 * @version 2.4.0
+	 */
 	public function widget($args, $instance) {
-		echo frameWcu::_()->getModule('currency_widget')->getView()->displayWidget($instance, $this->widgetTemplate);
+		htmlWcu::echo_escaped_html( frameWcu::_()->getModule('currency_widget')->getView()->displayWidget($instance, $this->widgetTemplate) );
 	}
 	public function form($instance) {
 		frameWcu::_()->getModule('currency_widget')->getView()->displayForm($instance, $this, $this->widgetTemplate);

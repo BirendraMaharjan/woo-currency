@@ -106,8 +106,19 @@ class currency_widgetControllerWcu extends controllerWcu { // phpcs:ignore WordP
 	 */
 	public function getPermissions() {
 		return array(
-			WCU_METHODS => array(
-				'woobewoo_cs_get_currency_rates_list' => array( WCU_ADMIN, WCU_LOGGED, WCU_GUEST ),
+			WCU_USERLEVELS => array(
+				WCU_ADMIN  => array(
+					'woobewoo_cs_get_currency_rates_list',
+					'getCurrencyRate',
+				),
+				WCU_LOGGED => array(
+					'woobewoo_cs_get_currency_rates_list',
+					'getCurrencyRate',
+				),
+				WCU_GUEST  => array(
+					'woobewoo_cs_get_currency_rates_list',
+					'getCurrencyRate',
+				)
 			),
 		);
 	}

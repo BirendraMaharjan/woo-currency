@@ -213,11 +213,17 @@ foreach ($this->displayRulesTab as $p) {
 		<div class="wcuCurrencySwitcherFloatingTableCurrenciesBox">
             <table class="wcuCurrencySwitcherFloatingTableCurrencies" cellspacing="0" cellpadding="0">
                 <tbody>
-                <?php if ($cur_currency_top) {
-                    $top[$this->currentCurrency] = $this->currencies[$this->currentCurrency];
-                    unset($this->currencies[$this->currentCurrency]);
-                    $this->currencies = $top + $this->currencies;
-                }?>
+                <?php
+                if (
+					$cur_currency_top &&
+					isset( $this->currencies[$this->currentCurrency] )
+                ) {
+	                $top = array( $this->currentCurrency => $this->currencies[$this->currentCurrency] );
+	                unset( $this->currencies[$this->currentCurrency] );
+	                $this->currencies = $top + $this->currencies;
+                }
+
+                ?>
                 <?php foreach ($this->currencies as $key => $currency) { ?>
                     <?php $current = $key == $this->currentCurrency ? 'wcuCurrent' : ''; ?>
                     <tr class="<?php echo esc_attr( $current )?>" data-currency="<?php echo esc_attr( $key ); ?>">
@@ -242,9 +248,12 @@ foreach ($this->displayRulesTab as $p) {
 				<tbody>
 					<tr>
 						<?php if (!empty($switcher_opening_button) && ($switcher_opening_button !== 'text')) { ?>
-							<?php if ($cur_currency_top) { ?>
+							<?php
+							if ( $cur_currency_top && isset( $this->currencies[ $this->currentCurrency ] ) ) { ?>
 								<td class="wcuCurrent">
-									<div class="wcuCurrencySwitcherButtonDiv"><?php echo wp_kses_post(  $this->currenciesButton[$this->currentCurrency] ); ?></div>
+									<div class="wcuCurrencySwitcherButtonDiv">
+										<?php echo wp_kses_post( $this->currenciesButton[ $this->currentCurrency ] ); ?>
+									</div>
 								</td>
 							<?php } ?>
 							<?php foreach ($this->currenciesButton as $key => $currency) { ?>
@@ -275,19 +284,5 @@ foreach ($this->displayRulesTab as $p) {
 		<?php } ?>
 
 </div>
-<script type="text/javascript">
-	jQuery('.ddChild').css('height', 'auto');
-    jQuery(document).ready(function(){
-        var wcuTableBoxHeight = jQuery('#wcuCurrencySwitcherFloating').height();
-        if (wcuTableBoxHeight > 250) {
-            jQuery('.wcuCurrencySwitcherFloatingTableCurrenciesBox').slimScroll({
-                height: '250px'
-                , railVisible: true
-                , alwaysVisible: true
-                , allowPageScroll: false
-            });
-        }
-    });
-</script>
 <?php
 // phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

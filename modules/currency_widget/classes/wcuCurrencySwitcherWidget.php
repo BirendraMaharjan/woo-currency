@@ -25,8 +25,14 @@ class wcuCurrencySwitcherWidget extends WP_Widget {
 		);
 		parent::__construct( $this->widgetName, WCU_WP_PLUGIN_NAME . ' ' . __('Switcher', 'woo-currency'), $this->widgetOps );
 	}
-	public function widget($args, $instance) {
-		echo frameWcu::_()->getModule('currency_widget')->getView()->displayWidget($instance, $this->widgetTemplate);
+
+	/**
+	 * widget.
+	 *
+	 * @version 2.4.0
+	 */
+	public function widget( $args, $instance ) {
+		htmlWcu::echo_escaped_html( frameWcu::_()->getModule( 'currency_widget' )->getView()->displayWidget( $instance, $this->widgetTemplate ) );
 	}
 	public function form($instance) {
 		frameWcu::_()->getModule('currency_widget')->getView()->displayForm($instance, $this, $this->widgetTemplate);

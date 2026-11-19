@@ -145,3 +145,16 @@ function getCookie(cname) {
 	}
 	return "";
 }
+
+jQuery( document ).ready( function ( $ ) {
+	$( '.ddChild' ).css( 'height', 'auto' );
+	var wcuTableBoxHeight = $( '#wcuCurrencySwitcherFloating' ).height();
+	if ( wcuTableBoxHeight > 250 ) {
+		$( '.wcuCurrencySwitcherFloatingTableCurrenciesBox' ).slimScroll( {
+			height: '250px',
+			railVisible: true,
+			alwaysVisible: true,
+			allowPageScroll: false
+		} );
+	}
+} );

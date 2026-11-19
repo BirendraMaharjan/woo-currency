@@ -45,23 +45,22 @@ $layout         = isset( $this->instance['layout'] ) ? $this->instance['layout']
 			line-height: 21px;
 		}
 
+
+
 		<?php
 			$show_on_widths = isset($this->instance['show_on_widths']) ? $this->instance['show_on_widths'] : false;
 			$show_on_screen_compare = isset($this->instance['show_on_screen_compare']) ? $this->instance['show_on_screen_compare'] : false;
 			$show_on_screen_value = isset($this->instance['show_on_widths_value']) ? $this->instance['show_on_widths_value'] : false;
 		?>
-		<?php if ($show_on_widths && $show_on_screen_compare && $show_on_screen_value) { ?>
-		<?php if ($show_on_screen_compare === 'less') {
-	        $show_on_screen_compare = 'max-width';
-	    } else {
-	        $show_on_screen_compare = 'min-width';
-	    } ?>
-		#wcuCurrencyConverterWidget_<?php echo absint( $this->randId ); ?> {
+
+		<?php if ( $show_on_widths && $show_on_screen_value && in_array( $show_on_screen_compare, array( 'less', 'more' ), true ) ) { ?>
+
+		#wcuCurrencyConverterWidget_<?php echo esc_attr( $widget_id ); ?> {
 			display: none !important;
 		}
 
-		@media ( <?php echo esc_attr( $show_on_screen_compare ); ?>:<?php echo esc_attr( $show_on_screen_value ); ?>px ) {
-			#wcuCurrencyConverterWidget_<?php echo absint( $this->randId ); ?> {
+		@media (<?php echo 'less' === $show_on_screen_compare ? 'max-width' : 'min-width'; ?>: <?php echo esc_attr( $show_on_screen_value ); ?>px) {
+			#wcuCurrencyConverterWidget_<?php echo esc_attr( $widget_id ); ?> {
 				display: block !important;
 			}
 		}
@@ -202,17 +201,6 @@ if ( ! $this->moduleFlags ) {
 					?>
 				</div>
 
-				<script type="text/javascript">
-                    jQuery( ".wcuCurrencyConverterWidget .wcuExchangeIcon" ).click( function () {
-                        jQuery( this ).toggleClass( "wcuRotateAnimation" );
-                        var parent = jQuery( this ).closest( ".wcuCurrencyConverterWidget" );
-                        var from = parent.find( '[name="currency_from"]' );
-                        var to = parent.find( '[name="currency_to"]' );
-                        from = from.attr( "name", "currency_to" );
-                        to = to.attr( "name", "currency_from" );
-                    } );
-				</script>
-
 			<?php } elseif (
 			$this->moduleFlags &&
 			! empty( $this->instance['layout'] ) &&
@@ -320,34 +308,15 @@ if ( ! $this->moduleFlags ) {
 						</select>
 					<?php } ?>
 				</div>
-
-				<script type="text/javascript">
-                    jQuery( ".wcuCurrencyConverterWidget .wcuExchangeIcon" ).click( function () {
-                        jQuery( this ).toggleClass( "wcuRotateAnimation" );
-                        var parent = jQuery( this ).closest( ".wcuCurrencyConverterWidget" );
-                        var from = parent.find( '[name="currency_from"]' );
-                        var to = parent.find( '[name="currency_to"]' );
-                        from = from.attr( "name", "currency_to" );
-                        to = to.attr( "name", "currency_from" );
-                    } );
-                    jQuery( ".wcuCurrencyConverterWidget .wcuExchangeIconHorizontal" ).click( function () {
-                        jQuery( this ).toggleClass( "wcuRotateAnimation" );
-                        var parent = jQuery( this ).closest( ".wcuCurrencyConverterWidget" );
-                        var from = parent.find( '[name="amount"]' );
-                        var to = parent.find( '[name="result"]' );
-                        from = from.attr( "name", "result" );
-                        to = to.attr( "name", "amount" );
-                    } );
-				</script>
-
 			<?php } ?>
 
 			<div class="wcuCol-md-12 wcuCol-xs-12 wcuMargin">
-				<?php htmlWcu::echo_escaped_html(
+				<?php
+				htmlWcu::echo_escaped_html(
 					htmlWcu::button(
 						array(
 							'value' => esc_html( 'Convert', 'woo-currency' ),
-							'attrs' => 'class="wcuCurrencyConvertBtn wcuCol-md-12 wcuCol-xs-12 wcuMargin" onclick="getCurrencyRate(this); return false;"',
+							'attrs' => 'class="wcuCurrencyConvertBtn wcuCol-md-12 wcuCol-xs-12 wcuMargin"',
 						)
 					)
 				);
@@ -358,39 +327,5 @@ if ( ! $this->moduleFlags ) {
 
 		<div style="clear: both;"></div>
 	</div>
-
-	<script type="text/javascript">
-
-        jQuery( '#wcuCurrencyConverterWidget_<?php echo absint( $this->randId ); ?> select[name=currency_to] option:eq(1)' ).attr( 'selected', 'selected' );
-
-		<?php if ($this->showFlags) {?>
-        jQuery( document ).ready( function () {
-            jQuery( "#wcuCurrencyConverterWidget_<?php echo absint( $this->randId ); ?> .wcuFlagsSelectBoxDropdown" ).msDropDown();
-            oHandler = jQuery( "#wcuCurrencyConverterWidget_<?php echo absint( $this->randId ); ?> [name='currency_to'].wcuFlagsSelectBoxDropdown" ).data( 'dd' );
-            if ( oHandler ) {
-                oHandler.set( "selectedIndex", 1 );
-            }
-        } );
-		<?php }?>
-
-        function getCurrencyRate( btn )
-        {
-            var shell = jQuery( btn ).parents( '.wcuCurrencyConverterShell:first' );
-            jQuery.sendFormWcu( {
-                data: {
-                    mod: 'currency_widget',
-                    action: 'getCurrencyRate',
-                    amount: shell.find( 'input[name="amount"]' ).val(),
-                    currency_from: shell.find( '[name="currency_from"]' ).val(),
-                    currency_to: shell.find( '[name="currency_to"]' ).val()
-                },
-                onSuccess: function ( res ) {
-                    if ( !res.error ) {
-                        shell.find( '[name="result"]' ).val( res.data.result );
-                    }
-                }
-            } );
-        }
-	</script>
 <?php
 // phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

@@ -20,6 +20,7 @@ class currency_widgetViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingC
 			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_style( 'wp-color-picker' );
 			frameWcu::_()->getModule('templates')->loadCoreJs();
+			frameWcu::_()->addScript( 'frontend-currency-widget', $this->getModule()->getModPath() . 'js/frontend-currency-widget.js' );
 
 			$show = false;
 			$showOn = !empty($instance['show_on']) ? $instance['show_on'] : 'both';

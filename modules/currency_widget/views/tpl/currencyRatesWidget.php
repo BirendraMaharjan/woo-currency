@@ -89,47 +89,5 @@ if (!$this->moduleFlags) {
 	</table>
 
 </div>
-
-<script type="text/javascript">
-	jQuery(document).ready(function() {
-
-		<?php if ($this->showFlags) {?>
-			jQuery(".wcuFlagsSelectBoxDropdown").msDropDown();
-		<?php }?>
-
-		var select = jQuery('.wcuCurrencyRatesWidget [name="wcu_currency_item"]'),
-			list = jQuery('.wcuCurrencyRatesList tr');
-
-		select.on('change', function() {
-			var shell = jQuery(this).closest('.wcuCurrencyRatesWidget'),
-				current = shell.find('[name="wcu_currency_item"]').val();
-
-			list.find('.wcuCurrencyRateVal').html('loading...');
-			jQuery.sendFormWcu({
-				data: {
-					mod: 'currency_widget',
-					action: 'woobewoo_cs_get_currency_rates_list',
-					current: current,
-					exclude: shell.data('exclude')
-				},
-				onSuccess: function(res) {
-					if(!res.error) {
-						list.each(function() {
-							var self = jQuery(this);
-
-							if(self.data('currency') == current) {
-								self.hide();
-							} else {
-								self.show();
-							}
-							self.find('.wcuCurrencyRateVal').html(res.data.rates[self.data('currency')]);
-						});
-					}
-				}
-			});
-		});
-		select.trigger('change');
-	});
-</script>
 <?php
 // phpcs:enable WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound

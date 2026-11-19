@@ -32,8 +32,13 @@ class currency_switcherWcu extends moduleWcu
 		}
 	}
 
+	/**
+	 * showModule.
+	 *
+	 * @version 2.4.0
+	 */
 	public function showModule() {
-		echo $this->drawModule();
+		htmlWcu::echo_escaped_html( $this->drawModule() );
 	}
 
 	/**

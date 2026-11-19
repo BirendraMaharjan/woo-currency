@@ -1,3 +1,10 @@
+/**
+ * WBW Currency Switcher for WooCommerce - Admin Currency JS
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
 jQuery(document).ready(function() {
     var currenciesShell = jQuery('.wcuCurrenciesShell'),
         targetToggle = jQuery('[data-target-toggle]'),
@@ -425,30 +432,50 @@ jQuery(document).ready(function() {
     });
 });
 
-function wcuLookPreviewAjax(moduleName) {
+function wcuLookPreviewAjax( moduleName ) {
     var divClass = moduleName;
-    switch (moduleName) {
-      case 'currency_switcher':
-        moduleName = 'drawCurrencySwitcherAjax';
-        break;
-      case 'currency_converter':
-        moduleName = 'drawCurrencyConverterAjax';
-        break;
-      case 'currency_rates':
-        moduleName = 'drawCurrencyRatesAjax';
-        break;
-      default:
-        break;
+    switch ( moduleName ) {
+        case 'currency_switcher':
+            moduleName = 'drawCurrencySwitcherAjax';
+            break;
+        case 'currency_converter':
+            moduleName = 'drawCurrencyConverterAjax';
+            break;
+        case 'currency_rates':
+            moduleName = 'drawCurrencyRatesAjax';
+            break;
+        default:
+            break;
     }
-   
-	jQuery('#mainform').sendFormWcu({
-		data: jQuery('.form-table.moduleName'+divClass).serializeAnythingWcu()
-	,	appendData: {mod: divClass, action: moduleName}
-	,	onSuccess: function(res) {
-			if(!res.error) {
-				jQuery(".wcuTabContentPreviewInner"+divClass+"").html(res.html);
-			}
-		}
-	});
+
+    jQuery( '#mainform' ).sendFormWcu( {
+        data: jQuery( '.form-table.moduleName' + divClass ).serializeAnythingWcu()
+        , appendData: { mod: divClass, action: moduleName }
+        , onSuccess: function ( res ) {
+            if ( !res.error ) {
+                if ( res.error ) {
+                    return;
+                }
+
+                var html = res.html;
+                var assets = res.data && res.data.assets ? res.data.assets : {};
+
+                // Append CSS files.
+                if ( Array.isArray( assets.styles ) ) {
+                    assets.styles.forEach( function ( url ) {
+                        html = '<link rel="stylesheet" href="' + url + '">' + html;
+                    } );
+                }
+                // Append JS files.
+                if ( Array.isArray( assets.scripts ) ) {
+                    assets.scripts.forEach( function ( url ) {
+                        html += '<script src="' + url + '"><\/script>';
+                    } );
+                }
+
+                jQuery( '.wcuTabContentPreviewInner' + divClass ).html( html );
+            }
+        }
+    } );
 };
 

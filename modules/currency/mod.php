@@ -1286,10 +1286,19 @@ class currencyWcu extends moduleWcu {
 		return $show;
 	}
 
+	/**
+	 * drawModuleAjax.
+	 *
+	 * @version 2.4.0
+	 */
 	public function drawModuleAjax( $moduleName, $data, $isPro = false ) {
 		$moduleName = isset( $moduleName ) ? $moduleName : '';
 		$resHtml = '';
 		$styleLink2 = '';
+		$styleLink = '';
+		$scriptLink = '';
+		$styles = array();
+		$scripts = array();
 		if ( isset( $data ) ) {
 
 			if ( $isPro ) {
@@ -1321,13 +1330,26 @@ class currencyWcu extends moduleWcu {
 				$scriptLink = frameWcu::_()->getModule( $moduleName )->getModPath() . 'js/frontend.currency.rates.js';
 			}
 
-			$resHtml .= "<link rel='stylesheet' href='$styleLink' type='text/css' media='all' />";
-			$resHtml .= !empty($styleLink2) ? "<link rel='stylesheet' href='$styleLink2' type='text/css' media='all' />" : '';
-			$resHtml .= "<script type='text/javascript' src='".$scriptLink."'></script>";
+			if ( ! empty( $styleLink2 ) ) {
+				$styles[] = $styleLink2;
+			}
+			if ( ! empty( $styleLink ) ) {
+				$styles[] = $styleLink;
+			}
+			if ( ! empty( $scriptLink ) ) {
+				$scripts[] = $scriptLink;
+			}
 
 			$resHtml .= frameWcu::_()->getModule( $moduleName )->drawModule( $data );
 		}
-		return $resHtml;
+
+		return array(
+			'html'   => $resHtml,
+			'assets' => array(
+				'styles'  => $styles,
+				'scripts' => $scripts,
+			),
+		);
 	}
 
 	public function getWcuOrderCurrency( $orderId ) {

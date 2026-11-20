@@ -151,6 +151,16 @@ Please report security bugs found in the source code of the plugin through the [
 
 == Changelog ==
 
+= 2.4.0 - 20/11/2026 =
+* Fix - Currency rates and currency converter frontend display issue.
+* Fix - Security - Improved output escaping and AJAX response handling.
+* Fix - Admin controls - Replaced the old Chosen controls with SelectWoo.
+* Fix - WordPress compatibility - Updated PHP, date, filesystem, random-number, HTTP API, and request-handling functions.
+* Dev - Security - Sanitized GET, POST, cookie, session, server, and file inputs.
+* Dev - Improved coding standards and cleaned up the plugin code.
+Tested up to: 7.1.
+WC tested up to: 11.3.
+
 = 2.3.2 - 28/07/2026 =
 * Dev - Code cleaned up.
 * WC tested up to: 11.0.

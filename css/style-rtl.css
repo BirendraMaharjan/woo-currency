@@ -1,3 +1,10 @@
+/**
+ * WBW Currency Switcher for WooCommerce - Style-rtl CSS
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
 .woobewoo-plugin .woobewoo-content .woobewoo-navigation {
 	left: 0;
 }
@@ -12,8 +19,4 @@
 }
 .woobewoo-plugin .wcuCopyTextCode {
 	direction: ltr;
-}
-.chosen-container-single.chosen-container-single-nosearch .chosen-search,
-.chosen-container .chosen-drop {
-	left: 9999px;
 }

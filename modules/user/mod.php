@@ -1,4 +1,11 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - userWcu Class
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
 class userWcu extends moduleWcu {
 	protected $_data = array();
     protected $_curentID = 0;

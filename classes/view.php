@@ -30,11 +30,11 @@ abstract class viewWcu extends baseObjectWcu {
 	/**
 	 * display.
 	 */
-	public function display($tpl = '') {
-		$tpl = (empty($tpl)) ? $this->_tpl : $tpl;
+	public function display( $tpl = '' ) {
+		$tpl = ( empty( $tpl ) ) ? $this->_tpl : $tpl;
 
-		if(($content = $this->getContent($tpl)) !== false) {
-			echo $content;
+		if ( ( $content = $this->getContent( $tpl ) ) !== false ) {
+			echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Template files escape dynamic values for their output context.
 		}
 	}
 

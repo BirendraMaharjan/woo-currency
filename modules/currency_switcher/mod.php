@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - currency_switcherWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class currency_switcherWcu extends moduleWcu
 {
 	public function init() {
@@ -22,8 +32,13 @@ class currency_switcherWcu extends moduleWcu
 		}
 	}
 
+	/**
+	 * showModule.
+	 *
+	 * @version 2.4.0
+	 */
 	public function showModule() {
-		echo $this->drawModule();
+		htmlWcu::echo_escaped_html( $this->drawModule() );
 	}
 
 	/**
@@ -147,6 +162,12 @@ class currency_switcherWcu extends moduleWcu
             ),
         );
     }
+
+	/**
+	 * getOptionsParams.
+	 *
+	 * @version 2.4.0
+	 */
     public function getOptionsParams()
     {
 		$fontFamilyList = frameWcu::_()->getModule('currency')->getFontFamilyList();
@@ -168,8 +189,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => '',
                     'row_show' => '',
                     'row_hide' => '',
-                    'tooltip' => __('Currency Switcher allows you to switch the currency of the products according to the selected settings.', WCU_LANG_CODE),
-                    'label' => __('Enable switcher', WCU_LANG_CODE),
+                    'tooltip' => __('Currency Switcher allows you to switch the currency of the products according to the selected settings.', 'woo-currency'),
+                    'label' => __('Enable switcher', 'woo-currency'),
                     'params' => array(
                         'value'=>'1',
                     ),
@@ -179,13 +200,13 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => '',
                     'row_show' => '',
                     'row_hide' => '',
-                    'tooltip' => __('Select currency switcher type.', WCU_LANG_CODE),
-                    'label' => __('Type', WCU_LANG_CODE),
+                    'tooltip' => __('Select currency switcher type.', 'woo-currency'),
+                    'label' => __('Type', 'woo-currency'),
                     'params' => array(
                         'options' => array(
-                            'simple' => __('Simple', WCU_LANG_CODE),
-                            'floating' => __('Floating', WCU_LANG_CODE),
-                            'rotating' => __('Rotating', WCU_LANG_CODE),
+                            'simple' => __('Simple', 'woo-currency'),
+                            'floating' => __('Floating', 'woo-currency'),
+                            'rotating' => __('Rotating', 'woo-currency'),
                         ),
                         'data-target-toggle' => '.wcuSwEnableDesign, .wcuSwEnablePosition, .wcuSwEnableShow, .wcuSwEnableLayout, .wcuSwEnableCurCurrency, .wcuSwEnableHorizOffset, .wcuSwEnableOpacity, .wcuSwEnableHeader',
                     ),
@@ -196,16 +217,16 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'simple',
                     'row_hide' => '',
-                    'tooltip' => __('Select design of panel for Currency Switcher Simple.', WCU_LANG_CODE),
-                    'label' => __('Design', WCU_LANG_CODE).' <sup>PRO</sup>',
+                    'tooltip' => __('Select design of panel for Currency Switcher Simple.', 'woo-currency'),
+                    'label' => __('Design', 'woo-currency').' <sup>PRO</sup>',
                     'params' => array(
                         'value' => 'Classic',
                         'options_attrs' => array(
                             'Dropdown' => "disabled",
                         ),
                         'options' => array(
-                            'Classic' => __('Classic', WCU_LANG_CODE),
-                            'Dropdown' => __('Dropdown', WCU_LANG_CODE).' <sup>PRO</sup>',
+                            'Classic' => __('Classic', 'woo-currency'),
+                            'Dropdown' => __('Dropdown', 'woo-currency').' <sup>PRO</sup>',
                         ),
                         'data-target-toggle' => '.wcuSwEnableSwitcher, .wcuSwEnableOpacitySimple',
                     ),
@@ -217,20 +238,20 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => '',
                     'row_hide' => 'Classic',
                     'row_hide_with_all' => true,
-                    'tooltip' => __('Show panel by mouse hover or click.', WCU_LANG_CODE),
-                    'label' => __('Toggle Switcher', WCU_LANG_CODE),
+                    'tooltip' => __('Show panel by mouse hover or click.', 'woo-currency'),
+                    'label' => __('Toggle Switcher', 'woo-currency'),
                     'params' => array(
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'on_click' => __('on click', WCU_LANG_CODE),
-                            'on_hover' => __('on hover', WCU_LANG_CODE),
-							'full_size' => __('full size view', WCU_LANG_CODE),
+                            'on_click' => __('on click', 'woo-currency'),
+                            'on_hover' => __('on hover', 'woo-currency'),
+							'full_size' => __('full size view', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'on_click' => __('on click', WCU_LANG_CODE),
-                            'on_hover' => __('on hover', WCU_LANG_CODE),
-							'full_size' => __('full size view', WCU_LANG_CODE),
+                            'on_click' => __('on click', 'woo-currency'),
+                            'on_hover' => __('on hover', 'woo-currency'),
+							'full_size' => __('full size view', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -240,8 +261,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => '',
                     'row_hide' => 'simple',
-                    'tooltip' => __('Show current currency at the top of the panel.', WCU_LANG_CODE),
-                    'label' => __('Move current currency to top', WCU_LANG_CODE),
+                    'tooltip' => __('Show current currency at the top of the panel.', 'woo-currency'),
+                    'label' => __('Move current currency to top', 'woo-currency'),
                     'params' => array(
                         'value'=>'1',
                     ),
@@ -251,16 +272,16 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => 'wcuSwEnableShow',
                     'row_parent' => 'type',
                     'row_show' => 'rotating',
-                    'tooltip' => __('Show currency symbols in Currency Switcher Rotating.', WCU_LANG_CODE),
-                    'label' => __('Show currency symbols', WCU_LANG_CODE),
+                    'tooltip' => __('Show currency symbols in Currency Switcher Rotating.', 'woo-currency'),
+                    'label' => __('Show currency symbols', 'woo-currency'),
                 ),
 				'show_flags_rotating' => array(
                     'html' => 'checkboxHiddenVal',
                     'row_classes' => 'wcuSwEnableShow',
                     'row_parent' => 'type',
                     'row_show' => !$flagModule ? 'hidden' : 'rotating',
-                    'tooltip' => __('Show currency flag in Currency Switcher Rotating.', WCU_LANG_CODE),
-                    'label' => __('Show flags in Rotating', WCU_LANG_CODE),
+                    'tooltip' => __('Show currency flag in Currency Switcher Rotating.', 'woo-currency'),
+                    'label' => __('Show flags in Rotating', 'woo-currency'),
                     'params' => array(
                         'attrs' => !$flagModule ? 'disabled' : '',
                     ),
@@ -270,8 +291,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => 'wcuSwEnableShow',
                     'row_parent' => 'type',
                     'row_show' => $flagModule ? 'hidden' : 'rotating',
-                    'tooltip' => __('Show currency flag in Currency Switcher Rotating.', WCU_LANG_CODE),
-                    'label' => __('Show flags in Rotating', WCU_LANG_CODE).' <sup>PRO</sup>',
+                    'tooltip' => __('Show currency flag in Currency Switcher Rotating.', 'woo-currency'),
+                    'label' => __('Show flags in Rotating', 'woo-currency').' <sup>PRO</sup>',
                     'params' => array(
                         'attrs' => 'disabled ',
                     ),
@@ -281,8 +302,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => 'wcuSwEnableShow',
                     'row_parent' => 'type',
                     'row_show' => $flagModule ? 'hidden' : 'simple',
-                    'tooltip' => __('Show currency flag in Currency Switcher Simple.', WCU_LANG_CODE),
-                    'label' => __('Show flags in Simple', WCU_LANG_CODE).' <sup>PRO</sup>',
+                    'tooltip' => __('Show currency flag in Currency Switcher Simple.', 'woo-currency'),
+                    'label' => __('Show flags in Simple', 'woo-currency').' <sup>PRO</sup>',
                     'params' => array(
                         'attrs' => 'disabled ',
                     ),
@@ -293,26 +314,26 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'simple',
                     'row_hide' => '',
-                    'tooltip' => __('Choose your preferred currency display.', WCU_LANG_CODE),
-                    'label' => __('Show', WCU_LANG_CODE),
+                    'tooltip' => __('Choose your preferred currency display.', 'woo-currency'),
+                    'label' => __('Show', 'woo-currency'),
                     'params' => array(
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => $flagModule ? array(
-                            'flags' => __('Flags', WCU_LANG_CODE),
-                            'currency_codes' => __('Currency codes', WCU_LANG_CODE),
-                            'currency_symbols' => __('Currency symbols', WCU_LANG_CODE),
+                            'flags' => __('Flags', 'woo-currency'),
+                            'currency_codes' => __('Currency codes', 'woo-currency'),
+                            'currency_symbols' => __('Currency symbols', 'woo-currency'),
                         ) : array(
-                            'currency_codes' => __('Currency codes', WCU_LANG_CODE),
-                            'currency_symbols' => __('Currency symbols', WCU_LANG_CODE),
+                            'currency_codes' => __('Currency codes', 'woo-currency'),
+                            'currency_symbols' => __('Currency symbols', 'woo-currency'),
                         ),
                         'labeled' => $flagModule ? array(
-                            'flags' => __('Flags', WCU_LANG_CODE),
-                            'currency_codes' => __('Currency codes', WCU_LANG_CODE),
-                            'currency_symbols' => __('Currency symbols', WCU_LANG_CODE),
+                            'flags' => __('Flags', 'woo-currency'),
+                            'currency_codes' => __('Currency codes', 'woo-currency'),
+                            'currency_symbols' => __('Currency symbols', 'woo-currency'),
                         ) : array(
-                            'currency_codes' => __('Currency codes', WCU_LANG_CODE),
-                            'currency_symbols' => __('Currency symbols', WCU_LANG_CODE),
+                            'currency_codes' => __('Currency codes', 'woo-currency'),
+                            'currency_symbols' => __('Currency symbols', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -321,8 +342,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => 'wcuSwEnableShow',
                     'row_parent' => 'type',
                     'row_show' => $flagModule ? 'hidden' : 'floating',
-                    'tooltip' => __('Show currency flag in order list for Currency Switcher Floating.', WCU_LANG_CODE),
-                    'label' => __('Show flags in order', WCU_LANG_CODE).' <sup>PRO</sup>',
+                    'tooltip' => __('Show currency flag in order list for Currency Switcher Floating.', 'woo-currency'),
+                    'label' => __('Show flags in order', 'woo-currency').' <sup>PRO</sup>',
                     'params' => array(
                         'attrs' => 'disabled ',
                     ),
@@ -332,8 +353,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => 'wcuSwEnableShow',
                     'row_parent' => 'type',
                     'row_show' => $proModule ? 'hidden' : 'floating',
-                    'tooltip' => __('Show currency rates in order list for Currency Switcher Floating.', WCU_LANG_CODE),
-                    'label' => __('Show rates in order', WCU_LANG_CODE).' <sup>PRO</sup>',
+                    'tooltip' => __('Show currency rates in order list for Currency Switcher Floating.', 'woo-currency'),
+                    'label' => __('Show rates in order', 'woo-currency').' <sup>PRO</sup>',
                     'params' => array(
                         'attrs' => 'disabled ',
                     ),
@@ -344,15 +365,15 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'floating',
                     'row_hide' => '',
-                    'tooltip' => __('Set the display order and what to display in the list.', WCU_LANG_CODE),
-                    'label' => __('Show floating order', WCU_LANG_CODE),
+                    'tooltip' => __('Set the display order and what to display in the list.', 'woo-currency'),
+                    'label' => __('Show floating order', 'woo-currency'),
                     'params' => array(
                         'id' => 'wcuShowFloatingOrder',
                         'attrs' => 'style="height:130px;"',
                         'options' => $proModule ? frameWcu::_()->getModule('options_pro')->getProCsFloatingOrder() : array(
-                            'name' => __('Currency codes', WCU_LANG_CODE),
-                            'title' => __('Titles', WCU_LANG_CODE),
-                            'symbol' => __('Currency symbols', WCU_LANG_CODE),
+                            'name' => __('Currency codes', 'woo-currency'),
+                            'title' => __('Titles', 'woo-currency'),
+                            'symbol' => __('Currency symbols', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -362,21 +383,21 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'simple',
                     'row_hide' => '',
-                    'tooltip' => __('Choose icon size for Currency Switcher Simple.', WCU_LANG_CODE),
-                    'label' => __('Icon size', WCU_LANG_CODE).' <sup>PRO</sup>',
+                    'tooltip' => __('Choose icon size for Currency Switcher Simple.', 'woo-currency'),
+                    'label' => __('Icon size', 'woo-currency').' <sup>PRO</sup>',
                     'params' => array(
                         'value' => 'm',
                         'attrs' => 'class="wcuSwitcherRadioLabel" disabled',
                         'no_br'	=> true,
                         'options' => array(
-                            'proS' => __('S', WCU_LANG_CODE),
-                            'm' => __('M', WCU_LANG_CODE),
-                            'proL' => __('L', WCU_LANG_CODE),
+                            'proS' => __('S', 'woo-currency'),
+                            'm' => __('M', 'woo-currency'),
+                            'proL' => __('L', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'proS' => __('S', WCU_LANG_CODE),
-                            'm' => __('M', WCU_LANG_CODE),
-                            'proL' => __('L', WCU_LANG_CODE),
+                            'proS' => __('S', 'woo-currency'),
+                            'm' => __('M', 'woo-currency'),
+                            'proL' => __('L', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -386,18 +407,18 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'simple',
                     'row_hide' => '',
-                    'tooltip' => __('Choose panel layout design. Set the horizontal и vertical offset value according to the selected position of layout design.', WCU_LANG_CODE),
-                    'label' => __('Layout', WCU_LANG_CODE),
+                    'tooltip' => __('Choose panel layout design. Set the horizontal и vertical offset value according to the selected position of layout design.', 'woo-currency'),
+                    'label' => __('Layout', 'woo-currency'),
                     'params' => array(
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'horizontal' => __('Horizontal', WCU_LANG_CODE),
-                            'vertical' => __('Vertical', WCU_LANG_CODE),
+                            'horizontal' => __('Horizontal', 'woo-currency'),
+                            'vertical' => __('Vertical', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'horizontal' => __('Horizontal', WCU_LANG_CODE),
-                            'vertical' => __('Vertical', WCU_LANG_CODE),
+                            'horizontal' => __('Horizontal', 'woo-currency'),
+                            'vertical' => __('Vertical', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -407,18 +428,18 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'simple',
                     'row_hide' => '',
-                    'tooltip' => __('Set the horizontal и vertical offset value according to the selected position of layout design', WCU_LANG_CODE),
-                    'label' => __('Position', WCU_LANG_CODE),
+                    'tooltip' => __('Set the horizontal и vertical offset value according to the selected position of layout design', 'woo-currency'),
+                    'label' => __('Position', 'woo-currency'),
                     'params' => array(
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'left' => __('left', WCU_LANG_CODE),
-                            'right' => __('right', WCU_LANG_CODE),
+                            'left' => __('left', 'woo-currency'),
+                            'right' => __('right', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'left' => __('left', WCU_LANG_CODE),
-                            'right' => __('right', WCU_LANG_CODE),
+                            'left' => __('left', 'woo-currency'),
+                            'right' => __('right', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -428,18 +449,18 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'rotating',
                     'row_hide' => '',
-                    'tooltip' => __('Choose basic position of panel. Set the horizontal and vertical offset value according to the selected position of layout design.', WCU_LANG_CODE),
-                    'label' => __('Position', WCU_LANG_CODE),
+                    'tooltip' => __('Choose basic position of panel. Set the horizontal and vertical offset value according to the selected position of layout design.', 'woo-currency'),
+                    'label' => __('Position', 'woo-currency'),
                     'params' => array(
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'left' => __('left', WCU_LANG_CODE),
-                            'right' => __('right', WCU_LANG_CODE),
+                            'left' => __('left', 'woo-currency'),
+                            'right' => __('right', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'left' => __('left', WCU_LANG_CODE),
-                            'right' => __('right', WCU_LANG_CODE),
+                            'left' => __('left', 'woo-currency'),
+                            'right' => __('right', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -449,22 +470,22 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'floating',
                     'row_hide' => '',
-                    'tooltip' => __('Choose basic position of panel. Set the horizontal and vertical offset value according to the selected position of layout design.', WCU_LANG_CODE),
-                    'label' => __('Position', WCU_LANG_CODE),
+                    'tooltip' => __('Choose basic position of panel. Set the horizontal and vertical offset value according to the selected position of layout design.', 'woo-currency'),
+                    'label' => __('Position', 'woo-currency'),
                     'params' => array(
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'left' => __('left', WCU_LANG_CODE),
-                            'right' => __('right', WCU_LANG_CODE),
-                            'top' => __('top', WCU_LANG_CODE),
-                            'bottom' => __('bottom', WCU_LANG_CODE),
+                            'left' => __('left', 'woo-currency'),
+                            'right' => __('right', 'woo-currency'),
+                            'top' => __('top', 'woo-currency'),
+                            'bottom' => __('bottom', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'left' => __('left', WCU_LANG_CODE),
-                            'right' => __('right', WCU_LANG_CODE),
-                            'top' => __('top', WCU_LANG_CODE),
-                            'bottom' => __('bottom', WCU_LANG_CODE),
+                            'left' => __('left', 'woo-currency'),
+                            'right' => __('right', 'woo-currency'),
+                            'top' => __('top', 'woo-currency'),
+                            'bottom' => __('bottom', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -473,8 +494,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => 'wcuSwEnableShow',
                     'row_parent' => 'type',
                     'row_show' => $proModule ? 'hidden' : 'floating',
-                    'tooltip' => __('Show currency flag in opening button.', WCU_LANG_CODE),
-                    'label' => __('Show flags in button', WCU_LANG_CODE).' <sup>PRO</sup>',
+                    'tooltip' => __('Show currency flag in opening button.', 'woo-currency'),
+                    'label' => __('Show flags in button', 'woo-currency').' <sup>PRO</sup>',
                     'params' => array(
                         'attrs' => 'disabled ',
                     ),
@@ -486,20 +507,20 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => 'floating',
                     'row_hide' => '',
                     'inrow' => 'open',
-                    'tooltip' => __('Choose your preferred currency display.', WCU_LANG_CODE),
-                    'label' => __('Switcher opening button', WCU_LANG_CODE),
+                    'tooltip' => __('Choose your preferred currency display.', 'woo-currency'),
+                    'label' => __('Switcher opening button', 'woo-currency'),
                     'params' => $proModule ? frameWcu::_()->getModule('options_pro')->getProCsFloatingOpeningButton() : array(
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array (
-                            'currency_codes' => __('currency codes', WCU_LANG_CODE),
-                            'currency_symbols' => __('currency symbols', WCU_LANG_CODE),
-                            'text' => __('text', WCU_LANG_CODE),
+                            'currency_codes' => __('currency codes', 'woo-currency'),
+                            'currency_symbols' => __('currency symbols', 'woo-currency'),
+                            'text' => __('text', 'woo-currency'),
                         ),
                         'labeled' => array (
-                            'currency_codes' => __('currency codes', WCU_LANG_CODE),
-                            'currency_symbols' => __('currency symbols', WCU_LANG_CODE),
-                            'text' => __('text', WCU_LANG_CODE),
+                            'currency_codes' => __('currency codes', 'woo-currency'),
+                            'currency_symbols' => __('currency symbols', 'woo-currency'),
+                            'text' => __('text', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -523,8 +544,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => 'floating',
 					'row_hide' => '',
 					'inrow' => 'open',
-					'tooltip' => __('Select switcher opening button font setting.', WCU_LANG_CODE),
-					'label' => __('Switcher opening button font setting', WCU_LANG_CODE),
+					'tooltip' => __('Select switcher opening button font setting.', 'woo-currency'),
+					'label' => __('Switcher opening button font setting', 'woo-currency'),
 					'params' => array(
 						'attrs' => "style='width:100px'",
 						'options' => $fontFamilyList,
@@ -540,7 +561,7 @@ class currency_switcherWcu extends moduleWcu
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel"',
 						'attrs' => 'class="wcuSwitcherInput"',
-						'labeled' => __('px', WCU_LANG_CODE).'&emsp;',
+						'labeled' => __('px', 'woo-currency').'&emsp;',
 						'labeled_right' => true,
 					),
 				),
@@ -553,7 +574,7 @@ class currency_switcherWcu extends moduleWcu
 					'inrow' => 'middle',
 					'params' => array(
 						'value' => '1',
-						'labeled' => '&emsp;'.__('Bold', WCU_LANG_CODE).'&emsp;',
+						'labeled' => '&emsp;'.__('Bold', 'woo-currency').'&emsp;',
 						'labeled_right' => true,
 					),
 				),
@@ -566,7 +587,7 @@ class currency_switcherWcu extends moduleWcu
 					'inrow' => 'close',
 					'params' => array(
 						'value'=>'1',
-						'labeled' => '&emsp;'.__('Italic', WCU_LANG_CODE).'&emsp;',
+						'labeled' => '&emsp;'.__('Italic', 'woo-currency').'&emsp;',
 						'labeled_right' => true,
 					),
 				),
@@ -577,20 +598,20 @@ class currency_switcherWcu extends moduleWcu
 					'row_parent' => 'type',
 					'row_show' => 'floating',
 					'row_hide' => '',
-                    'tooltip' => __('Choose size for opening button.', WCU_LANG_CODE),
-                    'label' => __('Panel opening button size', WCU_LANG_CODE),
+                    'tooltip' => __('Choose size for opening button.', 'woo-currency'),
+                    'label' => __('Panel opening button size', 'woo-currency'),
                     'params' => array(
                         'attrs' => 'class="wcuSwitcherRadioLabel" ',
                         'no_br'	=> true,
                         'options' => array(
-                            's' => __('S', WCU_LANG_CODE),
-                            'm' => __('M', WCU_LANG_CODE),
-                            'l' => __('L', WCU_LANG_CODE),
+                            's' => __('S', 'woo-currency'),
+                            'm' => __('M', 'woo-currency'),
+                            'l' => __('L', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            's' => __('S', WCU_LANG_CODE),
-                            'm' => __('M', WCU_LANG_CODE),
-                            'l' => __('L', WCU_LANG_CODE),
+                            's' => __('S', 'woo-currency'),
+                            'm' => __('M', 'woo-currency'),
+                            'l' => __('L', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -601,8 +622,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'floating',
                     'row_hide' => '',
-                    'tooltip' => __('Show only current currency in opening button.', WCU_LANG_CODE),
-                    'label' => __('Show current currency only', WCU_LANG_CODE),
+                    'tooltip' => __('Show only current currency in opening button.', 'woo-currency'),
+                    'label' => __('Show current currency only', 'woo-currency'),
                     'params' => array(
                         'value'=>'1',
                     ),
@@ -614,12 +635,12 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => '',
                     'row_hide' => 'rotating',
                     'inrow' => 'open',
-                    'tooltip' => __('Change horizontal panel offset (only for top and bottom positions if type Floating or Rotating)', WCU_LANG_CODE),
-                    'label' => __('Horizontal offset', WCU_LANG_CODE),
+                    'tooltip' => __('Change horizontal panel offset (only for top and bottom positions if type Floating or Rotating)', 'woo-currency'),
+                    'label' => __('Horizontal offset', 'woo-currency'),
                     'params' => array(
                         'label_attrs' => 'class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput"',
-                        'labeled' => __('desktop', WCU_LANG_CODE),
+                        'labeled' => __('desktop', 'woo-currency'),
                     ),
                 ),
                 'horizontal_offset_desktop_dimension' => array(
@@ -633,12 +654,12 @@ class currency_switcherWcu extends moduleWcu
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -652,7 +673,7 @@ class currency_switcherWcu extends moduleWcu
                     'params' => array(
                         'label_attrs' => 'style="margin-left:30px;" class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput"',
-                        'labeled' => __('mobile', WCU_LANG_CODE),
+                        'labeled' => __('mobile', 'woo-currency'),
                     ),
                 ),
                 'horizontal_offset_mobile_dimension' => array(
@@ -666,12 +687,12 @@ class currency_switcherWcu extends moduleWcu
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -682,12 +703,12 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => '',
                     'row_hide' => '',
                     'inrow' => 'open',
-                    'label' => __('Vertical offset', WCU_LANG_CODE),
-                    'tooltip' => __('Change vertical panel offset (only for left and right positions if type Floating or Rotating)', WCU_LANG_CODE),
+                    'label' => __('Vertical offset', 'woo-currency'),
+                    'tooltip' => __('Change vertical panel offset (only for left and right positions if type Floating or Rotating)', 'woo-currency'),
                     'params' => array(
                         'label_attrs' => 'class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput"',
-                        'labeled' => __('desktop', WCU_LANG_CODE),
+                        'labeled' => __('desktop', 'woo-currency'),
                     ),
                 ),
                 'vertical_offset_desktop_dimension' => array(
@@ -701,12 +722,12 @@ class currency_switcherWcu extends moduleWcu
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
 
                     ),
@@ -721,7 +742,7 @@ class currency_switcherWcu extends moduleWcu
                     'params' => array(
                         'label_attrs' => 'style="margin-left:30px;" class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput"',
-                        'labeled' => __('mobile', WCU_LANG_CODE),
+                        'labeled' => __('mobile', 'woo-currency'),
                     ),
                 ),
                 'vertical_offset_mobile_dimension' => array(
@@ -735,12 +756,12 @@ class currency_switcherWcu extends moduleWcu
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -750,19 +771,19 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'simple',
                     'row_hide' => '',
-                    'tooltip' => __('Choose design of currency switcher blocks.', WCU_LANG_CODE),
-                    'label' => __('Icon type', WCU_LANG_CODE).' <sup>PRO</sup>',
+                    'tooltip' => __('Choose design of currency switcher blocks.', 'woo-currency'),
+                    'label' => __('Icon type', 'woo-currency').' <sup>PRO</sup>',
                     'params' => array(
                         'attrs' => 'class="wcuSwitcherRadioLabel" disabled',
                         'value' => 'rectangular',
                         'no_br'	=> true,
                         'options' => array(
-                            'rectangular' => __('rectangular', WCU_LANG_CODE),
-                            //'circleicon' => __('circle', WCU_LANG_CODE),
+                            'rectangular' => __('rectangular', 'woo-currency'),
+                            //'circleicon' => __('circle', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'rectangular' => __('rectangular', WCU_LANG_CODE),
-                            //'circleicon' => __('circle', WCU_LANG_CODE),
+                            'rectangular' => __('rectangular', 'woo-currency'),
+                            //'circleicon' => __('circle', 'woo-currency'),
                         ),
                         'data-target-toggle' => '.wcuSwDisableIconType',
                     ),
@@ -773,13 +794,13 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'simple',
                     'row_hide' => '',
-                    'tooltip' => __('Set the distance between currency blocks (margin)', WCU_LANG_CODE),
-                    'label' => __('Icon spacing', WCU_LANG_CODE),
+                    'tooltip' => __('Set the distance between currency blocks (margin)', 'woo-currency'),
+                    'label' => __('Icon spacing', 'woo-currency'),
                     'params' => array(
                         'labeled_right' => true,
                         'label_attrs' => 'class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput" style="margin-left:0px"',
-                        'labeled' => __('px ', WCU_LANG_CODE),
+                        'labeled' => __('px ', 'woo-currency'),
                     ),
                 ),
 				'simple_opacity_panel' => array(
@@ -788,12 +809,12 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => '',
                     'row_hide' => 'floating',
-                    'tooltip' => __('Change the level of transparency for the panel.', WCU_LANG_CODE),
-                    'label' => __('Transparent', WCU_LANG_CODE),
+                    'tooltip' => __('Change the level of transparency for the panel.', 'woo-currency'),
+                    'label' => __('Transparent', 'woo-currency'),
                     'params' => array(
                         'label_attrs' => 'class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput"',
-                        'labeled' => __('panel', WCU_LANG_CODE),
+                        'labeled' => __('panel', 'woo-currency'),
 						'placeholder' => '0 - 100',
                     ),
                 ),
@@ -804,12 +825,12 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => 'floating',
                     'row_hide' => '',
                     'inrow' => 'open',
-                    'tooltip' => __('Change the level of transparency for the panel and opening button.', WCU_LANG_CODE),
-                    'label' => __('Transparent', WCU_LANG_CODE),
+                    'tooltip' => __('Change the level of transparency for the panel and opening button.', 'woo-currency'),
+                    'label' => __('Transparent', 'woo-currency'),
                     'params' => array(
                         'label_attrs' => 'class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput"',
-                        'labeled' => __('panel', WCU_LANG_CODE),
+                        'labeled' => __('panel', 'woo-currency'),
 						'placeholder' => '0 - 100',
                     ),
                 ),
@@ -820,11 +841,11 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => 'floating',
                     'row_hide' => '',
                     'inrow' => 'middle',
-                    'label' => __('Transparent', WCU_LANG_CODE),
+                    'label' => __('Transparent', 'woo-currency'),
                     'params' => array(
                         'label_attrs' => 'class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput"',
-                        'labeled' => __('button', WCU_LANG_CODE),
+                        'labeled' => __('button', 'woo-currency'),
 						'placeholder' => '0 - 100',
                     ),
                 ),
@@ -833,8 +854,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => '',
                     'row_show' => 'all',
                     'row_hide' => '',
-                    'tooltip' => __('Show panel outer border.', WCU_LANG_CODE),
-                    'label' => __('Show border', WCU_LANG_CODE),
+                    'tooltip' => __('Show panel outer border.', 'woo-currency'),
+                    'label' => __('Show border', 'woo-currency'),
                     'params' => array(
                         'value'=>'1',
                     ),
@@ -846,8 +867,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => 'simple',
                     'row_hide' => '',
                     'inrow' => 'open',
-                    'tooltip' => __('Set panel border-radius.', WCU_LANG_CODE),
-                    'label' => __('Border-radius', WCU_LANG_CODE),
+                    'tooltip' => __('Set panel border-radius.', 'woo-currency'),
+                    'label' => __('Border-radius', 'woo-currency'),
                     'params' => array(
                         'label_attrs' => 'class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput" style="margin-left:0px"',
@@ -864,12 +885,12 @@ class currency_switcherWcu extends moduleWcu
                         'attrs' => 'class="wcuSwitcherRadioLabel"',
                         'no_br'	=> true,
                         'options' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
                         'labeled' => array(
-                            'px' => __('px', WCU_LANG_CODE),
-                            '%' => __('%', WCU_LANG_CODE),
+                            'px' => __('px', 'woo-currency'),
+                            '%' => __('%', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -879,8 +900,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-                    'tooltip' => __('Choose panel border color.', WCU_LANG_CODE),
-                    'label' => __('Border color', WCU_LANG_CODE),
+                    'tooltip' => __('Choose panel border color.', 'woo-currency'),
+                    'label' => __('Border color', 'woo-currency'),
                 ),
 				'floating_panel_header_show' => array(
                     'html' => 'checkboxHiddenVal',
@@ -888,8 +909,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'floating',
                     'row_hide' => '',
-                    'tooltip' => __('Show panel title.', WCU_LANG_CODE),
-                    'label' => __('Show header', WCU_LANG_CODE),
+                    'tooltip' => __('Show panel title.', 'woo-currency'),
+                    'label' => __('Show header', 'woo-currency'),
                     'params' => array(
                         'value'=>'1',
                     ),
@@ -900,8 +921,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'floating',
                     'row_hide' => '',
-                    'tooltip' => __('Type your text for panel title.', WCU_LANG_CODE),
-					'label' => __('Panel header text', WCU_LANG_CODE),
+                    'tooltip' => __('Type your text for panel title.', 'woo-currency'),
+					'label' => __('Panel header text', 'woo-currency'),
                     'params' => array(
                         'attrs' => 'style="width:200px;"',
                     ),
@@ -912,8 +933,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'floating',
                     'row_hide' => '',
-                    'tooltip' => __('Choose text color for panel title.', WCU_LANG_CODE),
-                    'label' => __('Panel header text color', WCU_LANG_CODE),
+                    'tooltip' => __('Choose text color for panel title.', 'woo-currency'),
+                    'label' => __('Panel header text color', 'woo-currency'),
                 ),
 				'floating_panel_header_bg_color' => array(
                     'html' => 'colorpicker',
@@ -921,8 +942,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'floating',
                     'row_hide' => '',
-                    'tooltip' => __('Choose background color for panel title.', WCU_LANG_CODE),
-                    'label' => __('Panel header background color', WCU_LANG_CODE),
+                    'tooltip' => __('Choose background color for panel title.', 'woo-currency'),
+                    'label' => __('Panel header background color', 'woo-currency'),
                 ),
 
 
@@ -934,8 +955,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => 'floating',
 					'row_hide' => '',
 					'inrow' => 'open',
-					'tooltip' => __('Select panel header font setting.', WCU_LANG_CODE),
-					'label' => __('Panel header font setting', WCU_LANG_CODE),
+					'tooltip' => __('Select panel header font setting.', 'woo-currency'),
+					'label' => __('Panel header font setting', 'woo-currency'),
 					'params' => array(
 						'attrs' => "style='width:100px'",
 						'options' => $fontFamilyList,
@@ -951,7 +972,7 @@ class currency_switcherWcu extends moduleWcu
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel"',
 						'attrs' => 'class="wcuSwitcherInput"',
-						'labeled' => __('px', WCU_LANG_CODE).'&emsp;',
+						'labeled' => __('px', 'woo-currency').'&emsp;',
 						'labeled_right' => true,
 					),
 				),
@@ -964,7 +985,7 @@ class currency_switcherWcu extends moduleWcu
 					'inrow' => 'middle',
 					'params' => array(
 						'value' => '1',
-						'labeled' => '&emsp;'.__('Bold', WCU_LANG_CODE).'&emsp;',
+						'labeled' => '&emsp;'.__('Bold', 'woo-currency').'&emsp;',
 						'labeled_right' => true,
 					),
 				),
@@ -977,7 +998,7 @@ class currency_switcherWcu extends moduleWcu
 					'inrow' => 'close',
 					'params' => array(
 						'value'=>'1',
-						'labeled' => '&emsp;'.__('Italic', WCU_LANG_CODE).'&emsp;',
+						'labeled' => '&emsp;'.__('Italic', 'woo-currency').'&emsp;',
 						'labeled_right' => true,
 					),
 				),
@@ -989,8 +1010,8 @@ class currency_switcherWcu extends moduleWcu
 					'row_show' => 'floating',
 					'row_hide' => '',
 					'inrow' => 'open',
-					'tooltip' => __('Select panel text font setting.', WCU_LANG_CODE),
-					'label' => __('Panel text font setting', WCU_LANG_CODE),
+					'tooltip' => __('Select panel text font setting.', 'woo-currency'),
+					'label' => __('Panel text font setting', 'woo-currency'),
 					'params' => array(
 						'attrs' => "style='width:100px'",
 						'options' => $fontFamilyList,
@@ -1006,7 +1027,7 @@ class currency_switcherWcu extends moduleWcu
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel"',
 						'attrs' => 'class="wcuSwitcherInput"',
-						'labeled' => __('px', WCU_LANG_CODE).'&emsp;',
+						'labeled' => __('px', 'woo-currency').'&emsp;',
 						'labeled_right' => true,
 					),
 				),
@@ -1019,7 +1040,7 @@ class currency_switcherWcu extends moduleWcu
 					'inrow' => 'middle',
 					'params' => array(
 						'value' => '1',
-						'labeled' => '&emsp;'.__('Bold', WCU_LANG_CODE).'&emsp;',
+						'labeled' => '&emsp;'.__('Bold', 'woo-currency').'&emsp;',
 						'labeled_right' => true,
 					),
 				),
@@ -1032,7 +1053,7 @@ class currency_switcherWcu extends moduleWcu
 					'inrow' => 'close',
 					'params' => array(
 						'value'=>'1',
-						'labeled' => '&emsp;'.__('Italic', WCU_LANG_CODE).'&emsp;',
+						'labeled' => '&emsp;'.__('Italic', 'woo-currency').'&emsp;',
 						'labeled_right' => true,
 					),
 				),
@@ -1043,11 +1064,11 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-                    'tooltip' => __('Choose panel text color.', WCU_LANG_CODE),
-                    'label' => __('Text color', WCU_LANG_CODE),
+                    'tooltip' => __('Choose panel text color.', 'woo-currency'),
+                    'label' => __('Text color', 'woo-currency'),
                     'inrow' => 'open',
                     'params' => array(
-                        'label_before' => __('static', WCU_LANG_CODE),
+                        'label_before' => __('static', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1059,7 +1080,7 @@ class currency_switcherWcu extends moduleWcu
                     'row_hide' => '',
                     'inrow' => 'middle',
                     'params' => array(
-                        'label_before' => __('hover', WCU_LANG_CODE),
+                        'label_before' => __('hover', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1071,7 +1092,7 @@ class currency_switcherWcu extends moduleWcu
                     'row_hide' => '',
                     'inrow' => 'close',
                     'params' => array(
-                        'label_before' => __('selected', WCU_LANG_CODE),
+                        'label_before' => __('selected', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1081,11 +1102,11 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-                    'tooltip' => __('Choose panel background color.', WCU_LANG_CODE),
-                    'label' => __('Background color', WCU_LANG_CODE),
+                    'tooltip' => __('Choose panel background color.', 'woo-currency'),
+                    'label' => __('Background color', 'woo-currency'),
                     'inrow' => 'open',
                     'params' => array(
-                        'label_before' => __('static', WCU_LANG_CODE),
+                        'label_before' => __('static', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1097,7 +1118,7 @@ class currency_switcherWcu extends moduleWcu
                     'row_hide' => '',
                     'inrow' => 'middle',
                     'params' => array(
-                        'label_before' => __('hover', WCU_LANG_CODE),
+                        'label_before' => __('hover', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1109,7 +1130,7 @@ class currency_switcherWcu extends moduleWcu
                     'row_hide' => '',
                     'inrow' => 'close',
                     'params' => array(
-                        'label_before' => __('selected', WCU_LANG_CODE),
+                        'label_before' => __('selected', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1119,11 +1140,11 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'rotating',
                     'row_hide' => '',
-                    'tooltip' => __('Choose rotating block text color.', WCU_LANG_CODE),
-                    'label' => __('Rotating block text color', WCU_LANG_CODE),
+                    'tooltip' => __('Choose rotating block text color.', 'woo-currency'),
+                    'label' => __('Rotating block text color', 'woo-currency'),
                     'inrow' => 'open',
                     'params' => array(
-                        'label_before' => __('static', WCU_LANG_CODE),
+                        'label_before' => __('static', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1135,7 +1156,7 @@ class currency_switcherWcu extends moduleWcu
                     'row_hide' => '',
                     'inrow' => 'middle',
                     'params' => array(
-                        'label_before' => __('hover', WCU_LANG_CODE),
+                        'label_before' => __('hover', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1147,7 +1168,7 @@ class currency_switcherWcu extends moduleWcu
                     'row_hide' => '',
                     'inrow' => 'close',
                     'params' => array(
-                        'label_before' => __('selected', WCU_LANG_CODE),
+                        'label_before' => __('selected', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1157,11 +1178,11 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => 'type',
                     'row_show' => 'rotating',
                     'row_hide' => '',
-                    'tooltip' => __('Choose rotating block background color.', WCU_LANG_CODE),
-                    'label' => __('Rotating block background color', WCU_LANG_CODE),
+                    'tooltip' => __('Choose rotating block background color.', 'woo-currency'),
+                    'label' => __('Rotating block background color', 'woo-currency'),
                     'inrow' => 'open',
                     'params' => array(
-                        'label_before' => __('static', WCU_LANG_CODE),
+                        'label_before' => __('static', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1173,7 +1194,7 @@ class currency_switcherWcu extends moduleWcu
                     'row_hide' => '',
                     'inrow' => 'middle',
                     'params' => array(
-                        'label_before' => __('hover', WCU_LANG_CODE),
+                        'label_before' => __('hover', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1185,7 +1206,7 @@ class currency_switcherWcu extends moduleWcu
                     'row_hide' => '',
                     'inrow' => 'close',
                     'params' => array(
-                        'label_before' => __('selected', WCU_LANG_CODE),
+                        'label_before' => __('selected', 'woo-currency'),
                         'label_before_attrs' => 'class="wcuColorPickerLabelBefore"',
                     ),
                 ),
@@ -1196,13 +1217,13 @@ class currency_switcherWcu extends moduleWcu
                     'row_classes' => '',
                     'row_show' => 'all',
                     'row_hide' => '',
-                    'tooltip' => __('Select the devices on which the panel should be displayed.', WCU_LANG_CODE),
-                    'label' => __('Show on', WCU_LANG_CODE),
+                    'tooltip' => __('Select the devices on which the panel should be displayed.', 'woo-currency'),
+                    'label' => __('Show on', 'woo-currency'),
                     'params' => array(
                         'options' => array(
-                            'both' => __('Mobile and Desktop', WCU_LANG_CODE),
-                            'mobiles' => __('mobiles', WCU_LANG_CODE),
-                            'desktops' => __('desktops', WCU_LANG_CODE),
+                            'both' => __('Mobile and Desktop', 'woo-currency'),
+                            'mobiles' => __('mobiles', 'woo-currency'),
+                            'desktops' => __('desktops', 'woo-currency'),
                         ),
                         'data-target-toggle' => '.wcuSwEnable, .wcuSwRotating',
                     ),
@@ -1213,8 +1234,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => 'all',
                     'row_hide' => '',
                     'inrow' => 'open',
-                    'tooltip' => __('If this option is selected, the panel will be displayed only under the selected conditions.', WCU_LANG_CODE),
-                    'label' => __('Show on screen size', WCU_LANG_CODE),
+                    'tooltip' => __('If this option is selected, the panel will be displayed only under the selected conditions.', 'woo-currency'),
+                    'label' => __('Show on screen size', 'woo-currency'),
                     'attrs' => 'style="margin-right: 10px;"',
                     'params' => array(
                         'value'=>'1',
@@ -1226,14 +1247,14 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => 'all',
                     'row_hide' => '',
                     'inrow' => 'middle',
-                    'label' => __('Show on', WCU_LANG_CODE),
+                    'label' => __('Show on', 'woo-currency'),
                     'params' => array(
                         'options' => array(
-                            'less' => __('less', WCU_LANG_CODE),
-                            'more' => __('more', WCU_LANG_CODE),
+                            'less' => __('less', 'woo-currency'),
+                            'more' => __('more', 'woo-currency'),
                         ),
-                        'labeled_before' => '&emsp;'.__('width', WCU_LANG_CODE),
-                        'labeled_after' => __('than', WCU_LANG_CODE),
+                        'labeled_before' => '&emsp;'.__('width', 'woo-currency'),
+                        'labeled_after' => __('than', 'woo-currency'),
                         'attrs' => 'style="margin:0px 20px; width:80px;"',
                         'data-target-toggle' => '.wcuSwEnable, .wcuSwRotating',
                     ),
@@ -1248,7 +1269,7 @@ class currency_switcherWcu extends moduleWcu
                     'params' => array(
                         'label_attrs' => 'style="" class="wcuSwitcherInputLabel"',
                         'attrs' => 'class="wcuSwitcherInput"',
-                        'labeled' => __('px', WCU_LANG_CODE),
+                        'labeled' => __('px', 'woo-currency'),
                         'labeled_right' => true,
                     ),
                 ),
@@ -1258,13 +1279,13 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => 'all',
                     'row_hide' => '',
-                    'tooltip' => __('Select pages from the list on which you want to display the panel or select "Enable" to display the panel on each page.', WCU_LANG_CODE),
-                    'label' => __('Display everywhere', WCU_LANG_CODE),
+                    'tooltip' => __('Select pages from the list on which you want to display the panel or select "Enable" to display the panel on each page.', 'woo-currency'),
+                    'label' => __('Display everywhere', 'woo-currency'),
                     'attrs' => 'style="margin-right: 10px;"',
                     'params' => array(
                         'options' => array(
-                            'enable' => __('Enable', WCU_LANG_CODE),
-                            'disable' => __('Disable', WCU_LANG_CODE),
+                            'enable' => __('Enable', 'woo-currency'),
+                            'disable' => __('Disable', 'woo-currency'),
                         ),
                     ),
                 ),
@@ -1274,9 +1295,9 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-					'tooltip' => __('Select pages from the list on which you want to hide or display module. If you turn Display everywhere on - module will be hidden on selected pages. If Display everywhere off - module will be displayed only on the selected pages.', WCU_LANG_CODE),
+					'tooltip' => __('Select pages from the list on which you want to hide or display module. If you turn Display everywhere on - module will be hidden on selected pages. If Display everywhere off - module will be displayed only on the selected pages.', 'woo-currency'),
 					'inrow' => 'open',
-                    'label' => __('Pages', WCU_LANG_CODE),
+                    'label' => __('Pages', 'woo-currency'),
 					'attrs' => 'style="margin-right: 10px;"',
                     'params' => array(
                         'value'=>'1',
@@ -1289,7 +1310,7 @@ class currency_switcherWcu extends moduleWcu
                     'row_show' => '',
                     'row_hide' => '',
 					'inrow' => 'close',
-                    'label' => __('Pages', WCU_LANG_CODE),
+                    'label' => __('Pages', 'woo-currency'),
                     'params' => array(
                         'options' => frameWcu::_()->getModule('currency')->getAllPagesListForSelectByType('page'),
                     ),
@@ -1300,9 +1321,9 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-					'tooltip' => __('Select product categories from the list on which you want to hide or display module. If you turn Display everywhere on - module will be hidden on selected pages. If Display everywhere off - module will be displayed only on the selected pages.', WCU_LANG_CODE),
+					'tooltip' => __('Select product categories from the list on which you want to hide or display module. If you turn Display everywhere on - module will be hidden on selected pages. If Display everywhere off - module will be displayed only on the selected pages.', 'woo-currency'),
 					'inrow' => 'open',
-                    'label' => __('Product categories', WCU_LANG_CODE),
+                    'label' => __('Product categories', 'woo-currency'),
 					'attrs' => 'style="margin-right: 10px;"',
                     'params' => array(
                         'value'=>'1',
@@ -1315,7 +1336,7 @@ class currency_switcherWcu extends moduleWcu
 					'row_show' => '',
 					'row_hide' => '',
 					'inrow' => 'close',
-                    'label' => __('Product categories', WCU_LANG_CODE),
+                    'label' => __('Product categories', 'woo-currency'),
                     'params' => array(
                         'options' => frameWcu::_()->getModule('currency')->getAllProductCategories(),
                     ),
@@ -1326,9 +1347,9 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-					'tooltip' => __('Custom post type from the list on which you want to hide or display module. If you turn Display everywhere on - module will be hidden on selected pages. If Display everywhere off - module will be displayed only on the selected pages.', WCU_LANG_CODE),
+					'tooltip' => __('Custom post type from the list on which you want to hide or display module. If you turn Display everywhere on - module will be hidden on selected pages. If Display everywhere off - module will be displayed only on the selected pages.', 'woo-currency'),
 					'inrow' => 'open',
-                    'label' => __('Custom post types', WCU_LANG_CODE),
+                    'label' => __('Custom post types', 'woo-currency'),
                     'params' => array(
                         'value'=>'1',
                     ),
@@ -1340,7 +1361,7 @@ class currency_switcherWcu extends moduleWcu
 					'row_show' => '',
                     'row_hide' => '',
 					'inrow' => 'close',
-                    'label' => __('Custom post types', WCU_LANG_CODE),
+                    'label' => __('Custom post types', 'woo-currency'),
                     'params' => array(
                         'options' => frameWcu::_()->getModule('currency')->getAllPostTypes(),
                     ),
@@ -1350,8 +1371,24 @@ class currency_switcherWcu extends moduleWcu
 		            'row_classes' => '',
 		            'row_show' => '',
 		            'row_hide' => '',
-		            'tooltip' => __('Show popup message "Do you want change currency?". Read more in the <a href="https://woobewoo.com/documentation/currency-switcher-mode/">documentation</a>.', WCU_LANG_CODE),
-		            'label' => __('Show popup message for switcher', WCU_LANG_CODE) . ' <sup>PRO</sup>' . ($proModule ? (method_exists(frameWcu::_()->getModule('options_pro'), 'getProShowPopupSwitcherMessage') ? '' : __(' (since version 1.4.0)')) : ''),
+		            'tooltip' => __('Show popup message "Do you want change currency?". Read more in the <a href="https://woobewoo.com/documentation/currency-switcher-mode/">documentation</a>.', 'woo-currency'),
+		            'label' => sprintf(
+		                /* Translators: %s: Option. */
+			            __(
+				            'Show popup message for switcher <sup>PRO</sup> %s',
+				            'woo-currency'
+			            ),
+			            $proModule ?
+				            (
+								method_exists(
+									frameWcu::_()->getModule('options_pro'),
+				            'getProShowPopupSwitcherMessage'
+								) ?
+								'' :
+								__( '(since version 1.4.0)', 'woo-currency' )
+				            ) :
+				            ''
+		            ),
 		            'params' => array(
 			            'value'=>'1',
 			            'attrs' => 'disabled',
@@ -1363,8 +1400,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-					'tooltip' => __('The shortcode can take parameters, read more in the documentation.', WCU_LANG_CODE),
-                    'label' => __('Shortcode', WCU_LANG_CODE),
+					'tooltip' => __('The shortcode can take parameters, read more in the documentation.', 'woo-currency'),
+                    'label' => __('Shortcode', 'woo-currency'),
                 ),
 				'switcher_shortcode_frontend_php' => array(
                     'html' => 'block',
@@ -1372,8 +1409,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-					'tooltip' => __('The shortcode can take parameters, read more in the documentation.', WCU_LANG_CODE),
-                    'label' => __('PHP Shortcode', WCU_LANG_CODE),
+					'tooltip' => __('The shortcode can take parameters, read more in the documentation.', 'woo-currency'),
+                    'label' => __('PHP Shortcode', 'woo-currency'),
                 ),
                 'switcher_shortcode_frontend_extended' => array(
                     'html' => 'block',
@@ -1381,8 +1418,15 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-					'tooltip' => __('<p>The shortcode can take parameters, read more in the documentation</p>. <img src="' . WCU_IMG_PATH . 'switcher-extended.png" />', WCU_LANG_CODE),
-                    'label' => __('Shortcode extended <sup>PRO</sup>', WCU_LANG_CODE),
+                    'tooltip' => sprintf(
+                        /* translators: %s: Image URL. */
+	                    __(
+		                    '<p>The shortcode can take parameters, read more in the documentation.</p> <img src="%s" />',
+		                    'woo-currency'
+	                    ),
+	                    WCU_IMG_PATH . 'switcher-extended.png'
+                    ),
+                    'label' => __('Shortcode extended <sup>PRO</sup>', 'woo-currency'),
                 ),
 				'switcher_shortcode_frontend_extended_php' => array(
                     'html' => 'block',
@@ -1390,8 +1434,15 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-					'tooltip' => __('<p>The shortcode can take parameters, read more in the documentation.</p> <img src="' . WCU_IMG_PATH . 'switcher-extended.png"/>', WCU_LANG_CODE),
-                    'label' => __('PHP Shortcode extended <sup>PRO</sup>', WCU_LANG_CODE),
+                    'tooltip' => sprintf(
+                        /* translators: %s: Image URL. */
+	                    __(
+		                    '<p>The shortcode can take parameters, read more in the documentation.</p> <img src="%s" />',
+		                    'woo-currency'
+	                    ),
+	                    WCU_IMG_PATH . 'switcher-extended.png'
+                    ),
+                    'label' => __('PHP Shortcode extended <sup>PRO</sup>', 'woo-currency'),
                 ),
                 'switcher_shortcode' => array(
                     'html' => 'block',
@@ -1399,8 +1450,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-                    'tooltip' => __('Display frontend switcher with view like widget analog. The shortcode can take parameters, read more in the documentation.', WCU_LANG_CODE),
-                    'label' => __('Shortcode (widget verstion)', WCU_LANG_CODE),
+                    'tooltip' => __('Display frontend switcher with view like widget analog. The shortcode can take parameters, read more in the documentation.', 'woo-currency'),
+                    'label' => __('Shortcode (widget verstion)', 'woo-currency'),
                 ),
                 'switcher_shortcode_php' => array(
                     'html' => 'block',
@@ -1408,8 +1459,8 @@ class currency_switcherWcu extends moduleWcu
                     'row_parent' => '',
                     'row_show' => '',
                     'row_hide' => '',
-                    'tooltip' => __('The shortcode can take parameters, read more in the documentation.', WCU_LANG_CODE),
-                    'label' => __('PHP Shortcode (widget version)', WCU_LANG_CODE),
+                    'tooltip' => __('The shortcode can take parameters, read more in the documentation.', 'woo-currency'),
+                    'label' => __('PHP Shortcode (widget version)', 'woo-currency'),
                 ),
             ),
         );

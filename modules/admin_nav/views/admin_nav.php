@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-class admin_navViewWcu extends viewWcu {
+class admin_navViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * breadcrumbsList.

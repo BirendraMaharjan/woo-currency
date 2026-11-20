@@ -2,7 +2,7 @@
 /**
  * WBW Currency Switcher for WooCommerce - currencyControllerWcu Class
  *
- * @version 2.3.1
+ * @version 2.4.0
  *
  * @author  woobewoo
  */
@@ -64,6 +64,8 @@ class currencyControllerWcu extends controllerWcu {
 
 	/**
 	 * getCurrencyRate.
+	 *
+	 * @version 2.4.0
 	 */
 	public function getCurrencyRate() {
 
@@ -73,7 +75,7 @@ class currencyControllerWcu extends controllerWcu {
 		$rate = $this->getModel()->getCurrencyRate($fromCurrency, $toCurrency);
 
 		if ($rate) {
-			$res->addMessage(__('Done', WCU_LANG_CODE));
+			$res->addMessage(__('Done', 'woo-currency'));
 			$res->addData('rate', $rate);
 		} else {
 			$res->pushError($this->getModel()->getErrors());

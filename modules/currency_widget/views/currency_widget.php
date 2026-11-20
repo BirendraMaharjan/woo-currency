@@ -1,15 +1,32 @@
 <?php
-class currency_widgetViewWcu extends viewWcu {
+/**
+ * WBW Currency Switcher for WooCommerce - currency_widgetViewWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+class currency_widgetViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 	public function displayForm($data, $widget, $template) {
 		$this->addCommonValidation();
 		$this->addCommonAdminAssets();
 		$this->displayWidgetForm($data, $widget, $template . 'Form');
 	}
+
+	/**
+	 * displayWidget.
+	 *
+	 * @version 2.4.0
+	 */
 	public function displayWidget($instance, $template) {
 		if(class_exists('WooCommerce')) {
 			wp_enqueue_script( 'wp-color-picker' );
 			wp_enqueue_style( 'wp-color-picker' );
 			frameWcu::_()->getModule('templates')->loadCoreJs();
+			frameWcu::_()->addScript( 'frontend-currency-widget', $this->getModule()->getModPath() . 'js/frontend-currency-widget.js' );
 
 			$show = false;
 			$showOn = !empty($instance['show_on']) ? $instance['show_on'] : 'both';
@@ -52,7 +69,7 @@ class currency_widgetViewWcu extends viewWcu {
 
 				$exclude = !empty($instance['exclude']) ? $instance['exclude'] : array();
 
-				$randId = mt_rand(1,99999);
+				$randId = wp_rand( 1, 99999 );
 
 				foreach($currenciesOpts as $key => $opt) {
 					if(in_array($key, $exclude)) {
@@ -67,7 +84,6 @@ class currency_widgetViewWcu extends viewWcu {
 				$this->assign('randId', $randId);
 				$this->assign('currentCurrency', frameWcu::_()->getModule('currency')->getCurrentCurrency());
 				frameWcu::_()->getModule('templates')->loadFontAwesome();
-				$template == 'currencySwitcher' && frameWcu::_()->getModule('templates')->loadChosenSelects();
 				frameWcu::_()->addStyle('widget.' . $template, $this->getModule()->getModPath(). 'css/widget.' . $template . '.css');
 
 				return parent::getContent($template . 'Widget');
@@ -79,9 +95,14 @@ class currency_widgetViewWcu extends viewWcu {
 	public function addCommonAdminAssets() {
 		frameWcu::_()->addStyle('wcu.widgets', $this->getModule()->getModPath(). 'css/wcu.widgets.css');
 	}
+	/**
+	 * addCommonValidation.
+	 *
+	 * @version 2.4.0
+	 */
 	public function addCommonValidation() {
 		if(!class_exists('WooCommerce')) {
-			echo "<div class='notice'>" . __('Warning: Woocommerce is not activated!', WCU_LANG_CODE) . "</div>";
+			echo "<div class='notice'>" . esc_html__('Warning: Woocommerce is not activated!', 'woo-currency') . "</div>";
 		}
 		return false;
 	}

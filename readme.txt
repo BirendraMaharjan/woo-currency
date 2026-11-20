@@ -1,12 +1,12 @@
 === Currency Switcher for WooCommerce by WBW ===
 Contributors: woobewoo
 Tags: currency switcher, multi currency, currency converter, currency, woocommerce
-Tested up to: 7.0
+Tested up to: 7.1
 Stable tag: 2.3.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-WBW Currency Switcher for WooCommerce allows customers to switch products prices to any currencies. Get rates converted in the real-time with dynamic currency switcher
+WBW Currency Switcher: allows customers to switch products prices to any currencies. Get rates converted in the real-time with dynamic currency switcher.
 
 == Description ==
 [WBW Currency Switcher for WooCommerce Plugin](https://woobewoo.com/plugins/woo-currency?utm_source=wordpress&utm_medium=description&utm_campaign=currency "WBW Currency Switcher for WooCommerce WordPress plugin") allows you to display prices in multiple currencies, use the unlimited number of currencies and set the exchange rate for each currency manually or automatically. The plugin makes full use of Cryptocompare and Free Converter platforms, providing the latest exchange rates, and converting displayed prices in real-time. Currency switcher can be changed automatically according to the customer’s IP.
@@ -150,6 +150,20 @@ Please report security bugs found in the source code of the plugin through the [
 13. Admin panel. Custom Currencies
 
 == Changelog ==
+
+= 2.4.0 - 20/11/2026 =
+* Fix - Currency rates and currency converter frontend display issue.
+* Fix - Security - Improved output escaping and AJAX response handling.
+* Fix - Admin controls - Replaced the old Chosen controls with SelectWoo.
+* Fix - WordPress compatibility - Updated PHP, date, filesystem, random-number, HTTP API, and request-handling functions.
+* Dev - Security - Sanitized GET, POST, cookie, session, server, and file inputs.
+* Dev - Improved coding standards and cleaned up the plugin code.
+Tested up to: 7.1.
+WC tested up to: 11.3.
+
+= 2.3.2 - 28/07/2026 =
+* Dev - Code cleaned up.
+* WC tested up to: 11.0.
 
 = 2.3.2 - 28/07/2026 =
 * Fix - Shipping tax (VAT) not converting on currency switch when using inclusive-VAT rates like Flat Rate.

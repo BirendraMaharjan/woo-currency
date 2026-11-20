@@ -2,12 +2,12 @@
 /**
  * WBW Currency Switcher for WooCommerce - currencyModelWcu Class
  *
- * @version 2.3.1
+ * @version 2.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
 
-class currencyModelWcu extends modelWcu {
+class currencyModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	public static $savedCurrencies = null;
 
@@ -197,6 +197,8 @@ class currencyModelWcu extends modelWcu {
 	/**
 	 * getCurrencyRate.
 	 *
+	 * @version 2.4.0
+	 *
 	 * @todo Is `ratesapi` the same as `ecb`?
 	 */
 	public function getCurrencyRate($fromCurrency, $toCurrency) {
@@ -210,9 +212,13 @@ class currencyModelWcu extends modelWcu {
 		$fromCurrency                 = urlencode($fromCurrency);
 		$toCurrency                   = urlencode($toCurrency);
 		if (!$fromCurrency) {
-			$errorMsg = sprintf(__("set main currency", WCU_LANG_CODE), $fromCurrency);
+			$errorMsg = sprintf(__("set main currency", 'woo-currency'), $fromCurrency);
 		} else {
-			$errorMsg = sprintf(__("no data for %s", WCU_LANG_CODE), $toCurrency);
+			$errorMsg = sprintf(
+				/* Translators: %s: Currency code. */
+				__( "no data for %s", 'woo-currency' ),
+				$toCurrency
+			);
 		}
 		$rate = '';
 
@@ -306,7 +312,11 @@ class currencyModelWcu extends modelWcu {
 				break;
 			case 'cbr':
 				if ($fromCurrency != 'RUB') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'RUB');
+					$rate = sprintf(
+						/* Translators: %s: Currency code. */
+						__( "set %s as main", 'woo-currency' ),
+						'RUB'
+					);
 				} elseif ($fromCurrency == $toCurrency) {
 					$rate = 1;
 				} else {
@@ -321,7 +331,11 @@ class currencyModelWcu extends modelWcu {
 				break;
 			case 'nbp':
 				if ($fromCurrency != 'PLN') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'PLN');
+					$rate = sprintf(
+						/* Translators: %s: Currency code. */
+						__( "set %s as main", 'woo-currency' ),
+						'PLN'
+					);
 				} elseif ($fromCurrency == $toCurrency) {
 					$rate = 1;
 				} else {
@@ -353,11 +367,15 @@ class currencyModelWcu extends modelWcu {
 				break;
 			case 'pb':
 				if ($fromCurrency != 'UAH') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'UAH');
+					$rate = sprintf(
+						/* Translators: %s: Currency code. */
+						__( "set %s as main", 'woo-currency' ),
+						'UAH'
+					);
 				} elseif ($fromCurrency == $toCurrency) {
 					$rate = 1;
 				} else {
-					$url = "https://api.privatbank.ua/p24api/exchange_rates?json&date=".date('d.m.Y');
+					$url = "https://api.privatbank.ua/p24api/exchange_rates?json&date=".gmdate('d.m.Y');
 					$res = function_exists('curl_init') ? $this->_fileGetContentsCurl($url) : file_get_contents($url);
 					$currencyData = json_decode($res, true);
 					$rate = $errorMsg;
@@ -373,8 +391,12 @@ class currencyModelWcu extends modelWcu {
 				}
 				break;
 			case 'bnr':
-				if ($fromCurrency != 'RON') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'RON');
+				if ( $fromCurrency != 'RON' ) {
+					$rate = sprintf(
+						/* Translators: %s: Currency code. */
+						__( "set %s as main", 'woo-currency' ),
+						'RON'
+					);
 				} elseif ($fromCurrency == $toCurrency) {
 					$rate = 1;
 				} else {
@@ -402,7 +424,11 @@ class currencyModelWcu extends modelWcu {
 				if ($currencyData['success']) {
 					$rate = !empty($currencyData['result']) ? $currencyData['result'] : $errorMsg;
 				} elseif ($currencyData['error']['code'] == 105 && $fromCurrency != 'EUR') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'EUR');
+					$rate = sprintf(
+						/* Translators: %s: Currency code. */
+						__( "set %s as main", 'woo-currency' ),
+						'EUR'
+					);
 				} elseif ($currencyData['error']['code'] == 105) {
 					$queryStr = sprintf("?access_key=%s", $fixerConverterApiKey);
 					$url = "http://data.fixer.io/api/latest" . $queryStr;
@@ -421,9 +447,13 @@ class currencyModelWcu extends modelWcu {
 				if ($currencyData['success']) {
 					$rate = !empty($currencyData['result']) ? $currencyData['result'] : $errorMsg;
 				} elseif ($currencyData['error']['code'] == 105 && $fromCurrency != 'USD') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'USD');
+					$rate = sprintf(
+						/* Translators: %s: Currency code. */
+						__( "set %s as main", 'woo-currency' ),
+						'USD'
+					);
 				} elseif ($currencyData['error']['code'] == 105) {
-					$queryStr = sprintf("?access_key=%s&amp;currencies=%s,%s&amp;date=%s", $currencylayerConverterApiKey, $fromCurrency, $toCurrency, date('Y-m-d'));
+					$queryStr = sprintf("?access_key=%s&amp;currencies=%s,%s&amp;date=%s", $currencylayerConverterApiKey, $fromCurrency, $toCurrency, gmdate('Y-m-d'));
 					$url = "http://api.currencylayer.com/live" . $queryStr;
 					$res = function_exists('curl_init') ? $this->_fileGetContentsCurl($url) : file_get_contents($url);
 					$currencyData = json_decode($res, true);
@@ -440,7 +470,11 @@ class currencyModelWcu extends modelWcu {
 				if (!empty($currencyData) && isset($currencyData['rates'])) {
 					$rate = !empty($currencyData['rates'][$toCurrency]) ? $currencyData['rates'][$toCurrency] : $errorMsg;
 				} elseif ((empty($currencyData) || in_array($currencyData['status'], [403, 429])) && $fromCurrency != 'USD') {
-					$rate = sprintf(__("set %s as main", WCU_LANG_CODE), 'USD');
+					$rate = sprintf(
+						/* Translators: %s: Currency code. */
+						__( "set %s as main", 'woo-currency' ),
+						'USD'
+					);
 				} elseif (empty($currencyData) || in_array($currencyData['status'], [403, 429])) {
 					$queryStr = sprintf("?app_id=%s&symbols=%s,%s", $oerConverterApiKey, $fromCurrency, $toCurrency);
 					$url = "https://openexchangerates.org/api/latest.json" . $queryStr;
@@ -492,24 +526,24 @@ class currencyModelWcu extends modelWcu {
 		}
 	}
 
-	private function _fileGetContentsCurl($url) {
-		$ch = curl_init();
+	/**
+	 * _fileGetContentsCurl.
+	 *
+	 * @version 2.4.0
+	 */
+	private function _fileGetContentsCurl( $url ) {
+		$response = wp_remote_get(
+			$url,
+			array(
+				'timeout'     => 15,
+				'redirection' => 3,
+			)
+		);
 
-		curl_setopt($ch, CURLOPT_AUTOREFERER, TRUE);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_URL, $url);
-		@curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+		if ( is_wp_error( $response ) || 200 !== wp_remote_retrieve_response_code( $response ) ) {
+			return false;
+		}
 
-		$data = curl_exec($ch);
-
-		curl_close($ch);
-
-		return $data;
-	}
-
-	public function changeSettingFlags($setting) {
-		$field = $this->getModule()->settingFlags;
-		update_option($field, $setting);
+		return wp_remote_retrieve_body( $response );
 	}
 }

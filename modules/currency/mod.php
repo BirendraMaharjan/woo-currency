@@ -2,7 +2,7 @@
 /**
  * WBW Currency Switcher for WooCommerce - currencyWcu Class
  *
- * @version 2.3.2
+ * @version 2.4.0
  *
  * @author woobewoo
  */
@@ -92,8 +92,8 @@ class currencyWcu extends moduleWcu {
 		add_action('woocommerce_cart_calculate_fees', array($this, 'updateFees'), 9999);
 		add_filter('woocommerce_coupon_get_amount', array($this, 'updateCouponAmount'), 9999, 2);
 
-		if (!empty($_GET['wc-ajax']) && ($_GET['wc-ajax'] == 'ppc-create-order')) {
-			add_filter('woocommerce_cart_get_total', array($this, 'getCurrencyPriceCart'), 9999);
+		if ( ! empty( $_GET['wc-ajax'] ) && ( 'ppc-create-order' == $_GET['wc-ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			add_filter( 'woocommerce_cart_get_total', array( $this, 'getCurrencyPriceCart' ), 9999 );
 		}
 
 		add_filter('woocommerce_price_filter_widget_min_amount', array($this, 'getCurrencyPriceMinWidget'), 9999);
@@ -104,8 +104,8 @@ class currencyWcu extends moduleWcu {
 		add_action('woocommerce_before_checkout_process', array($this, 'beforeOrderTotals'), 9999);
 		add_action('woocommerce_checkout_order_processed', array($this, 'afterOrderTotals'), 9999);
 
-		if(isset($_GET['startcheckout'])) {
-			add_filter('woocommerce_calculated_total', array($this, 'getCurrencyPrice'), 9999);
+		if ( isset( $_GET['startcheckout'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			add_filter( 'woocommerce_calculated_total', array( $this, 'getCurrencyPrice' ), 9999 );
 		}
 		if($this->convertByCheckout) {
 			add_filter('woocommerce_paypal_express_checkout_get_details', array($this, 'recalcPaypalExpressAmounts'), 9999);
@@ -282,17 +282,17 @@ class currencyWcu extends moduleWcu {
 	/**
 	 * isBlocksAPI.
 	 *
-	 * @version 2.2.8
+	 * @version 2.4.0
 	 *
 	 * @return bool
 	 */
 	public function isBlocksAPI() {
-		$uri = empty($_SERVER['REQUEST_URI']) ? '' : sanitize_text_field($_SERVER['REQUEST_URI']);
+		$uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 		return strpos( $uri, 'wp-json/wc/store/') !== false || strpos( $uri, '/checkout?__experimental_calc_totals=true') !== false;
 	}
 
 	public function getCurrencyPriceCart($price) {
-		if (!empty($_GET['wc-ajax']) && ($_GET['wc-ajax'] == 'ppc-create-order')) {
+		if (!empty($_GET['wc-ajax']) && ($_GET['wc-ajax'] == 'ppc-create-order')) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$payload = file_get_contents( 'php://input' );
 			if ($payload) {
 				$payloadJson   = json_decode( $payload, true );
@@ -620,7 +620,7 @@ class currencyWcu extends moduleWcu {
 		if (!class_exists('WooCommerce')) {
 			return;
 		}
-		if (!$this->convertByCheckout && (is_checkout() || is_checkout_pay_page() || isset($_GET['startcheckout']))) {
+		if (!$this->convertByCheckout && (is_checkout() || is_checkout_pay_page() || isset($_GET['startcheckout']))) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$this->resetCurrentCurrency(true);
 		}
 		if (is_order_received_page()) {
@@ -672,7 +672,7 @@ class currencyWcu extends moduleWcu {
 		if (
 			$this->convertByCheckout ||
 			wp_doing_ajax() ||
-			isset($_GET['wc-ajax']) ||
+			isset($_GET['wc-ajax']) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			(
 				!is_page() &&
 				!is_archive() &&
@@ -706,28 +706,38 @@ class currencyWcu extends moduleWcu {
 		}
 	}
 
+	/**
+	 * initCurrency.
+	 *
+	 * @version 2.4.0
+	 */
 	public function initCurrency() {
 		$currencies = $this->getCurrencies();
 
-		foreach ($currencies as $key => $currency) {
-			if(!empty($currency['etalon'])) {
+		foreach ( $currencies as $key => $currency ) {
+			if ( ! empty( $currency['etalon'] ) ) {
 				$this->defaultCurrency = $key;
 				break;
 			}
 		}
 		$this->currentCurrency = $this->defaultCurrency;
 
-		if(!is_admin() || (defined('DOING_AJAX') && DOING_AJAX)) {
-			if(isset($_COOKIE[$this->currencyCookieName])) {
-				$this->setCurrentCurrency($_COOKIE[$this->currencyCookieName]);
+		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( isset( $_COOKIE[ $this->currencyCookieName ] ) ) {
+				$this->setCurrentCurrency( sanitize_text_field( wp_unslash( $_COOKIE[ $this->currencyCookieName ] ) ) );
 			}
-			if(!empty($_GET['currency']) && array_key_exists(strtoupper($_GET['currency']), $currencies)) {
-				$this->setCurrentCurrency(strtoupper(utilsWcu::escape($_GET['currency'])));
-				add_action('wp_loaded', array($this, 'recalcCart'));
+
+			$currency = isset( $_GET['currency'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_GET['currency'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if (
+				'' !== $currency &&
+				array_key_exists( $currency, $currencies )
+			) {
+				$this->setCurrentCurrency( $currency );
+				add_action( 'wp_loaded', array( $this, 'recalcCart' ) );
 			}
 		}
 
-		$this->priceNumDecimals = get_option('woocommerce_price_num_decimals', $this->priceNumDecimals);
+		$this->priceNumDecimals = get_option( 'woocommerce_price_num_decimals', $this->priceNumDecimals );
 	}
 
 	public function recalcCart() {
@@ -736,13 +746,19 @@ class currencyWcu extends moduleWcu {
 		}
 	}
 
+	/**
+	 * disableWcuByCurrentUrl.
+	 *
+	 * @version 2.4.0
+	 */
 	public function disableWcuByCurrentUrl() {
 		$options = $this->getModel()->getOptions();
 		$links = !empty($options['options']['disable_uris']) ? $options['options']['disable_uris'] : '';
 		if (!empty($links)) {
 			$links = preg_split('/[\n\r]+/', $links);
 
-			$curLink = explode('/?', $_SERVER['REQUEST_URI']);
+			$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+			$curLink = explode('/?', $request_uri);
 			$curLink = $curLink[0];
 
 			if (substr($curLink,-1) !== '/') {
@@ -767,31 +783,58 @@ class currencyWcu extends moduleWcu {
 	/**
 	 * getCurrentCurrency.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.0
 	 */
 	public function getCurrentCurrency() {
-		if(!$this->convertByCheckout && ($this->wcuIsWcfmPage() || isset($_GET['startcheckout']) || (isset($_GET['wc-ajax']) && strpos($_GET['wc-ajax'], 'checkout') !== false))) {
+		$wc_ajax = isset( $_GET['wc-ajax'] ) ? sanitize_key( wp_unslash( $_GET['wc-ajax'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if (
+			! $this->convertByCheckout &&
+			( $this->wcuIsWcfmPage() || isset( $_GET['startcheckout'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			  ( '' !== $wc_ajax && strpos( $wc_ajax, 'checkout' ) !== false )
+			)
+		) {
 			$this->setCurrentCurrency($this->defaultCurrency, true);
 		} else if(!$this->convertByCheckout && in_the_loop() && (is_checkout() || is_checkout_pay_page())) {
 			$this->setCurrentCurrency($this->defaultCurrency, true);
 		} else if ($this->detectRobot()) {
 			$this->setCurrentCurrency($this->defaultCurrency, true);
-		} else if(!$this->convertByCheckout && isset($_GET['wc-ajax']) && $_GET['wc-ajax'] == 'ppc-create-order') {
+		} else if( !$this->convertByCheckout && 'ppc-create-order' == $wc_ajax ) {
 			$this->setCurrentCurrency($this->defaultCurrency, true);
-		} else if(!$this->convertByCheckout && isset($_GET['wc-ajax'], $_GET['wcu_checkout']) && $_GET['wc-ajax'] == 'get_refreshed_fragments') {
+		} else if(!$this->convertByCheckout && isset( $_GET['wcu_checkout'] ) && 'get_refreshed_fragments' == $wc_ajax) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$this->setCurrentCurrency($this->defaultCurrency, true);
-		} else if(!$this->convertByCheckout && defined('REST_REQUEST') && REST_REQUEST && isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], '/wp-json/wc/store/v1/checkout') !== false ) {
-			$this->setCurrentCurrency($this->defaultCurrency, true);
+		} else if (
+			! $this->convertByCheckout &&
+			defined( 'REST_REQUEST' ) &&
+			REST_REQUEST &&
+			strpos(
+				isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '',
+				'/wp-json/wc/store/v1/checkout'
+			) !== false
+		) {
+			$this->setCurrentCurrency( $this->defaultCurrency, true );
 		}
 		return $this->currentCurrency;
 	}
 
+	/**
+	 * detectRobot.
+	 *
+	 * @version 2.4.0
+	 */
 	public function detectRobot() {
-		if (isset($this->optionsPro['geoip_rules']) && !empty($this->optionsPro['geoip_rules']['default_for_robots'])) {
-			if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/bot|crawl|slurp|spider|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])) {
+		if ( isset( $this->optionsPro['geoip_rules'] ) && ! empty( $this->optionsPro['geoip_rules']['default_for_robots'] ) ) {
+
+			$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+
+			if (
+				'' !== $user_agent &&
+				preg_match( '/bot|crawl|slurp|spider|mediapartners/i', $user_agent )
+			) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -870,7 +913,7 @@ class currencyWcu extends moduleWcu {
 			}
 		}
 
-		if ( ( is_order_received_page() || is_account_page() || ( is_admin() && ! isset( $_REQUEST['save'] ) ) || isset( $_REQUEST['st'] ) ) ) {
+		if ( ( is_order_received_page() || is_account_page() || ( is_admin() && ! isset( $_REQUEST['save'] ) ) || isset( $_REQUEST['st'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $price;
 		}
 
@@ -955,6 +998,11 @@ class currencyWcu extends moduleWcu {
 		}
 	}
 
+	/**
+	 * checkWoocommerceEmailActions.
+	 *
+	 * @version 2.4.0
+	 */
 	public function checkWoocommerceEmailActions($email_actions) {
 		global $post;
 		if (is_object($post) AND utilsWcu::isOrderType($post->ID)) {
@@ -963,10 +1011,10 @@ class currencyWcu extends moduleWcu {
 				$this->setCurrentCurrency($currency);
 			}
 		} else {
-			if (isset($_POST['order_status']) AND isset($_POST['post_ID'])) {
-				$currency = $this->getWcuOrderCurrency((int) $_POST['post_ID']);
-				if (!empty($currency)) {
-					$this->setCurrentCurrency($currency);
+			if ( isset( $_POST['order_status'] ) and isset( $_POST['post_ID'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+				$currency = $this->getWcuOrderCurrency( absint( $_POST['post_ID'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+				if ( ! empty( $currency ) ) {
+					$this->setCurrentCurrency( $currency );
 				}
 			}
 		}
@@ -1035,14 +1083,19 @@ class currencyWcu extends moduleWcu {
 		return $post;
 	}
 
+	/**
+	 * checkAdminActionPostOrder.
+	 *
+	 * @version 2.4.0
+	 */
 	public function checkAdminActionPostOrder() {
-		if (isset($_GET['post'])) {
-			$post_id = $_GET['post'];
-			$post = get_post($post_id);
-			if (is_object($post) AND utilsWcu::isOrderType($post->ID)) {
-				$currency = $this->getWcuOrderCurrency($post->ID);
-				if (!empty($currency)) {
-					$this->setCurrentCurrency($currency);
+		if ( isset( $_GET['post'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$post_id = absint( $_GET['post'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$post    = get_post( $post_id );
+			if ( is_object( $post ) and utilsWcu::isOrderType( $post->ID ) ) {
+				$currency = $this->getWcuOrderCurrency( $post->ID );
+				if ( ! empty( $currency ) ) {
+					$this->setCurrentCurrency( $currency );
 					$this->beforeOrderTotals();
 				}
 			}
@@ -1074,8 +1127,13 @@ class currencyWcu extends moduleWcu {
 		return $settings;
 	}
 
+	/**
+	 * updateSettingsTabs.
+	 *
+	 * @version 2.4.0
+	 */
 	public function updateSettingsTabs($tabs) {
-		$tabs[$this->getCurrencyTabSlug()] = __('Currency', WCU_LANG_CODE);
+		$tabs[$this->getCurrencyTabSlug()] = __('Currency', 'woo-currency');
 		return $tabs;
 	}
 
@@ -1109,13 +1167,18 @@ class currencyWcu extends moduleWcu {
 		return $this->currencyNames;
 	}
 
+	/**
+	 * getCurrencyPositions.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getCurrencyPositions() {
 		if(empty($this->currencyPositions)) {
 			$this->currencyPositions = array(
-				'left' => __('left', WCU_LANG_CODE),
-				'right' => __('right', WCU_LANG_CODE),
-				'left_space' => __('left space', WCU_LANG_CODE),
-				'right_space' => __('right space', WCU_LANG_CODE),
+				'left' => __('left', 'woo-currency'),
+				'right' => __('right', 'woo-currency'),
+				'left_space' => __('left space', 'woo-currency'),
+				'right_space' => __('right space', 'woo-currency'),
 			);
 		}
 		return $this->currencyPositions;
@@ -1128,12 +1191,17 @@ class currencyWcu extends moduleWcu {
 		return $this->currencySymbols;
 	}
 
+	/**
+	 * getAllPagesListForSelect.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getAllPagesListForSelect() {
 		global $wpdb;
 		// We are not using wp methods here - as list can be very large - and it can take too much memory
 		$postTypesForPostsList = array('page', 'post', 'product', 'blog', 'grp_pages', 'documentation');
 		$allPages = dbWcu::get("SELECT ID, post_title FROM $wpdb->posts WHERE post_type IN ('". implode("','", $postTypesForPostsList). "') AND post_status IN ('publish','draft') ORDER BY post_title");
-		$array = array( WCU_HOME_PAGE_ID => __('Main Home page', WCU_LANG_CODE) );
+		$array = array( WCU_HOME_PAGE_ID => __('Main Home page', 'woo-currency') );
 		if (!empty($allPages)) {
 			foreach ($allPages as $p) {
 				$array[ $p['ID'] ] = $p['post_title'];
@@ -1155,6 +1223,11 @@ class currencyWcu extends moduleWcu {
 		return $array;
 	}
 
+	/**
+	 * getAllProductCategories.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getAllProductCategories() {
 		global $wpdb;
 		$orderby = 'name';
@@ -1166,7 +1239,7 @@ class currencyWcu extends moduleWcu {
 			'hide_empty' => $hide_empty,
 		);
 		$array = array();
-		$product_categories = get_terms('product_cat', $cat_args);
+		$product_categories = get_terms( array_merge( $cat_args, array( 'taxonomy' => 'product_cat' ) ) );
 		if (!empty($product_categories)) {
 			foreach ($product_categories as $p) {
 				$array[ $p->term_taxonomy_id ] = $p->name;
@@ -1266,10 +1339,19 @@ class currencyWcu extends moduleWcu {
 		return $show;
 	}
 
+	/**
+	 * drawModuleAjax.
+	 *
+	 * @version 2.4.0
+	 */
 	public function drawModuleAjax( $moduleName, $data, $isPro = false ) {
 		$moduleName = isset( $moduleName ) ? $moduleName : '';
 		$resHtml = '';
 		$styleLink2 = '';
+		$styleLink = '';
+		$scriptLink = '';
+		$styles = array();
+		$scripts = array();
 		if ( isset( $data ) ) {
 
 			if ( $isPro ) {
@@ -1301,13 +1383,26 @@ class currencyWcu extends moduleWcu {
 				$scriptLink = frameWcu::_()->getModule( $moduleName )->getModPath() . 'js/frontend.currency.rates.js';
 			}
 
-			$resHtml .= "<link rel='stylesheet' href='$styleLink' type='text/css' media='all' />";
-			$resHtml .= !empty($styleLink2) ? "<link rel='stylesheet' href='$styleLink2' type='text/css' media='all' />" : '';
-			$resHtml .= "<script type='text/javascript' src='".$scriptLink."'></script>";
+			if ( ! empty( $styleLink2 ) ) {
+				$styles[] = $styleLink2;
+			}
+			if ( ! empty( $styleLink ) ) {
+				$styles[] = $styleLink;
+			}
+			if ( ! empty( $scriptLink ) ) {
+				$scripts[] = $scriptLink;
+			}
 
 			$resHtml .= frameWcu::_()->getModule( $moduleName )->drawModule( $data );
 		}
-		return $resHtml;
+
+		return array(
+			'html'   => $resHtml,
+			'assets' => array(
+				'styles'  => $styles,
+				'scripts' => $scripts,
+			),
+		);
 	}
 
 	public function getWcuOrderCurrency( $orderId ) {
@@ -1350,6 +1445,11 @@ class currencyWcu extends moduleWcu {
 		return $options;
 	}
 
+	/**
+	 * getOptionsParams.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getOptionsParams() {
 		// row_classes - specific classes for option row.
 		// 1 - set row_parent param for child option
@@ -1385,8 +1485,8 @@ class currencyWcu extends moduleWcu {
 					'html' => 'selectbox',
 					'row_classes' => '',
 					'row_show' => 'all',
-					'tooltip' => __('Select your preferred currency aggregator to get the exchange rate. If you use cryptocurrency for trading, it is recommended to use the "Cryptocompare" aggregator.', WCU_LANG_CODE),
-					'label' => __('Currency Aggregator', WCU_LANG_CODE),
+					'tooltip' => __('Select your preferred currency aggregator to get the exchange rate. If you use cryptocurrency for trading, it is recommended to use the "Cryptocompare" aggregator.', 'woo-currency'),
+					'label' => __('Currency Aggregator', 'woo-currency'),
 					'params' => array(
 						'options' => !empty($currencyAgregator) ? $currencyAgregator : array(
 							'free_converter' => 'Free Converter',
@@ -1405,8 +1505,15 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'free_converter',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the free API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a free API key for the converter. If the field is empty, Free Converter will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://free.currencyconverterapi.com/free-api-key'),
-					'label' => __('Free Converter API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the free API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a free API key for the converter. If the field is empty, Free Converter will use the default API key - this may create an error when getting the exchange rate.',
+							'woo-currency'
+						),
+						'https://free.currencyconverterapi.com/free-api-key'
+					),
+					'label' => __('Free Converter API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1418,8 +1525,14 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'currencyapi',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the Currency Conversion API key in this field. Get <a target="blank" href="%s"> API key </a> for the Currency Conversion API. If the field is empty, Currency Conversion API will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://currencyapi.com/'),
-					'label' => __('Currency Conversion API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the Currency Conversion API key in this field. Get <a target="blank" href="%s"> API key </a> for the Currency Conversion API. If the field is empty, Currency Conversion API will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency'
+						),
+						'https://currencyapi.com/'
+					),
+					'label' => __('Currency Conversion API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'style="margin:0px; width:400px;"',
@@ -1431,8 +1544,15 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'ecb',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the European Central Bank API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a European Central Bank API key for the converter. If the field is empty, European Central Bank will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://exchangeratesapi.io/faq/'),
-					'label' => __('European Central Bank API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the European Central Bank API key of the converter in this field. Read <a target="blank" href="%s"> instructions </a> on how to get a European Central Bank API key for the converter. If the field is empty, European Central Bank will use the default API key - this may create an error when getting the exchange rate.',
+							'woo-currency'
+						),
+						'https://exchangeratesapi.io/faq/'
+					),
+					'label' => __('European Central Bank API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1444,8 +1564,15 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'fixer',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the Fixer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Fixer converter. If the field is empty, Fixer will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://fixer.io/product'),
-					'label' => __('Fixer API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the Fixer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Fixer converter. If the field is empty, Fixer will use the default API key - this may create an error when getting the exchange rate.',
+							'woo-currency'
+						),
+						'https://fixer.io/product'
+					),
+					'label' => __('Fixer API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1457,8 +1584,12 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'currencylayer',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the currencylayer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the currencylayer converter. If the field is empty, currencylayer will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://currencylayer.com/product'),
-					'label' => __('Currencylayer API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__( 'Insert the currencylayer API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the currencylayer converter. If the field is empty, currencylayer will use the default API key - this may create an error when getting the exchange rate.', 'woo-currency' ),
+						'https://currencylayer.com/product'
+					),
+					'label' => __('Currencylayer API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1470,8 +1601,15 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'converter_type',
 					'row_show' => 'oer',
 					'row_hide' => '',
-					'tooltip' => sprintf(__('Insert the Open Exchange Rates API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Open Exchange Rates converter. If the field is empty, Open Exchange Rates will use the default API key - this may create an error when getting the exchange rate.', WCU_LANG_CODE), 'https://openexchangerates.org/signup'),
-					'label' => __('Open Exchange Rates API key', WCU_LANG_CODE),
+					'tooltip' => sprintf(
+						/* Translators: %s: URL. */
+						__(
+							'Insert the Open Exchange Rates API key of the converter in this field. Get <a target="blank" href="%s"> API key </a> for the Open Exchange Rates converter. If the field is empty, Open Exchange Rates will use the default API key - this may create an error when getting the exchange rate.',
+							'woo-currency'
+						),
+						'https://openexchangerates.org/signup'
+					),
+					'label' => __('Open Exchange Rates API key', 'woo-currency'),
 					'params' => array(
 						'label_attrs' => 'class="wcuSwitcherInputLabel" ',
 						'attrs' => 'class="wcuSwitcherInput" style="margin:0px; width:400px;"',
@@ -1482,8 +1620,8 @@ class currencyWcu extends moduleWcu {
 					'row_classes' => '',
 					'row_show' => 'all',
 					'row_hide' => '',
-					'tooltip' => __('You can allow change currency at checkout. Please note, that some payment systems (like PayPal) could use only fixed currencies.', WCU_LANG_CODE),
-					'label' => __('Change currency at checkout', WCU_LANG_CODE),
+					'tooltip' => __('You can allow change currency at checkout. Please note, that some payment systems (like PayPal) could use only fixed currencies.', 'woo-currency'),
+					'label' => __('Change currency at checkout', 'woo-currency'),
 					'params' => array(
 						'value'=>'1',
 						'data-target-toggle' => '.wcuSwEnableCheckbox',
@@ -1495,8 +1633,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => 'convert_checkout',
 					'row_show' => '1',
 					'row_hide' => '',
-					'tooltip' => __('The order will always display the price that was calculated at the exchange rate at the time of purchase', WCU_LANG_CODE),
-					'label' => __('Save the current rate in the order', WCU_LANG_CODE),
+					'tooltip' => __('The order will always display the price that was calculated at the exchange rate at the time of purchase', 'woo-currency'),
+					'label' => __('Save the current rate in the order', 'woo-currency'),
 					'params' => array(
 						'value'=>'1',
 					),
@@ -1505,16 +1643,16 @@ class currencyWcu extends moduleWcu {
 					'html' => 'selectbox',
 					'row_classes' => '',
 					'row_show' => 'all',
-					'tooltip' => __('Automatic update of exchange rates for the selected schedule.', WCU_LANG_CODE),
-					'label' => ($updateRates) ? __('Automatic exchange rates updates', WCU_LANG_CODE) : __('Automatic exchange rates updates <sup class="pro-label">PRO</sup>', WCU_LANG_CODE),
+					'tooltip' => __('Automatic update of exchange rates for the selected schedule.', 'woo-currency'),
+					'label' => ($updateRates) ? __('Automatic exchange rates updates', 'woo-currency') : __('Automatic exchange rates updates <sup class="pro-label">PRO</sup>', 'woo-currency'),
 					'params' => array(
 						'options' => array(
-							'disabled' => __('Enter Rates Manually', WCU_LANG_CODE),
-							'one_min' => __('Update Every Minute', WCU_LANG_CODE),
-							'one_hour' => __('Update Hourly', WCU_LANG_CODE),
-							'half_day' => __('Update Twice Daily', WCU_LANG_CODE),
-							'daily' => __('Update Daily', WCU_LANG_CODE),
-							'weekly' => __('Update Weekly', WCU_LANG_CODE),
+							'disabled' => __('Enter Rates Manually', 'woo-currency'),
+							'one_min' => __('Update Every Minute', 'woo-currency'),
+							'one_hour' => __('Update Hourly', 'woo-currency'),
+							'half_day' => __('Update Twice Daily', 'woo-currency'),
+							'daily' => __('Update Daily', 'woo-currency'),
+							'weekly' => __('Update Weekly', 'woo-currency'),
 						),
 						'attrs' => ($updateRates) ? '' : 'disabled',
 					),
@@ -1523,12 +1661,12 @@ class currencyWcu extends moduleWcu {
 					'html' => 'selectbox',
 					'row_classes' => '',
 					'row_show' => 'all',
-					'tooltip' => __('Sends to admin email notice with result values of automatic exchange rates update.', WCU_LANG_CODE),
-					'label' => ($updateRates) ? __('Automatic exchange rates updates (notice admin by email)', WCU_LANG_CODE) : __('Automatic exchange rates updates (notice admin by email) <sup class="pro-label">PRO</sup>', WCU_LANG_CODE),
+					'tooltip' => __('Sends to admin email notice with result values of automatic exchange rates update.', 'woo-currency'),
+					'label' => ($updateRates) ? __('Automatic exchange rates updates (notice admin by email)', 'woo-currency') : __('Automatic exchange rates updates (notice admin by email) <sup class="pro-label">PRO</sup>', 'woo-currency'),
 					'params' => array(
 						'options' => array(
-							'disabled' => __('Disabled', WCU_LANG_CODE),
-							'enabled' => __('Enabled', WCU_LANG_CODE),
+							'disabled' => __('Disabled', 'woo-currency'),
+							'enabled' => __('Enabled', 'woo-currency'),
 						),
 						'attrs' => ($updateRates) ? '' : 'disabled',
 					),
@@ -1539,8 +1677,8 @@ class currencyWcu extends moduleWcu {
 					'row_parent' => '',
 					'row_show' => '',
 					'row_hide' => '',
-					'tooltip' => __('Type relative links, each from a new line, to disable the display of the currency converter on these pages.', WCU_LANG_CODE),
-					'label' => __('Disable URIs', WCU_LANG_CODE),
+					'tooltip' => __('Type relative links, each from a new line, to disable the display of the currency converter on these pages.', 'woo-currency'),
+					'label' => __('Disable URIs', 'woo-currency'),
 				),
 			),
 			'currency_switcher' => frameWcu::_()->getModule('currency_switcher')->getOptionsParams(),
@@ -1796,19 +1934,25 @@ class currencyWcu extends moduleWcu {
 				$metaQuery = array_merge( $q->get( 'meta_query' ), $metaQuery );
 				$q->set( 'meta_query', $metaQuery );
 			} else {
-				$q['meta_query'] = ( isset( $q['meta_query'] ) ) ? array_merge( $q['meta_query'], $metaQuery ) : $metaQuery;
+				$q['meta_query'] = ( isset( $q['meta_query'] ) ) ? array_merge( $q['meta_query'], $metaQuery ) : $metaQuery; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			}
 		}
 
 		return $q;
 	}
 
+	/**
+	 * checkAvailabilityForCountry.
+	 *
+	 * @version 2.4.0
+	 */
 	public function checkAvailabilityForCountry( $preempt, $wp_query ) {
 		if (is_single()) {
 			$countryCode  = frameWcu::_()->getModule( 'geoip_rules' )->getUserCountryCode();
 			$currencyCode = frameWcu::_()->getModule( 'geoip_rules' )->getCurrencyCodeByCountry( $countryCode );
 			if ( '' !== $currencyCode ) {
-				$isUnavailable = get_post_meta( url_to_postid( $_SERVER['REQUEST_URI'] ), 'wcu_currency_unavailable_' . $currencyCode );
+				$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+				$isUnavailable = get_post_meta( url_to_postid( $request_uri ), 'wcu_currency_unavailable_' . $currencyCode );
 				if ( $isUnavailable ) {
 					$wp_query->set_404();
 					status_header( 404 );

@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - controllerWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 abstract class controllerWcu {
 	protected $_models = array();
 	protected $_views = array();
@@ -201,18 +211,29 @@ abstract class controllerWcu {
 		$res = dispatcherWcu::applyFilters($this->getCode(). '_getListForTblResults', $res);
 		$res->ajaxExec();
 	}
+
+	/**
+	 * removeGroup.
+	 *
+	 * @version 2.4.0
+	 */
 	public function removeGroup() {
 		$res = new responseWcu();
 		if($this->getModel()->removeGroup(reqWcu::getVar('listIds', 'post'))) {
-			$res->addMessage(__('Done', WCU_LANG_CODE));
+			$res->addMessage(__('Done', 'woo-currency'));
 		} else
 			$res->pushError($this->getModel()->getErrors());
 		$res->ajaxExec();
 	}
+	/**
+	 * clear.
+	 *
+	 * @version 2.4.0
+	 */
 	public function clear() {
 		$res = new responseWcu();
 		if($this->getModel()->clear()) {
-			$res->addMessage(__('Done', WCU_LANG_CODE));
+			$res->addMessage(__('Done', 'woo-currency'));
 		} else
 			$res->pushError($this->getModel()->getErrors());
 		$res->ajaxExec();

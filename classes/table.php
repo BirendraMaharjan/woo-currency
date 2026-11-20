@@ -4,7 +4,7 @@
  *
  * @author  woobewoo
  *
- * @version 2.2.9
+ * @version 2.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -64,10 +64,15 @@ abstract class tableWcu {
 	protected $_limitFrom = '';
 	protected $_limitTo = '';
 
+	/**
+	 * getInstance.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function getInstance($table = '') {
 		static $instances = array();
 		if(!$table) {
-			throw new Exception('Unknown table ['. $table. ']');
+			throw new Exception('Unknown table ['. esc_attr($table). ']');
 		}
 		if(!isset($instances[$table])) {
 			$class = 'table'. strFirstUp($table). strFirstUp(WCU_CODE);
@@ -298,6 +303,11 @@ abstract class tableWcu {
 		return dbWcu::get($query, $return);
 	}
 
+	/**
+	 * store.
+	 *
+	 * @version 2.4.0
+	 */
 	public function store($data, $method = 'INSERT', $where = '') {
 		$this->_clearErrors();
 		$method = strtoupper($method);
@@ -319,7 +329,7 @@ abstract class tableWcu {
 		$fields = $this->_getQueryString($data, ',', true);
 
 		if(empty($fields)) {
-			$this->_addError(__('Nothing to update', WCU_LANG_CODE));
+			$this->_addError(__('Nothing to update', 'woo-currency'));
 			return false;
 		}
 
@@ -335,7 +345,7 @@ abstract class tableWcu {
 			else
 				return true;
 		} else
-			$this->_addError(WCU_TEST_MODE ? dbWcu::getError() : __('Database error. Please contact your developer.', WCU_LANG_CODE));
+			$this->_addError(WCU_TEST_MODE ? dbWcu::getError() : __('Database error. Please contact your developer.', 'woo-currency'));
 		return false;
 	}
 
@@ -504,7 +514,9 @@ abstract class tableWcu {
 	}
 
 	/**
-	 * Prepare data after extracting it from database
+	 * Prepare data after extracting it from database.
+	 *
+	 * @version 2.4.0
 	 */
 	public function prepareOutput($d = array()) {
 		$ignore = isset($d['ignore']) ? $d['ignore'] : array();
@@ -514,7 +526,7 @@ abstract class tableWcu {
 					if($d[$key] == '0000-00-00' || empty($d[$key]))
 						$d[$key] = '';
 					else {
-						$d[$key] = date(WCU_DATE_FORMAT, dbWcu::dateToTime($d[$key]));
+						$d[$key] = wp_date(WCU_DATE_FORMAT, dbWcu::dateToTime($d[$key]));
 					}
 					break;
 				case 'int':

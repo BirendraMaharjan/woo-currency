@@ -1,6 +1,15 @@
 <?php
-class currency_switcherViewWcu extends viewWcu
-{
+/**
+ * WBW Currency Switcher for WooCommerce - currency_switcherViewWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+class currency_switcherViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     /**
      * Retrive main module functionality to display
      *

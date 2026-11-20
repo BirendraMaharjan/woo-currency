@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - errorsWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class errorsWcu {
     const FATAL = 'fatal';
     const MOD_INSTALL = 'mod_install';
@@ -47,13 +57,19 @@ class errorsWcu {
             }
         }
     }
+
+	/**
+	 * showAdminErrors.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function showAdminErrors() {
-		if(self::$current) {
+		if ( self::$current ) {
 			$html = '';
-			foreach(self::$current as $error) {
-				$html .= '<div class="error"><p><strong style="font-size: 15px;">'. $error. '</strong></p></div>';
+			foreach ( self::$current as $error ) {
+				$html .= '<div class="error"><p><strong style="font-size: 15px;">' . $error . '</strong></p></div>';
 			}
-			echo $html;
+			echo wp_kses_post( $html );
 		}
 	}
     static public function appendErrorsContent($content) {

@@ -141,6 +141,8 @@ class currencyViewWcu extends viewWcu {
 
 	/**
 	 * getCurrencyTabContent.
+	 *
+	 * @version 2.4.0
 	 */
 	public function getCurrencyTabContent() {
 
@@ -173,7 +175,6 @@ class currencyViewWcu extends viewWcu {
 		frameWcu::_()->addScript('admin.currency', $module->getModPath() . 'js/admin.currency.js', array('jquery', 'jquery-ui-core', 'jquery-ui-sortable'));
 
 		frameWcu::_()->addScript('cookie.handler', WCU_JS_PATH. 'CookieHandler.js');
-		frameWcu::_()->addScript('currency.flag_handler', WCU_JS_PATH. 'currency.flag_handler.js', array('cookie.handler'));
 		frameWcu::_()->addScript('admin.currency', $module->getModPath() . 'js/admin.currency.js', array('jquery', 'jquery-ui-core', 'jquery-ui-sortable', 'cookie.handler', 'currency.flag_handler'));
 		frameWcu::_()->addJSVar('admin.currency', 'wcuCssPath', WCU_CSS_PATH);
 

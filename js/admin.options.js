@@ -1,19 +1,13 @@
 /**
  * WBW Currency Switcher for WooCommerce - Admin Options JS
  *
- * @version 2.2.7
+ * @version 2.4.0
  *
  * @author  woobewoo
  */
 
 var wcuAdminFormChanged = [];
-var g_wcuChosenOptions = {
-	width: '100%',
-	disable_search_threshold: 10,
-	search_contains: true,
-	enable_split_word_search: true,
-	placeholder_text_multiple: 'select options',
-};
+
 /**
  * beforeunload event handler.
  *
@@ -29,24 +23,34 @@ window.addEventListener('beforeunload', function (e) {
 /**
  * Jquery ready function
  *
- * @version 2.2.7
+ * @version 2.4.0
  */
-jQuery(document).ready(function(){
+jQuery(document).ready(function($){
 	wcuInitMainPromoPopup();
 
-	if (jQuery(".wcuDisplayRulesTab").length) {
-		jQuery(".wcuDisplayRulesTab .wcuToShowSelectList select").chosen(g_wcuChosenOptions);
+	function wcuInitSelectWoo( $elements ) {
+		$elements.each( function () {
+
+			const $this = $( this );
+			if ( $this.hasClass( 'select2-hidden-accessible' ) ) {
+				return;
+			}
+
+			$this.selectWoo( {
+				placeholder: $this.data( 'placeholder' ) || 'Select an option',
+				allowClear: true,
+				width: '100%',
+				closeOnSelect: $this.prop( 'multiple' ) ? false : true,
+			} );
+
+		} );
 	}
-	if (jQuery(".wcuGeoIpRulesCurrenciesList").length) {
-		jQuery(".wcuGeoIpRulesCurrenciesList").chosen({
-			width: '100%',
-		});
-	}
-	if (jQuery(".wcuMultiSelect").length) {
-		jQuery(".wcuMultiSelect select[multiple]").chosen({
-			width: '100%',
-		});
-	}
+	// Display Rules.
+	wcuInitSelectWoo(
+		$( '.wcuDisplayRulesTab .wcuToShowSelectList select, .wcuGeoIpRulesCurrenciesList, .wcuMultiSelect select[multiple]' )
+	);
+
+
 	if(typeof(wcuActiveTab) != 'undefined' && wcuActiveTab != 'main_page' && jQuery('#toplevel_page_woo-currency').hasClass('wp-has-current-submenu')) {
 		var subMenus = jQuery('#toplevel_page_woo-currency').find('.wp-submenu li');
 		subMenus.removeClass('current').each(function(){
@@ -741,3 +745,39 @@ jQuery(document).ready(function(){
 		jQuery(".icheckbox_minimal").parent().parent().find("label:nth-child(2)").hide();
 	}
 })
+
+jQuery( function ( $ ) {
+	'use strict';
+
+	// WordPress color picker.
+	$( '.woobewoo-cs-color-picker' ).each( function () {
+		$( this ).wpColorPicker();
+	} );
+
+	// Sync checkbox value with its hidden input.
+	$( document ).on(
+		'change',
+		'.woobewoo-cs-checkbox-hidden-val',
+		function () {
+			const hideId = $( this ).attr( 'data-hideid' );
+
+			if ( ! hideId ) {
+				return;
+			}
+
+			$( '#' + $.escapeSelector( hideId ) ).val(
+				$( this ).prop( 'checked' ) ? '1' : '0'
+			);
+		}
+	);
+
+	$( '.woobewoo-cs-select-sortable' ).each( function () {
+		const sortable = this.id;
+
+		if ( !sortable ) {
+			return;
+		}
+		wcuSelectMultipleSortableFunction( sortable );
+		wcuInitCustomCheckRadio();
+	} );
+} );

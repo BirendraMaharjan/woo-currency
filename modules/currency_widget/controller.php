@@ -1,5 +1,20 @@
 <?php
-class currency_widgetControllerWcu extends controllerWcu {
+/**
+ * WBW Currency Switcher for WooCommerce - currency_widgetControllerWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+class currency_widgetControllerWcu extends controllerWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
+	/**
+	 * getCurrencyRate.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getCurrencyRate() {
 		$res = new responseWcu();
 		$amount = reqWcu::getVar('amount');
@@ -17,16 +32,27 @@ class currency_widgetControllerWcu extends controllerWcu {
 				? $currencies[$toCurrency]['rate']
 				: $currencyModel->getCurrencyRate($defaultCurrency, $toCurrency);
 
-			$res->addMessage(__('Done', WCU_LANG_CODE));
+			$res->addMessage(__('Done', 'woo-currency'));
 			$res->addData('result', round($amount * $rateTo / $rateFrom, 7));
 		} else {
-			$res->pushError(sprintf(__('no data for %s', WCU_LANG_CODE), $toCurrency));
+			$res->pushError(
+				sprintf(
+					/* Translators: %s: Currency code. */
+					__( 'no data for %s', 'woo-currency' ),
+					$toCurrency
+				)
+			);
 		}
 
 
 		return $res->ajaxExec();
 	}
-	public function getCurrencyRatesList() {
+	/**
+	 * woobewoo_cs_get_currency_rates_list.
+	 *
+	 * @version 2.4.0
+	 */
+	public function woobewoo_cs_get_currency_rates_list() {
 		$res = new responseWcu();
 		$exclude = reqWcu::getVar('exclude');
 		$exclude = !empty($exclude) ? array_filter(array_map('trim', explode(',', $exclude))) : array();
@@ -67,15 +93,32 @@ class currency_widgetControllerWcu extends controllerWcu {
 				$rates[ $c['name'] ] = $rounding ? round( $rate, $decimal ) : ( ctype_digit( (string) $rate ) ? number_format( $rate, 2 ) : $rate );
 			}
 		}
-		$res->addMessage(__('Done', WCU_LANG_CODE));
+		$res->addMessage(__('Done', 'woo-currency'));
 		$res->addData('rates', $rates);
 
 		return $res->ajaxExec();
 	}
+
+	/**
+	 * getPermissions.
+	 *
+	 * @version 2.4.0
+	 */
 	public function getPermissions() {
 		return array(
 			WCU_USERLEVELS => array(
-				WCU_ADMIN => array()
+				WCU_ADMIN  => array(
+					'woobewoo_cs_get_currency_rates_list',
+					'getCurrencyRate',
+				),
+				WCU_LOGGED => array(
+					'woobewoo_cs_get_currency_rates_list',
+					'getCurrencyRate',
+				),
+				WCU_GUEST  => array(
+					'woobewoo_cs_get_currency_rates_list',
+					'getCurrencyRate',
+				)
 			),
 		);
 	}

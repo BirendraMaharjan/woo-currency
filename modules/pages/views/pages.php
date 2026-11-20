@@ -1,5 +1,15 @@
 <?php
-class pagesViewWcu extends viewWcu {
+/**
+ * WBW Currency Switcher for WooCommerce - pagesViewWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+class pagesViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     public function displayDeactivatePage() {
         $this->assign('GET', reqWcu::get('get'));
         $this->assign('POST', reqWcu::get('post'));

@@ -1,3 +1,15 @@
+<?php
+/**
+ * WBW Currency Switcher for WooCommerce - Options Admin Main
+ *
+ * @version 2.4.0
+ *
+ * @author woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+?>
 <style type="text/css">
 	.wcuAdminMainLeftSide {
 		width: 56%;
@@ -15,7 +27,7 @@
 <section>
 	<div class="woobewoo-item woobewoo-panel">
 		<div id="containerWrapper">
-			<?php _e('Main page Go here!!!!', WCU_LANG_CODE)?>
+			<?php esc_html_e( 'Main page Go here!!!!', 'woo-currency' ); ?>
 		</div>
 		<div style="clear: both;"></div>
 	</div>

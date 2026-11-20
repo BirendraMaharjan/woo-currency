@@ -2,14 +2,14 @@
 /**
  * WBW Currency Switcher for WooCommerce - promoViewWcu Class
  *
- * @version 2.2.0
+ * @version 2.4.0
  *
  * @author  woobewoo
  */
 
 defined( 'ABSPATH' ) || exit;
 
-class promoViewWcu extends viewWcu {
+class promoViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
 
 	/**
 	 * pluginSlug.
@@ -106,39 +106,29 @@ class promoViewWcu extends viewWcu {
 
 	/**
 	 * getServerSettings.
+	 *
+	 * @verson 2.4.0
 	 */
 	public function getServerSettings() {
 		global $wpdb;
+		$server_software = isset( $_SERVER['SERVER_SOFTWARE'] ) ?
+			sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) :
+			'';
 		return array(
 			'Operating System' => array('value' => PHP_OS),
 			'PHP Version' => array('value' => PHP_VERSION),
-			'Server Software' => array('value' => $_SERVER['SERVER_SOFTWARE']),
+			'Server Software' => array('value' => $server_software),
 			'MySQL' => array('value' =>  $wpdb->db_version()),
-			'PHP Allow URL Fopen' => array('value' => ini_get('allow_url_fopen') ? __('Yes', WCU_LANG_CODE) : __('No', WCU_LANG_CODE)),
+			'PHP Allow URL Fopen' => array('value' => ini_get('allow_url_fopen') ? __('Yes', 'woo-currency') : __('No', 'woo-currency')),
 			'PHP Memory Limit' => array('value' => ini_get('memory_limit')),
 			'PHP Max Post Size' => array('value' => ini_get('post_max_size')),
 			'PHP Max Upload Filesize' => array('value' => ini_get('upload_max_filesize')),
 			'PHP Max Script Execute Time' => array('value' => ini_get('max_execution_time')),
-			'PHP EXIF Support' => array('value' => extension_loaded('exif') ? __('Yes', WCU_LANG_CODE) : __('No', WCU_LANG_CODE)),
+			'PHP EXIF Support' => array('value' => extension_loaded('exif') ? __('Yes', 'woo-currency') : __('No', 'woo-currency')),
 			'PHP EXIF Version' => array('value' => phpversion('exif')),
-			'PHP XML Support' => array('value' => extension_loaded('libxml') ? __('Yes', WCU_LANG_CODE) : __('No', WCU_LANG_CODE), 'error' => !extension_loaded('libxml')),
-			'PHP CURL Support' => array('value' => extension_loaded('curl') ? __('Yes', WCU_LANG_CODE) : __('No', WCU_LANG_CODE), 'error' => !extension_loaded('curl')),
+			'PHP XML Support' => array('value' => extension_loaded('libxml') ? __('Yes', 'woo-currency') : __('No', 'woo-currency'), 'error' => !extension_loaded('libxml')),
+			'PHP CURL Support' => array('value' => extension_loaded('curl') ? __('Yes', 'woo-currency') : __('No', 'woo-currency'), 'error' => !extension_loaded('curl')),
 		);
-	}
-
-	/**
-	 * showWelcomePage.
-	 */
-	public function showWelcomePage() {
-		frameWcu::_()->getModule('templates')->loadJqueryUi();
-		frameWcu::_()->addStyle('sup.bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
-		frameWcu::_()->addStyle('admin.welcome', $this->getModule()->getModPath(). 'css/admin.welcome.css');
-		$goToAdminLink = frameWcu::_()->getModule('options')->getTabUrl('currency');
-		$skipTutorLink = uriWcu::_(array('baseUrl' => $goToAdminLink, 'skip_tutorial' => 1));
-		$this->assign('skipTutorLink', $this->_makeWelcomeLink( $skipTutorLink ));
-		$this->assign('faqList', $this->getMostFaqList());
-		$this->assign('mainLink', $this->getModule()->getMainLink());
-		parent::display('welcomePage');
 	}
 
 	/**

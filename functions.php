@@ -2,6 +2,8 @@
 /**
  * WBW Currency Switcher for WooCommerce - Functions
  *
+ * @version 2.4.0
+ *
  * @author  woobewoo
  */
 
@@ -35,6 +37,8 @@ if(!function_exists('dateToTimestampWcu')) {
 /**
  * Generate random string name.
  *
+ * @version 2.4.0
+ *
  * @param int $lenFrom min len
  * @param int $lenTo max len
  * @return string random string with length from $lenFrom to $lenTo
@@ -42,10 +46,10 @@ if(!function_exists('dateToTimestampWcu')) {
 if(!function_exists('getRandName')) {
 	function getRandName($lenFrom = 6, $lenTo = 9) {
 		$res = '';
-		$len = mt_rand($lenFrom, $lenTo);
+		$len = wp_rand($lenFrom, $lenTo);
 		if($len) {
 			for($i = 0; $i < $len; $i++) {
-				$res .= chr(mt_rand(97, 122)); /*rand symbol from a to z*/
+				$res .= chr(wp_rand(97, 122)); /*rand symbol from a to z*/
 			}
 		}
 		return $res;
@@ -145,14 +149,16 @@ if(!function_exists('toeCreateObjWcu')) {
 /**
  * Redirect user to specified location. Be advised that it should redirect even if headers already sent.
  *
+ * @version 2.4.0
+ *
  * @param string $url where page must be redirected
  */
-if(!function_exists('redirectWcu')) {
-	function redirectWcu($url) {
-		if(headers_sent()) {
-			echo '<script type="text/javascript"> document.location.href = "'. $url. '"; </script>';
+if ( ! function_exists( 'redirectWcu' ) ) {
+	function redirectWcu( $url ) {
+		if ( headers_sent() ) {
+			echo '<script type="text/javascript"> document.location.href = "' . esc_url_raw( $url ) . '"; </script>';
 		} else {
-			header('Location: '. $url);
+			header( 'Location: ' . $url );
 		}
 		exit();
 	}
@@ -234,6 +240,8 @@ if(!function_exists('json_encode_utf_normal')) {
 /**
  * Prepares the params values to store into db.
  *
+ * @version 2.4.0
+ *
  * @param array $d $_POST array
  * @return array
  */
@@ -260,7 +268,7 @@ if(!function_exists('prepareParamsWcu')) {
 		}
 		if(isset($d['code'])) {
 			if ($d['code'] == '') {
-				$d['code'] = prepareFieldCodeWcu($d['label']).'_'.rand(0, 9999999);
+				$d['code'] = prepareFieldCodeWcu($d['label']).'_'.wp_rand(0, 9999999);
 			}
 		}
 		return $d;
@@ -269,6 +277,8 @@ if(!function_exists('prepareParamsWcu')) {
 
 /**
  * prepareFieldCodeWcu.
+ *
+ * @version 2.4.0
  */
 if(!function_exists('prepareFieldCodeWcu')) {
 	function prepareFieldCodeWcu($string) {
@@ -279,7 +289,7 @@ if(!function_exists('prepareFieldCodeWcu')) {
 		$code = substr($string, 0, 8);
 		$code = strtolower($code);
 		if ($code == '') {
-			$code = 'field_'.date('dhis');
+			$code = 'field_'.wp_date('dhis');
 		}
 		return $code;
 	}

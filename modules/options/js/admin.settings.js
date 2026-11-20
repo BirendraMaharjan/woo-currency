@@ -1,5 +1,11 @@
+/**
+ * WBW Currency Switcher for WooCommerce - Admin Setting JS
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
 jQuery(document).ready(function(){
-	jQuery('.woobewoo-plugin select').chosen(g_wcuChosenOptions);	
 	jQuery('#wcuSettingsSaveBtn').click(function(){
 		jQuery('#wcuSettingsForm').submit();
 		return false;

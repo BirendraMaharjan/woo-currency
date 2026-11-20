@@ -1,8 +1,19 @@
 <?php
 /**
+ * WBW Currency Switcher for WooCommerce - filegeneratorWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+
+/**
  * Class to generate fiels and output them in attachment by http (https) protocol
  */
-class filegeneratorWcu {
+class filegeneratorWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     static protected $_instances = array();
     protected $_filename = '';
     protected $_data = '';
@@ -34,7 +45,7 @@ class filegeneratorWcu {
                 $this->_getDefaultHeader();
                 break;
         }
-        echo $this->_data;
+        echo $this->_data; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- This is a plain-text/CSV file download, not HTML output.
         exit();
     }
     protected function _getTxtHeader() {

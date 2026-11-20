@@ -2,7 +2,7 @@
 /**
  * WBW Currency Switcher for WooCommerce - frameWcu Class
  *
- * @version 2.3.1
+ * @version 2.4.0
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -140,16 +140,13 @@ class frameWcu {
 		register_activation_hook(  WCU_DIR. DS. WCU_MAIN_FILE, array('utilsWcu', 'activatePlugin')  ); //See classes/install.php file
 		register_uninstall_hook(WCU_DIR. DS. WCU_MAIN_FILE, array('utilsWcu', 'deletePlugin'));
 		register_deactivation_hook(WCU_DIR. DS. WCU_MAIN_FILE, array( 'utilsWcu', 'deactivatePlugin' ) );
-
-		add_action('init', array($this, 'connectLang'));
-	}
-
-	public function connectLang() {
-		load_plugin_textdomain(WCU_LANG_CODE, false, WCU_PLUG_NAME. '/languages/');
 	}
 
 	/**
-	 * Check permissions for action in controller by $code and made corresponding action
+	 * Check permissions for action in controller by $code and made corresponding action.
+	 *
+	 * @version 2.4.0
+	 *
 	 * @param string $code Code of controller that need to be checked
 	 * @param string $action Action that need to be checked
 	 * @return bool true if ok, else - should exit from application
@@ -158,14 +155,14 @@ class frameWcu {
 		if($this->havePermissions($code, $action))
 			return true;
 		else {
-			exit(_e('You have no permissions to view this page', WCU_LANG_CODE));
+			wp_die( esc_html__( 'You have no permissions to view this page', 'woo-currency' ) );
 		}
 	}
 
 	/**
 	 * Check permissions for action in controller by $code
 	 *
-	 * @version 2.3.1
+	 * @version 2.4.0
 	 *
 	 * @param string $code Code of controller that need to be checked
 	 * @param string $action Action that need to be checked
@@ -225,7 +222,7 @@ class frameWcu {
 				if(!empty($noncedMethods)) {
 					$noncedMethods = array_map('strtolower', $noncedMethods);
 					if(in_array($action, $noncedMethods)) {
-						$nonce = isset($_REQUEST['_wpnonce']) ? $_REQUEST['_wpnonce'] : reqCfs::getVar('_wpnonce');
+						$nonce = isset( $_REQUEST['_wpnonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ) : reqCfs::getVar( '_wpnonce' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 						if(!wp_verify_nonce( $nonce, $action )) {
 							die();
 						}

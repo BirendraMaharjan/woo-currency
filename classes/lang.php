@@ -1,4 +1,14 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - langWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class langWcu {
 	static private $_codeStorage = array();
 	static private $_data = array();
@@ -63,9 +73,11 @@ class langWcu {
 	/**
 	 * echo result of _($name) method
 	 * @see self::_($name)
+	 *
+	 * @version 2.4.0
 	 */
-	static public function _e($name) {
-		echo self::_($name);
+	static public function _e( $name ) {
+		echo wp_kses_post( self::_( $name ) );
 	}
 	static public function getData() {
 		return self::$_data;

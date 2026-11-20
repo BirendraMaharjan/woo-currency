@@ -1,7 +1,254 @@
 <?php
+/**
+ * WBW Currency Switcher for WooCommerce - htmlWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
 class htmlWcu {
     static public $categoriesOptions = array();
     static public $productsOptions = array();
+
+	/**
+	 * getAllowedHtmlTags.
+	 *
+	 * Returns a comprehensive wp_kses() allowed-tags array for filter widget
+	 * output. Extends the 'post' context with form elements and data-* / aria-*
+	 * attributes that the filter widget emits.
+	 *
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 *
+	 * @return array
+	 */
+	public static function get_allowed_html_tags() {
+		$allowed = wp_kses_allowed_html( 'post' );
+
+		$common = array(
+			'id'       => true,
+			'class'    => true,
+			'style'    => true,
+			'title'    => true,
+			'role'     => true,
+			'tabindex' => true,
+			'data-*'   => true,
+			'aria-*'   => true,
+		);
+
+		// Extend elements that 'post' already defines.
+		foreach (
+			array(
+				'div',
+				'span',
+				'ul',
+				'ol',
+				'li',
+				'p',
+				'a',
+				'img',
+				'section',
+				'nav',
+				'header',
+				'footer',
+			) as $tag
+		) {
+			$allowed[ $tag ] = isset( $allowed[ $tag ] ) ?
+				array_merge( $allowed[ $tag ], $common ) :
+				$common;
+		}
+		$allowed['a']   = array_merge(
+			$allowed['a'] ??
+			array(),
+			$common,
+			array(
+				'href'   => true,
+				'target' => true,
+				'rel'    => true,
+			)
+		);
+		$allowed['img'] = array_merge(
+			$allowed['img'] ??
+			array(),
+			$common,
+			array(
+				'src'    => true,
+				'alt'    => true,
+				'width'  => true,
+				'height' => true,
+			)
+		);
+
+		// Form elements (stripped by wp_kses_post).
+		$allowed['form']     = array_merge(
+			$common,
+			array(
+				'action'     => true,
+				'method'     => true,
+				'enctype'    => true,
+				'name'       => true,
+				'novalidate' => true,
+			)
+		);
+		$allowed['input']    = array_merge(
+			$common,
+			array(
+				'type'         => true,
+				'name'         => true,
+				'value'        => true,
+				'checked'      => true,
+				'disabled'     => true,
+				'readonly'     => true,
+				'placeholder'  => true,
+				'min'          => true,
+				'max'          => true,
+				'step'         => true,
+				'autocomplete' => true,
+				'required'     => true,
+				'size'         => true,
+				'maxlength'    => true,
+			)
+		);
+		$allowed['select']   = array_merge(
+			$common,
+			array(
+				'name'     => true,
+				'multiple' => true,
+				'size'     => true,
+				'disabled' => true,
+				'required' => true,
+			)
+		);
+		$allowed['option']   = array_merge(
+			$common,
+			array(
+				'value'    => true,
+				'selected' => true,
+				'disabled' => true,
+			)
+		);
+		$allowed['optgroup'] = array_merge(
+			$common,
+			array(
+				'label'    => true,
+				'disabled' => true,
+			)
+		);
+		$allowed['button']   = array_merge(
+			$common,
+			array(
+				'type'     => true,
+				'name'     => true,
+				'value'    => true,
+				'disabled' => true,
+			)
+		);
+		$allowed['label']    = array_merge( $common, array( 'for' => true ) );
+		$allowed['textarea'] = array_merge(
+			$common,
+			array(
+				'name'        => true,
+				'rows'        => true,
+				'cols'        => true,
+				'disabled'    => true,
+				'readonly'    => true,
+				'placeholder' => true,
+				'required'    => true,
+				'maxlength'   => true,
+			)
+		);
+
+		// SVG subset (used for icons inside filter items).
+		$allowed['svg']      = array_merge(
+			$common,
+			array(
+				'xmlns'   => true,
+				'viewbox' => true,
+				'width'   => true,
+				'height'  => true,
+				'fill'    => true,
+				'stroke'  => true,
+			)
+		);
+		$allowed['symbol']   = array_merge(
+			$common,
+			array(
+				'id'      => true,
+				'viewbox' => true,
+				'width'   => true,
+				'height'  => true,
+				'fill'    => true,
+				'stroke'  => true,
+			)
+		);
+		$allowed['path']     = array(
+			'd'            => true,
+			'fill'         => true,
+			'stroke'       => true,
+			'stroke-width' => true,
+		);
+		$allowed['circle']   = array(
+			'cx'   => true,
+			'cy'   => true,
+			'r'    => true,
+			'fill' => true,
+		);
+		$allowed['polyline'] = array(
+			'points' => true,
+			'fill'   => true,
+			'stroke' => true,
+		);
+		$allowed['line']     = array(
+			'x1'     => true,
+			'y1'     => true,
+			'x2'     => true,
+			'y2'     => true,
+			'stroke' => true,
+		);
+		$allowed['use']      = array(
+			'xlink:href' => true,
+			'href'       => true,
+		);
+
+		// Inline CSS and stylesheet links injected by the filter widget.
+		$allowed['style'] = array(
+			'type'  => true,
+			'media' => true,
+			'id'    => true,
+		);
+		$allowed['link']  = array(
+			'rel'   => true,
+			'href'  => true,
+			'type'  => true,
+			'media' => true,
+			'id'    => true,
+		);
+
+		return $allowed;
+	}
+
+	/**
+	 * Returns HTML sanitized with the plugin's allowed HTML tags.
+	 *
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 */
+	public static function escaped_html( $html ) {
+		return wp_kses( $html, self::get_allowed_html_tags() );
+	}
+
+	/**
+	 * Outputs HTML sanitized with the plugin's allowed HTML tags.
+	 *
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 */
+	public static function echo_escaped_html( $html ) {
+		echo wp_kses( $html, self::get_allowed_html_tags() );
+	}
     static public function block($name, $params= array('attrs' => '', 'value' => '')){
         $output = '<p class="toe_'. self::nameToClassId($name). '">'.$params['value'].'</p>';
         //$output .= self::hidden($name, $params);
@@ -106,6 +353,12 @@ class htmlWcu {
         $params['type'] = 'hidden';
         return self::input($name, $params);
     }
+
+	/**
+	 * checkboxHiddenVal.
+	 *
+	 * @version 2.4.0
+	 */
     static public function checkboxHiddenVal($name, $params = array('attrs' => '', 'value' => '', 'checked' => '')) {
 		$params['attrs'] = isset($params['attrs']) ? $params['attrs'] : '';
 		$checkId = self::nameToClassId($name, $params);
@@ -118,18 +371,12 @@ class htmlWcu {
 			$paramsCheck['attrs'] .= ' id="'. $checkId. '"';
 		}
 		$paramsCheck['attrs'] .= ' data-hideid="'. $hideId. '"';
+	    $paramsCheck['attrs'] .= ' class="woobewoo-cs-checkbox-hidden-val"';
 		$paramsHidden['attrs'] = ' id="'. $hideId. '"';
 		$paramsCheck['value'] = isset($paramsCheck['value']) ? $paramsCheck['value'] : '';
 		$paramsCheck['checked'] = $paramsCheck['value'] ? '1' : '0';
 		$out = self::checkbox(self::nameToClassId($name), $paramsCheck);
 		$out .= self::hidden($name, $paramsHidden);
-		$out .= '<script type="text/javascript">//<!--
-			jQuery(function(){
-				jQuery("#'. $checkId. '").change(function(){
-					jQuery("#'. $hideId. '").val( (jQuery(this).prop("checked") ? 1 : 0) );
-				});
-			});
-			//--></script>';
 		return $out;
 	}
     static public function checkbox($name, $params = array('attrs' => '', 'value' => '', 'checked' => '')) {
@@ -188,6 +435,12 @@ class htmlWcu {
             // -->
         </script>';
 	}
+
+	/**
+	 * datepicker.
+	 *
+	 * @version 2.4.0
+	 */
     static public function datepicker($name, $params = array('attrs' => '', 'value' => '')) {
         if(isset($params['id']) && !empty($params['id']))
             $id = $params['id'];
@@ -196,7 +449,7 @@ class htmlWcu {
 		$params = array_merge(array(
 			'dateFormat' => WCU_DATE_FORMAT_JS,
 			'changeYear' => true,
-			'yearRange' => '1905:'. (date('Y')+5),
+			'yearRange' => '1905:' . ( wp_date( 'Y' ) + 5 ),
 		), $params);
         return self::input($name, array(
                 'attrs' => 'id="'. $id. '" '. (isset($params['attrs']) ? $params['attrs'] : ''),
@@ -256,6 +509,12 @@ class htmlWcu {
 
         return $out;
     }
+
+	/**
+	 * selectlist.
+	 *
+	 * @version 2.4.0
+	 */
     static public function selectlist($name, $params = array('attrs'=>'', 'size'=> 5, 'options' => array(), 'value' => '')) {
         $out = '';
         if(!strpos($name, '[]'))
@@ -263,9 +522,12 @@ class htmlWcu {
         if (!isset($params['size']) || !is_numeric($params['size']) || $params['size'] == '') {
             $params['size'] = 5;
         }
+	    if ( ! isset( $params['placeholder'] ) ) {
+		    $params['placeholder'] = __( 'Select an option', 'woo-currency' );
+	    }
 		$params['attrs'] = isset($params['attrs']) ? $params['attrs'] : '';
 		$params['attrs'] .= self::_dataToAttrs($params);
-        $out .= '<select multiple="multiple" size="'.$params['size'].'" name="'.$name.'" '.$params['attrs'].'>';
+        $out .= '<select multiple="multiple" size="'.$params['size'].'" name="'.$name.'" '.$params['attrs'].' data-placeholder="'.$params['placeholder'].'">';
 		$params['value'] = isset($params['value']) ? $params['value'] : array();
         if(!empty($params['options'])) {
             foreach($params['options'] as $k => $v) {
@@ -286,6 +548,7 @@ class htmlWcu {
         $id = isset($params['id']) ? $params['id'] : '';
 		$params['attrs'] = isset($params['attrs']) ? $params['attrs'] : '';
 		$params['attrs'] .= self::_dataToAttrs($params);
+		$params['attrs'] .= ' class="woobewoo-cs-select-sortable"';
         $out .= '<select multiple="multiple" size="'.$params['size'].'" id="'.$id.'" name="'.$name.'" '.$params['attrs'].'>';
 		$params['value'] = isset($params['value']) ? $params['value'] : array();
         if(!empty($params['options'])) {
@@ -295,24 +558,35 @@ class htmlWcu {
             }
         }
         $out .= '</select>';
-        $out .= '<script type="text/javascript">
+       /* $out .= '<script type="text/javascript">
                 jQuery(document).ready(function(){
                     wcuSelectMultipleSortableFunction("'.$id.'");
                 });
-                </script>';
+                </script>';*/
         return $out;
     }
 	static public function file($name, $params = array()) {
 		$params['type'] = 'file';
 		return self::input($name, $params);
 	}
+
+	/**
+	 * ajaxfile.
+	 *
+	 * @version 2.4.0
+	 */
     static public function ajaxfile($name, $params = array('url' => '', 'value' => '', 'fid' => '', 'buttonName' => '', 'class' => '')) {
 		frameWcu::_()->addScript('ajaxupload', WCU_JS_PATH. 'ajaxupload.js');
         $out = '';
 		$params['class'] = isset($params['class']) ? $params['class'] : '';
         if(strpos($params['url'], 'pl='. WCU_CODE) === false)
 			$params['url'] = uriWcu::_(array('baseUrl' => $params['url'], 'pl' => WCU_CODE));
-        $out .= self::button(array('value' => __( empty($params['buttonName']) ? 'Upload' :  $params['buttonName'] ), 'attrs' => 'id="toeUploadbut_'.$name.'" class="button button-large '.$params['class'].'"'));
+	    $out .= self::button(
+		    array(
+			    'value' => empty( $params['buttonName'] ? __( 'Upload', 'woo-currency' ) : $params['buttonName'] ),
+			    'attrs' => 'id="toeUploadbut_' . $name . '" class="button button-large ' . $params['class'] . '"'
+		    )
+	    );
         $display = (empty($params['value']) ? 'style="display: none;"' : '');
         if(isset($params['preview']) && $params['preview'])
             $out .= self::img($params['value'], 0, array('attrs' => 'id="prev_'.$name.'" '.$display.' class="previewpicture"'));
@@ -498,6 +772,12 @@ class htmlWcu {
         $params['attrs'] .= ' type="country"';
         return self::selectlist($name, $params);
     }
+
+	/**
+	 * textFieldsDynamicTable.
+	 *
+	 * @version 2.4.0
+	 */
     static public function textFieldsDynamicTable($name, $params = array('value' => '', 'attrs' => '', 'options' => array())) {
         $res = '';
         if(empty($params['options']))
@@ -537,7 +817,7 @@ class htmlWcu {
                     $paramsForText = array(
                         'value' => $value,
                     );
-                    $res .= __($p['label']). htmlWcu::text($name. '['. $i. ']['. $key. ']', $paramsForText);
+	                $res .= $p['label'] . htmlWcu::text( $name . '[' . $i . '][' . $key . ']', $paramsForText );
                 }
                 $res .= $remove. '</div>';
                 $i++;
@@ -631,10 +911,16 @@ class htmlWcu {
 	static public function capcha() {
 		return recapchaWcu::_()->getHtml();
 	}
+
+	/**
+	 * textIncDec.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function textIncDec($name, $params = array('value' => '', 'attrs' => '', 'options' => array(), 'onclick' => '', 'id' => '')) {
 		if(!isset($params['attrs']))
 			$params['attrs'] = '';
-		$textId = (isset($params['id']) && !empty($params['id'])) ? $params['id'] : 'toeTextIncDec_'. mt_rand(9, 9999);
+		$textId = (isset($params['id']) && !empty($params['id'])) ? $params['id'] : 'toeTextIncDec_'. wp_rand(9, 9999);
 		$params['attrs'] .= ' id="'. $textId. '"';
 		$textField = self::text($name, $params);
 		$onClickInc = 'toeTextIncDec(\''. $textId. '\', 1); return false;';
@@ -647,6 +933,12 @@ class htmlWcu {
 				. '<div class="toeIncDecButton toeDecButton '. $textId. '" onclick="'. $onClickDec. '">-</div></div>';
 		return $textField;
 	}
+
+	/**
+	 * colorpicker.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function colorpicker($name, $params = array('value' => '')) {
 		$params['value'] = isset($params['value']) ? $params['value'] : '';
 		$params['attrs'] = isset($params['attrs']) ? $params['attrs'] : '';
@@ -655,14 +947,14 @@ class htmlWcu {
 		$nameToClass = str_replace('-', '_', self::nameToClassId($name));
 		$textId = self::nameToClassId($name, $params);
 		if(strpos($params['attrs'], 'id="') === false) {
-			$textId .= '_'. mt_rand(9, 9999);
+			$textId .= '_'. wp_rand(9, 9999);
 			$params['attrs'] .= 'id="'. $textId. '"';
 		}
-		//$pickerId = $textId. '_picker';
+
 		$params['attrs'] .= ' data-default-color="'. $params['value']. '"';
+		$params['attrs'] .= ' class="'. $nameToClass . ' woobewoo-cs-color-picker"';
 
         $out = '';
-
         if (isset($params['label_before'])) {
             $out .= '<div '.$params['label_before_attrs'].'>'.$params['label_before'].'</div>';
         }
@@ -673,19 +965,6 @@ class htmlWcu {
             $out .= '<div '.$params['label_after_attrs'].'>'.$params['label_after'].'</div>';
         }
 
-		//$out .= '<div style="position: absolute; z-index: 1;" id="'. $pickerId. '"></div>';
-		$out .= '<script type="text/javascript">//<!--
-			jQuery(function(){
-				jQuery("#'. $textId. '").wpColorPicker({
-					change: function(event, ui) {
-						// Find change functiona for this element, if such exist - triger it
-						if(window["wpColorPicker_'. $nameToClass. '_change"]) {
-							window["wpColorPicker_'. $nameToClass. '_change"](event, ui);
-						}
-					}
-				});
-			});
-			//--></script>';
 		return $out;
 	}
 	static public function fontsList($name, $params = array('value' => '')) {
@@ -703,23 +982,28 @@ class htmlWcu {
 		return self::selectbox($name, $params);
 	}
 
+	/**
+	 * slideInput.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function slideInput($name, $params = array('attrs' => '', 'checked' => false, 'id' => '')) {
 		$params = !isset($params) || empty($params) ? array() : $params;
 		if(!isset($params['id'])) {
 			$params['id'] = self::nameToClassId($name, $params);
 			if(strpos($params['attrs'], 'id="') === false) {
-				$params['id'] .= '_'. mt_rand(1, 99999);
+				$params['id'] .= '_'. wp_rand(1, 99999);
 			}
 		}
 		$params['checked'] = isset($params['checked']) ? (int) $params['checked'] : 0;
 		$params['attrs'] = isset($params['attrs']) && !empty($params['attrs']) ? $params['attrs'] : '';
 		$params['attrs'] .= ' id="'. $params['id']. '"';
 
-		return '<a class="toeSlideShellWcu" href="#"'. $params['attrs']. '>
+		return '<a class="toeSlideShellWcu" href="#"' . $params['attrs'] . '>
 			<span class="toeSlideButtWcu"></span>
-			<span class="toeSlideOnWcu">'. __('ON'). '</span>
-			<span class="toeSlideOffWcu">'. __('OFF'). '</span>
-			<input type="hidden" name="'. $name. '" />
+			<span class="toeSlideOnWcu">' . __( 'ON', 'woo-currency') . '</span>
+			<span class="toeSlideOffWcu">' . __( 'OFF', 'woo-currency' ) . '</span>
+			<input type="hidden" name="' . $name . '" />
 		</a>
 		<script type="text/javascript">
 		// <!--
@@ -729,20 +1013,30 @@ class htmlWcu {
 		// -->
 		</script>';
 	}
+
+	/**
+	 * galleryBtn.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function galleryBtn($name, $params = array()) {
 		$galleryType = isset($params['galleryType']) ? $params['galleryType'] : 'all';
 		$buttonId = self::nameToClassId($name, $params);
 		$params['value'] = isset($params['value']) ? $params['value'] : '';
 		$params['attrs'] = isset($params['attrs']) ? $params['attrs'] : '';
 		if(strpos($params['attrs'], 'id="') === false) {
-			$buttonId .= '_'. mt_rand(1, 99999);
+			$buttonId .= '_'. wp_rand(1, 99999);
 			$params['attrs'] .= ' id="'. $buttonId. '"';
 		}
 		$inputId = $buttonId. '_input';
 		$out = self::hidden($name, array('value' => $params['value'], 'attrs' => 'id="'. $inputId. '"'));
 		$onChange = isset($params['onChange']) ? $params['onChange'] : '';
 		$buttonParams = $params;
-		$buttonParams['value'] = isset($params['btnVal']) ? $params['btnVal'] : sprintf(__('Select %s', WCU_LANG_CODE), strFirstUp($galleryType));
+		$buttonParams['value'] = $params['btnVal'] ?? sprintf(
+			/* Translators: %s: Gallery Type. */
+			__( 'Select %s', 'woo-currency' ),
+			strFirstUp( $galleryType )
+		);
 		$out .= self::button($buttonParams);
 		$out .= '<script type="text/javascript">
 		// <!--

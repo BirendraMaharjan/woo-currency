@@ -1,5 +1,15 @@
 <?php
-class csvgeneratorWcu {
+/**
+ * WBW Currency Switcher for WooCommerce - csvgeneratorWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+class csvgeneratorWcu { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound
     protected $_filename = '';
     protected $_delimiter = ';';
     protected $_enclosure = "\n";

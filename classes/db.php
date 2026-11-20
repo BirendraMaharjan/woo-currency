@@ -1,5 +1,16 @@
 <?php
 /**
+ * WBW Currency Switcher for WooCommerce - dbWcu Class
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+
+/**
  * Shell - class to work with $wpdb global object
  */
 class dbWcu {
@@ -11,37 +22,55 @@ class dbWcu {
      * @return mixed data from DB
      */
     static public $query = '';
-    static public function get($query, $get = 'all', $outputType = ARRAY_A) {
+
+	/**
+	 * get.
+	 * @version 2.4.0
+	 */
+    static public function get($query, $get = 'all', $outputType = ARRAY_A, $args = array() ) {
         global $wpdb;
         $get = strtolower($get);
-        $res = NULL;
         $query = self::prepareQuery($query);
         self::$query = $query;
-        switch($get) {
+
+	    $query = self::prepareQuery( $query );
+	    if ( ! empty( $args ) ) {
+		    $query = $wpdb->prepare( $query, $args ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- This adapter accepts query templates and passes caller values separately through $args.
+	    }
+
+	    switch ( $get ) {
             case 'one':
-                $res = $wpdb->get_var($query);
+                $res = $wpdb->get_var($query); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- This legacy SQL adapter accepts only internal SQL; callers parameterize values or construct them through the table schema.
                 break;
             case 'row':
-                $res = $wpdb->get_row($query, $outputType);
+                $res = $wpdb->get_row($query, $outputType); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- This legacy SQL adapter accepts only internal SQL; callers parameterize values or construct them through the table schema.
                 break;
             case 'col':
-                $res = $wpdb->get_col($query);
+                $res = $wpdb->get_col($query); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- This legacy SQL adapter accepts only internal SQL; callers parameterize values or construct them through the table schema.
                 break;
             case 'all':
             default:
-                $res = $wpdb->get_results($query, $outputType);
+                $res = $wpdb->get_results($query, $outputType); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- This legacy SQL adapter accepts only internal SQL; callers parameterize values or construct them through the table schema.
                 break;
         }
         return $res;
     }
     /**
      * Execute one query
-     * @return query results
+     *
+     * @version 2.4.0
+     *
+     * @return false results
      */
-    static public function query($query) {
-        global $wpdb;
-        return ($wpdb->query( self::prepareQuery($query) ) === false ? false : true);
-    }
+	static public function query( $query, $args = array() ) {
+		global $wpdb;
+		$query = self::prepareQuery( $query );
+		if ( ! empty( $args ) ) {
+			$query = $wpdb->prepare( $query, $args ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- This adapter accepts query templates and passes caller values separately through $args.
+		}
+
+		return ( $wpdb->query( $query ) === false ? false : true ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, PluginCheck.Security.DirectDB.UnescapedDBParameter -- DDL and table-layer statements use internal schema identifiers; dynamic values must be passed in $args.
+	}
     /**
      * Get last insert ID
      * @return int last ID
@@ -80,13 +109,19 @@ class dbWcu {
         global $wpdb;        
         return $wpdb->insert_id;
     }
+
+	/**
+	 * timeToDate.
+	 *
+	 * @version 2.4.0
+	 */
     static public function timeToDate($timestamp = 0) {
         if($timestamp) {
             if(!is_numeric($timestamp))
                 $timestamp = dateToTimestampWcu($timestamp);
-            return date('Y-m-d', $timestamp);
+            return gmdate('Y-m-d', $timestamp);
         } else {
-            return date('Y-m-d');
+            return gmdate('Y-m-d');
         }
     }
     static public function dateToTime($date) {

@@ -92,8 +92,8 @@ class currencyWcu extends moduleWcu {
 		add_action('woocommerce_cart_calculate_fees', array($this, 'updateFees'), 9999);
 		add_filter('woocommerce_coupon_get_amount', array($this, 'updateCouponAmount'), 9999, 2);
 
-		if (!empty($_GET['wc-ajax']) && ($_GET['wc-ajax'] == 'ppc-create-order')) {
-			add_filter('woocommerce_cart_get_total', array($this, 'getCurrencyPriceCart'), 9999);
+		if ( ! empty( $_GET['wc-ajax'] ) && ( 'ppc-create-order' == $_GET['wc-ajax'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			add_filter( 'woocommerce_cart_get_total', array( $this, 'getCurrencyPriceCart' ), 9999 );
 		}
 
 		add_filter('woocommerce_price_filter_widget_min_amount', array($this, 'getCurrencyPriceMinWidget'), 9999);
@@ -104,8 +104,8 @@ class currencyWcu extends moduleWcu {
 		add_action('woocommerce_before_checkout_process', array($this, 'beforeOrderTotals'), 9999);
 		add_action('woocommerce_checkout_order_processed', array($this, 'afterOrderTotals'), 9999);
 
-		if(isset($_GET['startcheckout'])) {
-			add_filter('woocommerce_calculated_total', array($this, 'getCurrencyPrice'), 9999);
+		if ( isset( $_GET['startcheckout'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			add_filter( 'woocommerce_calculated_total', array( $this, 'getCurrencyPrice' ), 9999 );
 		}
 		if($this->convertByCheckout) {
 			add_filter('woocommerce_paypal_express_checkout_get_details', array($this, 'recalcPaypalExpressAmounts'), 9999);
@@ -282,17 +282,17 @@ class currencyWcu extends moduleWcu {
 	/**
 	 * isBlocksAPI.
 	 *
-	 * @version 2.2.8
+	 * @version 2.4.0
 	 *
 	 * @return bool
 	 */
 	public function isBlocksAPI() {
-		$uri = empty($_SERVER['REQUEST_URI']) ? '' : sanitize_text_field($_SERVER['REQUEST_URI']);
+		$uri = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
 		return strpos( $uri, 'wp-json/wc/store/') !== false || strpos( $uri, '/checkout?__experimental_calc_totals=true') !== false;
 	}
 
 	public function getCurrencyPriceCart($price) {
-		if (!empty($_GET['wc-ajax']) && ($_GET['wc-ajax'] == 'ppc-create-order')) {
+		if (!empty($_GET['wc-ajax']) && ($_GET['wc-ajax'] == 'ppc-create-order')) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$payload = file_get_contents( 'php://input' );
 			if ($payload) {
 				$payloadJson   = json_decode( $payload, true );
@@ -620,7 +620,7 @@ class currencyWcu extends moduleWcu {
 		if (!class_exists('WooCommerce')) {
 			return;
 		}
-		if (!$this->convertByCheckout && (is_checkout() || is_checkout_pay_page() || isset($_GET['startcheckout']))) {
+		if (!$this->convertByCheckout && (is_checkout() || is_checkout_pay_page() || isset($_GET['startcheckout']))) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$this->resetCurrentCurrency(true);
 		}
 		if (is_order_received_page()) {
@@ -672,7 +672,7 @@ class currencyWcu extends moduleWcu {
 		if (
 			$this->convertByCheckout ||
 			wp_doing_ajax() ||
-			isset($_GET['wc-ajax']) ||
+			isset($_GET['wc-ajax']) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			(
 				!is_page() &&
 				!is_archive() &&
@@ -706,28 +706,38 @@ class currencyWcu extends moduleWcu {
 		}
 	}
 
+	/**
+	 * initCurrency.
+	 *
+	 * @version 2.4.0
+	 */
 	public function initCurrency() {
 		$currencies = $this->getCurrencies();
 
-		foreach ($currencies as $key => $currency) {
-			if(!empty($currency['etalon'])) {
+		foreach ( $currencies as $key => $currency ) {
+			if ( ! empty( $currency['etalon'] ) ) {
 				$this->defaultCurrency = $key;
 				break;
 			}
 		}
 		$this->currentCurrency = $this->defaultCurrency;
 
-		if(!is_admin() || (defined('DOING_AJAX') && DOING_AJAX)) {
-			if(isset($_COOKIE[$this->currencyCookieName])) {
-				$this->setCurrentCurrency($_COOKIE[$this->currencyCookieName]);
+		if ( ! is_admin() || ( defined( 'DOING_AJAX' ) && DOING_AJAX ) ) {
+			if ( isset( $_COOKIE[ $this->currencyCookieName ] ) ) {
+				$this->setCurrentCurrency( sanitize_text_field( wp_unslash( $_COOKIE[ $this->currencyCookieName ] ) ) );
 			}
-			if(!empty($_GET['currency']) && array_key_exists(strtoupper($_GET['currency']), $currencies)) {
-				$this->setCurrentCurrency(strtoupper(utilsWcu::escape($_GET['currency'])));
-				add_action('wp_loaded', array($this, 'recalcCart'));
+
+			$currency = isset( $_GET['currency'] ) ? strtoupper( sanitize_text_field( wp_unslash( $_GET['currency'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if (
+				'' !== $currency &&
+				array_key_exists( $currency, $currencies )
+			) {
+				$this->setCurrentCurrency( $currency );
+				add_action( 'wp_loaded', array( $this, 'recalcCart' ) );
 			}
 		}
 
-		$this->priceNumDecimals = get_option('woocommerce_price_num_decimals', $this->priceNumDecimals);
+		$this->priceNumDecimals = get_option( 'woocommerce_price_num_decimals', $this->priceNumDecimals );
 	}
 
 	public function recalcCart() {
@@ -736,13 +746,19 @@ class currencyWcu extends moduleWcu {
 		}
 	}
 
+	/**
+	 * disableWcuByCurrentUrl.
+	 *
+	 * @version 2.4.0
+	 */
 	public function disableWcuByCurrentUrl() {
 		$options = $this->getModel()->getOptions();
 		$links = !empty($options['options']['disable_uris']) ? $options['options']['disable_uris'] : '';
 		if (!empty($links)) {
 			$links = preg_split('/[\n\r]+/', $links);
 
-			$curLink = explode('/?', $_SERVER['REQUEST_URI']);
+			$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+			$curLink = explode('/?', $request_uri);
 			$curLink = $curLink[0];
 
 			if (substr($curLink,-1) !== '/') {
@@ -767,31 +783,58 @@ class currencyWcu extends moduleWcu {
 	/**
 	 * getCurrentCurrency.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.0
 	 */
 	public function getCurrentCurrency() {
-		if(!$this->convertByCheckout && ($this->wcuIsWcfmPage() || isset($_GET['startcheckout']) || (isset($_GET['wc-ajax']) && strpos($_GET['wc-ajax'], 'checkout') !== false))) {
+		$wc_ajax = isset( $_GET['wc-ajax'] ) ? sanitize_key( wp_unslash( $_GET['wc-ajax'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		if (
+			! $this->convertByCheckout &&
+			( $this->wcuIsWcfmPage() || isset( $_GET['startcheckout'] ) || // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			  ( '' !== $wc_ajax && strpos( $wc_ajax, 'checkout' ) !== false )
+			)
+		) {
 			$this->setCurrentCurrency($this->defaultCurrency, true);
 		} else if(!$this->convertByCheckout && in_the_loop() && (is_checkout() || is_checkout_pay_page())) {
 			$this->setCurrentCurrency($this->defaultCurrency, true);
 		} else if ($this->detectRobot()) {
 			$this->setCurrentCurrency($this->defaultCurrency, true);
-		} else if(!$this->convertByCheckout && isset($_GET['wc-ajax']) && $_GET['wc-ajax'] == 'ppc-create-order') {
+		} else if( !$this->convertByCheckout && 'ppc-create-order' == $wc_ajax ) {
 			$this->setCurrentCurrency($this->defaultCurrency, true);
-		} else if(!$this->convertByCheckout && isset($_GET['wc-ajax'], $_GET['wcu_checkout']) && $_GET['wc-ajax'] == 'get_refreshed_fragments') {
+		} else if(!$this->convertByCheckout && isset( $_GET['wcu_checkout'] ) && 'get_refreshed_fragments' == $wc_ajax) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$this->setCurrentCurrency($this->defaultCurrency, true);
-		} else if(!$this->convertByCheckout && defined('REST_REQUEST') && REST_REQUEST && isset($_SERVER['REQUEST_URI']) && strpos($_SERVER['REQUEST_URI'], '/wp-json/wc/store/v1/checkout') !== false ) {
-			$this->setCurrentCurrency($this->defaultCurrency, true);
+		} else if (
+			! $this->convertByCheckout &&
+			defined( 'REST_REQUEST' ) &&
+			REST_REQUEST &&
+			strpos(
+				isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '',
+				'/wp-json/wc/store/v1/checkout'
+			) !== false
+		) {
+			$this->setCurrentCurrency( $this->defaultCurrency, true );
 		}
 		return $this->currentCurrency;
 	}
 
+	/**
+	 * detectRobot.
+	 *
+	 * @version 2.4.0
+	 */
 	public function detectRobot() {
-		if (isset($this->optionsPro['geoip_rules']) && !empty($this->optionsPro['geoip_rules']['default_for_robots'])) {
-			if (isset($_SERVER['HTTP_USER_AGENT']) && preg_match('/bot|crawl|slurp|spider|mediapartners/i', $_SERVER['HTTP_USER_AGENT'])) {
+		if ( isset( $this->optionsPro['geoip_rules'] ) && ! empty( $this->optionsPro['geoip_rules']['default_for_robots'] ) ) {
+
+			$user_agent = isset( $_SERVER['HTTP_USER_AGENT'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) : '';
+
+			if (
+				'' !== $user_agent &&
+				preg_match( '/bot|crawl|slurp|spider|mediapartners/i', $user_agent )
+			) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -870,7 +913,7 @@ class currencyWcu extends moduleWcu {
 			}
 		}
 
-		if ( ( is_order_received_page() || is_account_page() || ( is_admin() && ! isset( $_REQUEST['save'] ) ) || isset( $_REQUEST['st'] ) ) ) {
+		if ( ( is_order_received_page() || is_account_page() || ( is_admin() && ! isset( $_REQUEST['save'] ) ) || isset( $_REQUEST['st'] ) ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return $price;
 		}
 
@@ -955,6 +998,11 @@ class currencyWcu extends moduleWcu {
 		}
 	}
 
+	/**
+	 * checkWoocommerceEmailActions.
+	 *
+	 * @version 2.4.0
+	 */
 	public function checkWoocommerceEmailActions($email_actions) {
 		global $post;
 		if (is_object($post) AND utilsWcu::isOrderType($post->ID)) {
@@ -963,10 +1011,10 @@ class currencyWcu extends moduleWcu {
 				$this->setCurrentCurrency($currency);
 			}
 		} else {
-			if (isset($_POST['order_status']) AND isset($_POST['post_ID'])) {
-				$currency = $this->getWcuOrderCurrency((int) $_POST['post_ID']);
-				if (!empty($currency)) {
-					$this->setCurrentCurrency($currency);
+			if ( isset( $_POST['order_status'] ) and isset( $_POST['post_ID'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+				$currency = $this->getWcuOrderCurrency( absint( $_POST['post_ID'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.NonceVerification.Missing
+				if ( ! empty( $currency ) ) {
+					$this->setCurrentCurrency( $currency );
 				}
 			}
 		}
@@ -1035,14 +1083,19 @@ class currencyWcu extends moduleWcu {
 		return $post;
 	}
 
+	/**
+	 * checkAdminActionPostOrder.
+	 *
+	 * @version 2.4.0
+	 */
 	public function checkAdminActionPostOrder() {
-		if (isset($_GET['post'])) {
-			$post_id = $_GET['post'];
-			$post = get_post($post_id);
-			if (is_object($post) AND utilsWcu::isOrderType($post->ID)) {
-				$currency = $this->getWcuOrderCurrency($post->ID);
-				if (!empty($currency)) {
-					$this->setCurrentCurrency($currency);
+		if ( isset( $_GET['post'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$post_id = absint( $_GET['post'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$post    = get_post( $post_id );
+			if ( is_object( $post ) and utilsWcu::isOrderType( $post->ID ) ) {
+				$currency = $this->getWcuOrderCurrency( $post->ID );
+				if ( ! empty( $currency ) ) {
+					$this->setCurrentCurrency( $currency );
 					$this->beforeOrderTotals();
 				}
 			}
@@ -1881,19 +1934,25 @@ class currencyWcu extends moduleWcu {
 				$metaQuery = array_merge( $q->get( 'meta_query' ), $metaQuery );
 				$q->set( 'meta_query', $metaQuery );
 			} else {
-				$q['meta_query'] = ( isset( $q['meta_query'] ) ) ? array_merge( $q['meta_query'], $metaQuery ) : $metaQuery;
+				$q['meta_query'] = ( isset( $q['meta_query'] ) ) ? array_merge( $q['meta_query'], $metaQuery ) : $metaQuery; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			}
 		}
 
 		return $q;
 	}
 
+	/**
+	 * checkAvailabilityForCountry.
+	 *
+	 * @version 2.4.0
+	 */
 	public function checkAvailabilityForCountry( $preempt, $wp_query ) {
 		if (is_single()) {
 			$countryCode  = frameWcu::_()->getModule( 'geoip_rules' )->getUserCountryCode();
 			$currencyCode = frameWcu::_()->getModule( 'geoip_rules' )->getCurrencyCodeByCountry( $countryCode );
 			if ( '' !== $currencyCode ) {
-				$isUnavailable = get_post_meta( url_to_postid( $_SERVER['REQUEST_URI'] ), 'wcu_currency_unavailable_' . $currencyCode );
+				$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '';
+				$isUnavailable = get_post_meta( url_to_postid( $request_uri ), 'wcu_currency_unavailable_' . $currencyCode );
 				if ( $isUnavailable ) {
 					$wp_query->set_404();
 					status_header( 404 );

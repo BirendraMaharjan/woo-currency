@@ -67,16 +67,25 @@ class uriWcu {
     static public function page($id) {
         return get_page_link($id);
     }
-    static public function getGetParams($exclude = array()) {
-        $res = array();
-        if(isset($_GET) && !empty($_GET)) {
-            foreach($_GET as $key => $val) {
-                if(in_array($key, $exclude)) continue;
-                $res[$key] = $val;
-            }
-        }
-        return $res;
-    }
+
+	/**
+	 * getGetParams.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function getGetParams( $exclude = array() ) {
+		$res = array();
+		if ( isset( $_GET ) && ! empty( $_GET ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			foreach ( $_GET as $key => $val ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+				if ( in_array( $key, $exclude ) ) {
+					continue;
+				}
+				$res[ sanitize_key( wp_unslash( $key ) ) ] = map_deep( wp_unslash( $val ), 'sanitize_text_field' );
+			}
+		}
+
+		return $res;
+	}
     static public function mod($name, $action = '', $data = NULL) {
         $params = array('mod' => $name);
         if($action)
@@ -107,18 +116,41 @@ class uriWcu {
     }
     /**
      * Get current path
+     *
+     * @version 2.4.0
+     *
      * @return string current link
      */
-    static public function getCurrent() {
-        if (!empty($_SERVER['HTTPS'])) {
-            return 'https://'. $_SERVER['HTTP_HOST']. $_SERVER['SCRIPT_NAME'];
-        } else {
-            return 'http://'. $_SERVER['HTTP_HOST']. $_SERVER['SCRIPT_NAME'];
-        }
-    }
+	static public function getCurrent() {
+		$host        = isset( $_SERVER['HTTP_HOST'] ) ?
+			sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) :
+			'';
+		$script_name = isset( $_SERVER['SCRIPT_NAME'] ) ?
+			sanitize_text_field( wp_unslash( $_SERVER['SCRIPT_NAME'] ) ) :
+			'';
+
+		if ( ! empty( $_SERVER['HTTPS'] ) ) {
+			return 'https://' . $host . $script_name;
+		} else {
+			return 'http://' . $host . $script_name;
+		}
+	}
+
+	/**
+	 * getFullUrl.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function getFullUrl() {
-		$url = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https://' : 'http://';
-		$url .= $_SERVER['HTTP_HOST']. $_SERVER['REQUEST_URI'];
+		$url         = isset( $_SERVER['HTTPS'] ) && ! empty( $_SERVER['HTTPS'] ) ? 'https://' : 'http://';
+		$host        = isset( $_SERVER['HTTP_HOST'] ) ?
+			sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) :
+			'';
+		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ?
+			esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) :
+			'';
+		$url         .= $host . $request_uri;
+
 		return $url;
 	}
 	/**

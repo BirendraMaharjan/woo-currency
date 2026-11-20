@@ -26,7 +26,10 @@ class promoControllerWcu extends controllerWcu { // phpcs:ignore WordPress.Namin
 		}
 		$originalPage = reqWcu::getVar('original_page');
 		$http = isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) ? 'https://' : 'http://';
-		if(strpos($originalPage, $http. $_SERVER['HTTP_HOST']) !== 0) {
+	    $host = isset( $_SERVER['HTTP_HOST'] ) ?
+		    sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) :
+		    '';
+	    if ( strpos( $originalPage, $http . $host ) !== 0 ) {
 			$originalPage = '';
 		}
 		redirectWcu($originalPage);
@@ -77,7 +80,10 @@ class promoControllerWcu extends controllerWcu { // phpcs:ignore WordPress.Namin
 			}
 		}
 		if(!$res->error()) {
-			$msg = 'Message from: '. get_bloginfo('name').', Host: '. $_SERVER['HTTP_HOST']. '<br />';
+			$host = isset( $_SERVER['HTTP_HOST'] ) ?
+				sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) :
+				'';
+			$msg = 'Message from: ' . get_bloginfo( 'name' ) . ', Host: ' . $host . '<br />';
 			$msg .= 'Plugin: '. WCU_WP_PLUGIN_NAME. '<br />';
 			foreach($fields as $fName => $fData) {
 				if(in_array($fName, array('name', 'email', 'subject'))) continue;

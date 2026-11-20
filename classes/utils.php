@@ -89,25 +89,29 @@ class utilsWcu {
             copy( $source, $destination );
         }
     }
-    static public function getIP() {
-		$res = '';
-		if(!isset($_SERVER['HTTP_CLIENT_IP']) || empty($_SERVER['HTTP_CLIENT_IP'])) {
-			if(!isset($_SERVER['HTTP_X_REAL_IP']) || empty($_SERVER['HTTP_X_REAL_IP'])) {
-				if(!isset($_SERVER['HTTP_X_SUCURI_CLIENTIP']) || empty($_SERVER['HTTP_X_SUCURI_CLIENTIP'])) {
-					if(!isset($_SERVER['HTTP_X_FORWARDED_FOR']) || empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-						$res = $_SERVER['REMOTE_ADDR'];
-					} else
-						$res = $_SERVER['HTTP_X_FORWARDED_FOR'];
-				} else
-					$res = $_SERVER['HTTP_X_SUCURI_CLIENTIP'];
-			} else
-				$res = $_SERVER['HTTP_X_REAL_IP'];
-		} else
-			$res = $_SERVER['HTTP_CLIENT_IP'];
-		
-		return $res;
-        //return (empty($_SERVER['HTTP_CLIENT_IP']) ? (empty($_SERVER['HTTP_X_FORWARDED_FOR']) ? $_SERVER['REMOTE_ADDR'] : $_SERVER['HTTP_X_FORWARDED_FOR']) : $_SERVER['HTTP_CLIENT_IP']);
-    }
+
+	/**
+	 * getIP.
+	 *
+	 * @version 2.4.0
+	 */
+	static public function getIP() {
+		foreach (
+			array(
+				'HTTP_CLIENT_IP',
+				'HTTP_X_REAL_IP',
+				'HTTP_X_SUCURI_CLIENTIP',
+				'HTTP_X_FORWARDED_FOR',
+				'REMOTE_ADDR'
+			) as $header
+		) {
+			if ( isset( $_SERVER[ $header ] ) && '' !== $_SERVER[ $header ] ) {
+				return sanitize_text_field( wp_unslash( $_SERVER[ $header ] ) );
+			}
+		}
+
+		return '';
+	}
     
     /**
      * Parse xml file into simpleXML object
@@ -348,10 +352,13 @@ class utilsWcu {
     }
     /**
      * Get current host location
+     *
+     * @version 2.4.0
+     *
      * @return string host string
      */
     static public function getHost() {
-        return $_SERVER['HTTP_HOST'];
+	    return isset( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
     }
     /**
      * Check if device is mobile
@@ -396,7 +403,7 @@ class utilsWcu {
 		}
         if (function_exists('is_multisite') && is_multisite()) {
 			// $orig_id = $wpdb->blogid;
-            $blog_id = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+            $blog_id = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             foreach ($blog_id as $id) {
                 if (switch_to_blog($id)) {
                     installerWcu::init();
@@ -419,7 +426,7 @@ class utilsWcu {
         global $wpdb;
         if (function_exists('is_multisite') && is_multisite()) {
 			// $orig_id = $wpdb->blogid;
-            $blog_id = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+            $blog_id = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             foreach ($blog_id as $id) {
                 if (switch_to_blog($id)) {
                     installerWcu::delete();
@@ -436,7 +443,7 @@ class utilsWcu {
 		global $wpdb;
         if (function_exists('is_multisite') && is_multisite()) {
 			// $orig_id = $wpdb->blogid;
-            $blog_id = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+            $blog_id = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs"); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
             foreach ($blog_id as $id) {
                 if (switch_to_blog($id)) {
                     installerWcu::deactivate();
@@ -542,8 +549,16 @@ class utilsWcu {
 		$uploadsDir = self::getUploadsDir();
 		return str_replace($uploadsDir, $uploadsPath, $path);
 	}
+
+	/**
+	 * getUserBrowserString.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function getUserBrowserString() {
-		return isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : false;
+		return isset( $_SERVER['HTTP_USER_AGENT'] ) ?
+			sanitize_text_field( wp_unslash( $_SERVER['HTTP_USER_AGENT'] ) ) :
+			false;
 	}
 	static public function getBrowser() {
 		$u_agent = self::getUserBrowserString();
@@ -644,10 +659,19 @@ class utilsWcu {
 	static public function getLangCode() {
 		return get_locale();
 	}
+
+	/**
+	 * getBrowserLangCode.
+	 *
+	 * @version 2.4.0
+	 */
 	static public function getBrowserLangCode() {
-		return isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && !empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])
-			? strtolower(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2))
-			: self::getLangCode2Letter();
+		return isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) &&
+		       (
+				   ! empty( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ?
+			       strtolower( substr( sanitize_text_field( wp_unslash( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ), 0, 2 ) ) :
+			       self::getLangCode2Letter()
+		       );
 	}
 	static public function getTimeRange() {
 		$time = array();

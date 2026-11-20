@@ -6,7 +6,7 @@ Stable tag: 2.3.2
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
-WBW Currency Switcher for WooCommerce allows customers to switch products prices to any currencies. Get rates converted in the real-time with dynamic currency switcher
+WBW Currency Switcher: allows customers to switch products prices to any currencies. Get rates converted in the real-time with dynamic currency switcher.
 
 == Description ==
 [WBW Currency Switcher for WooCommerce Plugin](https://woobewoo.com/plugins/woo-currency?utm_source=wordpress&utm_medium=description&utm_campaign=currency "WBW Currency Switcher for WooCommerce WordPress plugin") allows you to display prices in multiple currencies, use the unlimited number of currencies and set the exchange rate for each currency manually or automatically. The plugin makes full use of Cryptocompare and Free Converter platforms, providing the latest exchange rates, and converting displayed prices in real-time. Currency switcher can be changed automatically according to the customer’s IP.

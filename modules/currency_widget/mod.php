@@ -30,15 +30,19 @@ class currency_widgetWcu extends moduleWcu {
 		register_widget('wcuCurrencyRatesWidget');
 	}
 	public function drawSwitcherWidget($atts) {
-		if (is_array($atts) && array_key_exists('exclude', $atts) && (!is_array($atts['exclude']))) {
-			$atts['exclude'] = explode(',', $atts['exclude']);
+		if (
+			is_array( $atts ) &&
+			array_key_exists( 'exclude', $atts ) &&
+			( ! is_array( $atts['exclude'] ) )
+		) {
+			$atts['exclude'] = explode( ',', $atts['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 		}
 		$params = shortcode_atts( array(
 			'currency_display' => 'name',
 			'show_as' => 'dropdown',
 			'show_flag_dropdown' => false,
 			'width' => '100%',
-			'exclude' => array(),
+			'exclude' => array(), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 			'show_on' => 'both',
 			'show_on_widths' => 0,
 			'show_on_screen_compare' => 'less',
@@ -47,8 +51,12 @@ class currency_widgetWcu extends moduleWcu {
 		return frameWcu::_()->getModule('currency_widget')->getView()->displayWidget($params, 'currencySwitcher');
 	}
 	public function drawConverterWidget($atts) {
-		if (is_array($atts) && array_key_exists('exclude', $atts) && (!is_array($atts['exclude']))) {
-			$atts['exclude'] = explode(',', $atts['exclude']);
+		if (
+			is_array( $atts ) &&
+			array_key_exists( 'exclude', $atts ) &&
+			( ! is_array( $atts['exclude'] ) )
+		) {
+			$atts['exclude'] = explode( ',', $atts['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 		}
 		$params = shortcode_atts( array(
 			'currency_display' => 'name',
@@ -58,7 +66,7 @@ class currency_widgetWcu extends moduleWcu {
 			'btn_bg_color' => '#333',
 			'btn_bg_color_h' => '#e58004',
 			'width' => '100%',
-			'exclude' => array(),
+			'exclude' => array(), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 			'show_on' => 'both',
 			'show_on_widths' => 0,
 			'show_on_screen_compare' => 'less',
@@ -67,15 +75,19 @@ class currency_widgetWcu extends moduleWcu {
 		return frameWcu::_()->getModule('currency_widget')->getView()->displayWidget($params, 'currencyConverter');
 	}
 	public function drawRatesWidget($atts) {
-		if (is_array($atts) && array_key_exists('exclude', $atts) && (!is_array($atts['exclude']))) {
-			$atts['exclude'] = explode(',', $atts['exclude']);
+		if (
+			is_array( $atts ) &&
+			array_key_exists( 'exclude', $atts ) &&
+			( ! is_array( $atts['exclude'] ) )
+		) {
+			$atts['exclude'] = explode( ',', $atts['exclude'] ); // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 		}
 		$params = shortcode_atts( array(
 			'currency_display' => 'name',
 			'show_flag_dropdown' => false,
 			'show_flag_currency_list' => false,
 			'width' => '100%',
-			'exclude' => array(),
+			'exclude' => array(), // phpcs:ignore WordPressVIPMinimum.Performance.WPQueryParams.PostNotIn_exclude
 			'show_on' => 'both',
 			'show_on_widths' => 0,
 			'show_on_screen_compare' => 'less',

@@ -145,13 +145,19 @@ class optionsViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventio
 
 	/**
 	 * serverSettings.
+	 *
+	 * @version 2.4.0
 	 */
 	public function serverSettings() {
 		global $wpdb;
+		$server_software = isset( $_SERVER['SERVER_SOFTWARE'] ) ?
+			sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) :
+			'';
+
 		$this->assign('systemInfo', array(
 			'Operating System'            => array('value' => PHP_OS),
 			'PHP Version'                 => array('value' => PHP_VERSION),
-			'Server Software'             => array('value' => $_SERVER['SERVER_SOFTWARE']),
+			'Server Software'             => array('value' => $server_software),
 			'MySQL'                       => array('value' =>  $wpdb->db_version()),
 			'PHP Allow URL Fopen'         => array('value' => ini_get('allow_url_fopen') ? 'Yes' : 'No'),
 			'PHP Memory Limit'            => array('value' => ini_get('memory_limit')),

@@ -111,10 +111,13 @@ class promoViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingConventions
 	 */
 	public function getServerSettings() {
 		global $wpdb;
+		$server_software = isset( $_SERVER['SERVER_SOFTWARE'] ) ?
+			sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) :
+			'';
 		return array(
 			'Operating System' => array('value' => PHP_OS),
 			'PHP Version' => array('value' => PHP_VERSION),
-			'Server Software' => array('value' => $_SERVER['SERVER_SOFTWARE']),
+			'Server Software' => array('value' => $server_software),
 			'MySQL' => array('value' =>  $wpdb->db_version()),
 			'PHP Allow URL Fopen' => array('value' => ini_get('allow_url_fopen') ? __('Yes', 'woo-currency') : __('No', 'woo-currency')),
 			'PHP Memory Limit' => array('value' => ini_get('memory_limit')),

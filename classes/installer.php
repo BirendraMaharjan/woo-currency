@@ -122,9 +122,9 @@ class installerWcu {
 		self::_checkSendStat( 'delete' );
 		global $wpdb;
 		$wpPrefix = $wpdb->prefix;
-		$wpdb->query( "DROP TABLE IF EXISTS `" . $wpPrefix . WCU_DB_PREF . "modules`" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( "DROP TABLE IF EXISTS `" . $wpPrefix . WCU_DB_PREF . "modules_type`" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
-		$wpdb->query( "DROP TABLE IF EXISTS `" . $wpPrefix . WCU_DB_PREF . "usage_stat`" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
+		$wpdb->query( "DROP TABLE IF EXISTS `" . $wpPrefix . WCU_DB_PREF . "modules`" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->query( "DROP TABLE IF EXISTS `" . $wpPrefix . WCU_DB_PREF . "modules_type`" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->query( "DROP TABLE IF EXISTS `" . $wpPrefix . WCU_DB_PREF . "usage_stat`" ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared, WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.SchemaChange, WordPress.DB.DirectDatabaseQuery.NoCaching
 		delete_option( $wpPrefix . WCU_DB_PREF . 'db_version' );
 		delete_option( $wpPrefix . WCU_DB_PREF . 'db_installed' );
 		delete_option( WCU_DB_PREF . 'orders_currencies' );

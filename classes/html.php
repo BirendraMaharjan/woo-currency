@@ -509,6 +509,12 @@ class htmlWcu {
 
         return $out;
     }
+
+	/**
+	 * selectlist.
+	 *
+	 * @version 2.4.0
+	 */
     static public function selectlist($name, $params = array('attrs'=>'', 'size'=> 5, 'options' => array(), 'value' => '')) {
         $out = '';
         if(!strpos($name, '[]'))
@@ -516,9 +522,12 @@ class htmlWcu {
         if (!isset($params['size']) || !is_numeric($params['size']) || $params['size'] == '') {
             $params['size'] = 5;
         }
+	    if ( ! isset( $params['placeholder'] ) ) {
+		    $params['placeholder'] = __( 'Select an option', 'woo-currency' );
+	    }
 		$params['attrs'] = isset($params['attrs']) ? $params['attrs'] : '';
 		$params['attrs'] .= self::_dataToAttrs($params);
-        $out .= '<select multiple="multiple" size="'.$params['size'].'" name="'.$name.'" '.$params['attrs'].'>';
+        $out .= '<select multiple="multiple" size="'.$params['size'].'" name="'.$name.'" '.$params['attrs'].' data-placeholder="'.$params['placeholder'].'">';
 		$params['value'] = isset($params['value']) ? $params['value'] : array();
         if(!empty($params['options'])) {
             foreach($params['options'] as $k => $v) {

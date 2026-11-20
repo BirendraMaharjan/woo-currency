@@ -546,9 +546,4 @@ class currencyModelWcu extends modelWcu { // phpcs:ignore WordPress.NamingConven
 
 		return wp_remote_retrieve_body( $response );
 	}
-
-	public function changeSettingFlags($setting) {
-		$field = $this->getModule()->settingFlags;
-		update_option($field, $setting);
-	}
 }

@@ -12,13 +12,18 @@ defined( 'ABSPATH' ) || exit;
 class templatesWcu extends moduleWcu {
     protected $_styles = array();
 
+	/**
+	 * init.
+	 *
+	 * @version 2.4.0
+	 */
     public function init() {
         if (is_admin()) {
 			if($isAdminPlugOptsPage = frameWcu::_()->isAdminPlugOptsPage()) {
 				$this->loadCoreJs();
 				$this->loadAdminCoreJs();
 				$this->loadCoreCss();
-				$this->loadChosenSelects();
+				$this->load_selectwoo();
 				frameWcu::_()->addScript('adminOptionsWcu', WCU_JS_PATH. 'admin.options.js', array(), false, true);
 				add_action('admin_enqueue_scripts', array($this, 'loadMediaScripts'));
 				add_action('init', array($this, 'connectAdditionalAdminAssets'));
@@ -133,9 +138,20 @@ class templatesWcu extends moduleWcu {
 	public function loadFontAwesome() {
 		frameWcu::_()->addStyle('font-awesomeWcu', FrameWcu::_()->getModule('templates')->getModPath(). 'css/font-awesome.min.css');
 	}
-	public function loadChosenSelects() {
-		frameWcu::_()->addStyle('jquery.chosen', FrameWcu::_()->getModule('templates')->getModPath(). 'lib/chosen/chosen.min.css');
-		frameWcu::_()->addScript('jquery.chosen', FrameWcu::_()->getModule('templates')->getModPath(). 'lib/chosen/chosen.jquery.min.js');
+
+	/**
+	 * load_selectwoo.
+	 *
+	 * @version 2.4.0
+	 * @since   2.4.0
+	 */
+	public function load_selectwoo() {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return;
+		}
+
+		wp_enqueue_script( 'selectWoo' );
+		wp_enqueue_style( 'select2' );
 	}
 	public function loadDatePicker() {
 		frameWcu::_()->addScript('jquery-ui-datepicker');

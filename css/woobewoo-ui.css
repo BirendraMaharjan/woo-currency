@@ -1,3 +1,10 @@
+/**
+ * WBW Currency Switcher for WooCommerce - WooBeWoo UI CSS
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
 .woobewoo-plugin {
     width: 100%;
 	font-size: 15px;
@@ -614,31 +621,10 @@ input[type="color"] {
 .form-table .col-w-60perc {
 	width: 60%;
 }
-/*custom selects*/
-/*.chosen-container, .chosen-container div {
-	overflow: auto !important;
-	height: auto !important;
-}*/
 /*fieldsets*/
 .woobewoo-plugin fieldset {
 	border: 1px solid #000;
 	padding: 5px;
-}
-/*chosen selects*/
-.woobewoo-plugin .chosen-container-multi .chosen-choices li.search-choice {
-	background-image: none;
-	background-color: transparent;
-	border: 1px solid #000;
-	border-radius: 0;
-}
-.woobewoo-plugin .chosen-container-active .chosen-choices {
-	border-color: #4ae8ea;
-}
-.woobewoo-plugin .chosen-container.chosen-container-multi:not(.chosen-responsive) {
-	min-width: 300px;	/*As if select is hidden on chosen init action - it will be with width: 0 - and this is really bad*/
-}
-.woobewoo-plugin .chosen-responsive {
-	width: 100% !important;
 }
 /*shortcode text*/
 .sup-shortcode {
@@ -805,18 +791,10 @@ input[type="color"] {
 	.breadcrumbs-separator {
 		display: none;
 	}
-	.woobewoo-plugin .chosen-container.chosen-container-multi {
-		min-width: 50px;
-		max-width: 100px;
-	}
 }
 /*tables - jqgrid - responsivness*/
 @media (max-width: 1280px) {
 	.woobewoo-tbl-pagination-shell .ui-pg-table .ui-paging-info {
 		display: none !important;
 	}
-}
-/*wp add transition for all links in admin area, this is not required for our chosen "x" buttons*/
-a.search-choice-close {
-	transition-duration: 0s;
 }

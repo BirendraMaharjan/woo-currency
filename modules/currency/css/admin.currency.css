@@ -1,17 +1,10 @@
-.wcuTabContent .chosen-container-single .chosen-single {
-    height: 25px;
-    padding: 0 0 0 8px;
-}
-
-.wcuTabContent .chosen-container-single .chosen-single div b {
-    background-position-y: 4px;
-}
-
-#wcuSwitcherTab .chosen-container,
-#wcuOptionsTab .chosen-container {
-    min-width: 400px;
-}
-
+/**
+ * WBW Currency Switcher for WooCommerce - Admin Currency CSS
+ *
+ * @version 2.4.0
+ *
+ * @author  woobewoo
+ */
 .wcuCurrenciesShell .nav-tab:focus {
     box-shadow: none;
 }

@@ -1,5 +1,5 @@
 /**
- * WBW Currency Switcher for WooCommerce - frontend-currency-widget
+ * WBW Currency Switcher for WooCommerce - Frontend Currency Widget JS
  *
  * @version 2.4.0
  * @since   2.4.0
@@ -169,16 +169,6 @@ jQuery( document ).ready( function ( $ ) {
 					dropdown.attr( 'id', id );
 					window.wcuDDList[id] = dropdown.msDropDown().data( 'dd' );
 				}
-			} );
-		}
-
-		// Initialize Chosen when required.
-		if (
-			widget.data( 'use-chosen' ) &&
-			typeof $.fn.chosen === 'function'
-		) {
-			select.chosen( {
-				disable_search: true
 			} );
 		}
 

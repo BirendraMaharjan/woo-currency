@@ -7,15 +7,11 @@
  */
 jQuery(document).ready(function() {
     var currenciesShell = jQuery('.wcuCurrenciesShell'),
-        targetToggle = jQuery('[data-target-toggle]'),
-        chosenOptionsObj = jQuery.extend({}, g_wcuChosenOptions, {
-            width: '100%'
-        });
+        targetToggle = jQuery('[data-target-toggle]');
 
 	jQuery("body").find("[name='wcu_options[options][converter_type]'] option[value=ratesapipro]").prop('disabled', true).attr('disabled', true);
 	jQuery("body").find("[name='wcu_options[options][converter_type]'] option[value=ecbpro]").prop('disabled', true).prop('disabled', true).attr('disabled', true);
 
-    jQuery('#wcuOptionsTab select, #wcuSwitcherTab select').chosen(g_wcuChosenOptions);
     if (currenciesShell.length && typeof jQuery.fn.wpTabs == 'function') {
         currenciesShell.wpTabs({
             change: function(selector) {

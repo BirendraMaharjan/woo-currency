@@ -15,6 +15,12 @@ class currency_widgetViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingC
 		$this->addCommonAdminAssets();
 		$this->displayWidgetForm($data, $widget, $template . 'Form');
 	}
+
+	/**
+	 * displayWidget.
+	 *
+	 * @version 2.4.0
+	 */
 	public function displayWidget($instance, $template) {
 		if(class_exists('WooCommerce')) {
 			wp_enqueue_script( 'wp-color-picker' );
@@ -78,7 +84,6 @@ class currency_widgetViewWcu extends viewWcu { // phpcs:ignore WordPress.NamingC
 				$this->assign('randId', $randId);
 				$this->assign('currentCurrency', frameWcu::_()->getModule('currency')->getCurrentCurrency());
 				frameWcu::_()->getModule('templates')->loadFontAwesome();
-				$template == 'currencySwitcher' && frameWcu::_()->getModule('templates')->loadChosenSelects();
 				frameWcu::_()->addStyle('widget.' . $template, $this->getModule()->getModPath(). 'css/widget.' . $template . '.css');
 
 				return parent::getContent($template . 'Widget');
